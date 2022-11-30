@@ -33,6 +33,5 @@ public class Courses extends AppCompatActivity {
     }
 
     public void goToCoursesList(View view){
-        //Intent intent = new Intent(Courses.this, )
     }
 }
