@@ -3,19 +3,17 @@ package C196.mainactivity.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Date;
-
 @Entity(tableName = "courses")
 public class Course {
     @PrimaryKey(autoGenerate = true)
     private int courseID;
     private String courseName;
     private String courseStatus;
-    private Date courseStartDate;
-    private Date courseEndDate;
+    private String courseStartDate;
+    private String courseEndDate;
     private String courseShareNotes;
 
-    public Course(int courseID, String courseName, String courseStatus, Date courseStartDate, Date courseEndDate, String courseShareNotes) {
+    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStatus = courseStatus;
@@ -48,19 +46,19 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
-    public Date getCourseStartDate() {
+    public String getCourseStartDate() {
         return courseStartDate;
     }
 
-    public void setCourseStartDate(Date courseStartDate) {
+    public void setCourseStartDate(String courseStartDate) {
         this.courseStartDate = courseStartDate;
     }
 
-    public Date getCourseEndDate() {
+    public String getCourseEndDate() {
         return courseEndDate;
     }
 
-    public void setCourseEndDate(Date courseEndDate) {
+    public void setCourseEndDate(String courseEndDate) {
         this.courseEndDate = courseEndDate;
     }
 
