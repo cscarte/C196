@@ -40,15 +40,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UI.Professors"
-            android:exported="false"
-            android:parentActivityName=".UI.HomeScreen"
-            android:label="Professors">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".UI.HomeScreen"
             android:exported="true">
             <intent-filter>
