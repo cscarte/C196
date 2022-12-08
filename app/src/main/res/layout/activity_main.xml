@@ -31,46 +31,50 @@
 
     <Button
         android:id="@+id/coursesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="396dp"
+        android:layout_width="191dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="392dp"
         android:onClick="enterCoursesScreen"
         android:text="Courses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/mentorsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="194dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="472dp"
         android:onClick="enterMentorsScreen"
         android:text="Mentors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coursesButton" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/professorsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="32dp"
-        android:onClick="enterProfessorsScreen"
-        android:text="Professors"
+        android:id="@+id/assessmentsButton"
+        android:layout_width="197dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="628dp"
+        android:onClick="enterAssessmentsScreen"
+        android:text="Assessments"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/termsButton" />
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/termsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="396dp"
-        android:layout_marginEnd="52dp"
+        android:layout_width="192dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="552dp"
         android:onClick="enterTermsScreen"
         android:text="Terms"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

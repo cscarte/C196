@@ -22,6 +22,16 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".UI.Assessments"
+            android:exported="false"
+            android:parentActivityName=".UI.HomeScreen"
+            android:label="Assessments">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".UI.Terms"
             android:exported="false"
             android:parentActivityName=".UI.HomeScreen"

@@ -25,13 +25,19 @@ public class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent(HomeScreen.this, Mentors.class);
         startActivity(intent);
     }
-
+/**
     public void enterProfessorsScreen(View view){
         Intent intent = new Intent(HomeScreen.this, Professors.class);
         startActivity(intent);
     }
+*/
 
     public void enterTermsScreen(View view){
+        Intent intent = new Intent(HomeScreen.this, Terms.class);
+        startActivity(intent);
+    }
+
+    public void enterAssessmentsScreen(View view){
         Intent intent = new Intent(HomeScreen.this, Terms.class);
         startActivity(intent);
     }
