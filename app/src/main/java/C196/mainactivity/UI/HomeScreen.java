@@ -16,6 +16,17 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /*
+    public void EnterHere(View view){
+        Intent intent = new Intent(HomeScreen.this, Term.class);
+        startActivity(intent);
+        Repository repository = new Repository(getApplication());
+        Term term = new Term(1, "Intro To School", "12/01/22", "12/31/22");
+        repository.insert(term);
+    }
+
+     */
+
     public void enterCoursesScreen(View view){
         Intent intent = new Intent(HomeScreen.this, Courses.class);
         startActivity(intent);
