@@ -15,8 +15,8 @@
         <activity
             android:name=".UI.Mentors"
             android:exported="false"
-            android:parentActivityName=".UI.HomeScreen"
-            android:label="Mentors">
+            android:label="Mentors"
+            android:parentActivityName=".UI.HomeScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -24,18 +24,26 @@
         <activity
             android:name=".UI.Assessments"
             android:exported="false"
-            android:parentActivityName=".UI.HomeScreen"
-            android:label="Assessments">
+            android:label="Assessments"
+            android:parentActivityName=".UI.HomeScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
+        <activity
+            android:name=".UI.AssessmentDetails"
+            android:exported="false"
+            android:label="Assessment Details"
+            android:parentActivityName=".UI.Assessments">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".UI.Terms"
             android:exported="false"
-            android:parentActivityName=".UI.HomeScreen"
-            android:label="Terms"            >
+            android:label="Terms"
+            android:parentActivityName=".UI.HomeScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -43,8 +51,8 @@
         <activity
             android:name=".UI.Courses"
             android:exported="false"
-            android:parentActivityName=".UI.HomeScreen"
-            android:label="Courses">
+            android:label="Courses"
+            android:parentActivityName=".UI.HomeScreen">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

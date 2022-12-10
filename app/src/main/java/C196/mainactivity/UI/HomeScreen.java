@@ -48,7 +48,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void enterAssessmentsScreen(View view){
-        Intent intent = new Intent(HomeScreen.this, Terms.class);
+        Intent intent = new Intent(HomeScreen.this, Assessments.class);
         startActivity(intent);
     }
 }
