@@ -59,4 +59,7 @@ public class Mentor {
                 ", mentorEmail='" + mentorEmail + '\'' +
                 '}';
     }
+
+    public Mentor() {
+    }
 }

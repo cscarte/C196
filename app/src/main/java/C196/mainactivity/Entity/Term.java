@@ -59,4 +59,7 @@ public class Term {
                 ", termEndDate=" + termEndDate +
                 '}';
     }
+
+    public Term() {
+    }
 }

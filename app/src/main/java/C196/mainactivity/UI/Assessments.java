@@ -12,7 +12,7 @@ public class Assessments extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mentors);
+        setContentView(R.layout.activity_assessments);
     }
 
     public void enterAssessmentDetails(View view){

@@ -81,4 +81,7 @@ public class Course {
                 ", courseShareNotes='" + courseShareNotes + '\'' +
                 '}';
     }
+
+    public Course() {
+    }
 }

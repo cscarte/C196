@@ -81,4 +81,7 @@ public class Assessment {
                 ", courseID=" + courseID +
                 '}';
     }
+
+    public Assessment() {
+    }
 }
