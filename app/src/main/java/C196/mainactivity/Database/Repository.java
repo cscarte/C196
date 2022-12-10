@@ -38,9 +38,9 @@ public class Repository {
         mTermDAO = db.termDAO();
     }
 
-    public void insert(Term assessment){
+    public void insert(Term term){
         databaseExecutor.execute(() ->{
-          mAssessmentDAO.insert(assessment);
+          mTermDAO.insert(term);
         });
         try{
             Thread.sleep(1000);

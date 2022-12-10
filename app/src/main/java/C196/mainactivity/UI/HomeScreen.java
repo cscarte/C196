@@ -6,6 +6,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import C196.mainactivity.Database.Repository;
+import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
 
 public class HomeScreen extends AppCompatActivity {
@@ -16,7 +18,6 @@ public class HomeScreen extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    /*
     public void EnterHere(View view){
         Intent intent = new Intent(HomeScreen.this, Term.class);
         startActivity(intent);
@@ -24,8 +25,6 @@ public class HomeScreen extends AppCompatActivity {
         Term term = new Term(1, "Intro To School", "12/01/22", "12/31/22");
         repository.insert(term);
     }
-
-     */
 
     public void enterCoursesScreen(View view){
         Intent intent = new Intent(HomeScreen.this, Courses.class);

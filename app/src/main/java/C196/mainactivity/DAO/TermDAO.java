@@ -9,7 +9,6 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import C196.mainactivity.Entity.Mentor;
 import C196.mainactivity.Entity.Term;
 
 @Dao
@@ -24,5 +23,5 @@ public interface TermDAO {
     void delete(Term term);
 
     @Query("SELECT * FROM terms ORDER BY termID ASC")
-    List<Mentor> getAllTerms();
+    List<Term> getAllTerms();
 }
