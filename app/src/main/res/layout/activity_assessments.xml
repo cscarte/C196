@@ -9,11 +9,12 @@
         android:id="@+id/assessmentLabel"
         android:layout_width="160dp"
         android:layout_height="100dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Assessments"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,4 +32,11 @@
         app:layout_constraintVertical_bias="0.976"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/assessmentsRecyclerView"
+        android:layout_width="412dp"
+        android:layout_height="474dp"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="128dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
