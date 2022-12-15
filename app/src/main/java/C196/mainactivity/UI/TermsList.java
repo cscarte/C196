@@ -25,7 +25,7 @@ public class TermsList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.termsRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.mentorsRecyclerView);
         Repository repository = new Repository(getApplication());
 
         List<Term> termList = repository.getmAllTerms();
