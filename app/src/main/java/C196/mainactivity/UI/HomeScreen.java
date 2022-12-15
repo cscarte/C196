@@ -26,12 +26,12 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void enterCoursesScreen(View view){
-        Intent intent = new Intent(HomeScreen.this, Courses.class);
+        Intent intent = new Intent(HomeScreen.this, CoursesList.class);
         startActivity(intent);
     }
 
     public void enterMentorsScreen(View view){
-        Intent intent = new Intent(HomeScreen.this, Mentors.class);
+        Intent intent = new Intent(HomeScreen.this, MentorsList.class);
         startActivity(intent);
     }
 /**
@@ -42,12 +42,12 @@ public class HomeScreen extends AppCompatActivity {
 */
 
     public void enterTermsScreen(View view){
-        Intent intent = new Intent(HomeScreen.this, Terms.class);
+        Intent intent = new Intent(HomeScreen.this, TermsList.class);
         startActivity(intent);
     }
 
     public void enterAssessmentsScreen(View view){
-        Intent intent = new Intent(HomeScreen.this, Assessments.class);
+        Intent intent = new Intent(HomeScreen.this, AssessmentsList.class);
         startActivity(intent);
     }
 

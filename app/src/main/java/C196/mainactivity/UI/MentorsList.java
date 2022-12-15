@@ -1,12 +1,12 @@
 package C196.mainactivity.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import C196.mainactivity.R;
 
-public class Mentors extends AppCompatActivity {
+public class MentorsList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

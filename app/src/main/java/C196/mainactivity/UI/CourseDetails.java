@@ -1,4 +1,6 @@
 package C196.mainactivity.UI;
 
-public class CourseDetails {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CourseDetails extends AppCompatActivity {
 }

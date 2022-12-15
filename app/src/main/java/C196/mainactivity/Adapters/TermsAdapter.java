@@ -1,4 +1,4 @@
-package C196.mainactivity.UI;
+package C196.mainactivity.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,24 +10,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
+import C196.mainactivity.UI.TermDetails;
 
 public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHolder> {
+    private List<Term> termArrayList = new ArrayList<>();
+    private final Context context;
+    private final LayoutInflater mInflater;
+
     class TermViewHolder extends RecyclerView.ViewHolder {
         private final TextView termsItemView;
 
         private TermViewHolder(View view) {
             super(view);
-            termsItemView = view.findViewById(R.id.textView2);
+            termsItemView = view.findViewById(R.id.termsListTextView);
             view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    final Term current = mTerms.get(position);
+                    final Term current = termArrayList.get(position);
                     Intent intent = new Intent(context, TermDetails.class);
                     intent.putExtra("termID", current.getTermID());
                     intent.putExtra("termTitle", current.getTermTitle());
@@ -39,10 +45,6 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
         }
     }
 
-    private List<Term> mTerms;
-    private final Context context;
-    private final LayoutInflater mInflater;
-
     public TermsAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -51,14 +53,14 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
     @NonNull
     @Override
     public TermsAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.activity_terms_list_item, parent, false);
+        View view = mInflater.inflate(R.layout.activity_terms_list, parent, false);
         return new TermViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TermsAdapter.TermViewHolder holder, int position) {
-        if (mTerms != null) {
-            Term current = mTerms.get(position);
+        if (termArrayList != null) {
+            Term current = termArrayList.get(position);
             String name = current.getTermTitle();
             holder.termsItemView.setText(name);
         } else {
@@ -66,15 +68,15 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
         }
     }
 
-    public void setTerms(List<Term> terms) {
-        mTerms = terms;
-        notifyDataSetChanged();
-    }
-
     @Override
     public int getItemCount() {
-        if (mTerms != null) {
-            return mTerms.size();
+        if (termArrayList != null) {
+            return termArrayList.size();
         } else return 0;
+    }
+
+    public void setTermsArrayList(List<Term> terms) {
+        termArrayList = terms;
+        notifyDataSetChanged();
     }
 }
