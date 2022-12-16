@@ -29,7 +29,7 @@ public class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent(HomeScreen.this, CoursesList.class);
         startActivity(intent);
     }
-
+/**
     public void enterMentorsScreen(View view){
         Intent intent = new Intent(HomeScreen.this, MentorsList.class);
         startActivity(intent);

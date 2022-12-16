@@ -53,7 +53,7 @@ public class MentorsAdapter extends RecyclerView.Adapter<MentorsAdapter.MentorVi
     @NonNull
     @Override
     public MentorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.activity_mentors_list, parent, false);
+        View view = mInflater.inflate(R.layout.activity_courses_list, parent, false);
         return new MentorViewHolder(view);
     }
 
