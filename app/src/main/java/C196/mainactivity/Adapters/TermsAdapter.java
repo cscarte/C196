@@ -27,7 +27,7 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
 
         private TermViewHolder(View view) {
             super(view);
-            termsItemView = view.findViewById(R.id.termsListTextView);
+            termsItemView = view.findViewById(R.id.termsDetailsTextView);
             view.setOnClickListener(new View.OnClickListener() {
 
                 @Override

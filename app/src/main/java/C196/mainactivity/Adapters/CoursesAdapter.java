@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import C196.mainactivity.Entity.Course;
@@ -18,7 +17,7 @@ import C196.mainactivity.R;
 import C196.mainactivity.UI.CourseDetails;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder> {
-    private List<Course> courseArrayList = new ArrayList<>();
+    private List<Course> courseArrayList;
     private final Context context;
     private final LayoutInflater mInflater;
 
@@ -77,7 +76,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
         } else return 0;
     }
 
-    public void setCourseArrayList(List<Course> courses){
+    public void setCourseList(List<Course> courses){
         courseArrayList = courses;
         notifyDataSetChanged();
     }

@@ -27,7 +27,7 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
 
         private AssessmentViewHolder(View view){
             super(view);
-            assessmentsItemView = view.findViewById(R.id.assessmentsTextView);
+            assessmentsItemView = view.findViewById(R.id.assessmentsDetailsTextView);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

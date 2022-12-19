@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import C196.mainactivity.Adapters.CoursesAdapter;
@@ -16,6 +18,7 @@ import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
 public class CoursesList extends AppCompatActivity {
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +28,23 @@ public class CoursesList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.coursesRecyclerView);
-        Repository repository = new Repository(getApplication());
 
+        repository = new Repository(getApplication());
         List<Course> courseList = repository.getmAllCourses();
 
         final CoursesAdapter adapter = new CoursesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
 
-    public void enterCourseDetails(View view){
-        Intent intent = new Intent(CoursesList.this, CourseDetails.class);
-        startActivity(intent);
+        FloatingActionButton floatingActionButton = findViewById(R.id.addCourseDetailsButton);
+        adapter.setCourseList(courseList);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CoursesList.this, CourseDetails.class);
+                startActivity(intent);
+            }
+        });
     }
 }
