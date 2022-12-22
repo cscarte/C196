@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,11 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
     private List<Assessment> assessmentArrayList = new ArrayList<>();
     private final Context context;
     private final LayoutInflater mInflater;
+    private AdapterView.OnItemClickListener listener;
 
     class AssessmentViewHolder extends RecyclerView.ViewHolder{
         private final TextView assessmentsItemView;
+
 
         private AssessmentViewHolder(View view){
             super(view);
@@ -80,5 +83,9 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
     public void setAssessmentArrayList(List<Assessment> assessmentList){
         assessmentArrayList = assessmentList;
         notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListener(View.OnClickListener listener) {
+        this.listener = (AdapterView.OnItemClickListener) listener;
     }
 }

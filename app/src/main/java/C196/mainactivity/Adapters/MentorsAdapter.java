@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import C196.mainactivity.UI.MentorDetails;
 
 public class MentorsAdapter extends RecyclerView.Adapter<MentorsAdapter.MentorViewHolder> {
     private List<Mentor> mentorArrayList = new ArrayList<>();
+    private AdapterView.OnItemClickListener listener;
     private final Context context;
     private final LayoutInflater mInflater;
 
@@ -78,5 +80,9 @@ public class MentorsAdapter extends RecyclerView.Adapter<MentorsAdapter.MentorVi
     public void setMentorArrayList(List<Mentor> mentors) {
         mentorArrayList = mentors;
         notifyDataSetChanged();
+    }
+
+    public void setOnItemClickListenere(AdapterView.OnItemClickListener listener){
+        this.listener = listener;
     }
 }
