@@ -81,8 +81,4 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
         termArrayList = terms;
         notifyDataSetChanged();
     }
-
-    public void setOnItemClickListener(AdapterView.OnItemClickListener listener){
-        this.listener = listener;
-    }
 }

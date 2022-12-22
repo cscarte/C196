@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import C196.mainactivity.Entity.Assessment;
@@ -19,7 +18,8 @@ import C196.mainactivity.R;
 import C196.mainactivity.UI.AssessmentDetails;
 
 public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.AssessmentViewHolder> {
-    private List<Assessment> assessmentArrayList = new ArrayList<>();
+    private List<Assessment> assessmentArrayList;
+    private List<Assessment> mAssessments;
     private final Context context;
     private final LayoutInflater mInflater;
     private AdapterView.OnItemClickListener listener;
@@ -68,6 +68,7 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
         if (assessmentArrayList != null){
             Assessment current = assessmentArrayList.get(position);
             String name = current.getAssessmentTitle();
+            holder.assessmentsItemView.setText(name);
         } else {
             holder.assessmentsItemView.setText("No assessment name set");
         };
@@ -83,9 +84,5 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
     public void setAssessmentArrayList(List<Assessment> assessmentList){
         assessmentArrayList = assessmentList;
         notifyDataSetChanged();
-    }
-
-    public void setOnItemClickListener(View.OnClickListener listener) {
-        this.listener = (AdapterView.OnItemClickListener) listener;
     }
 }

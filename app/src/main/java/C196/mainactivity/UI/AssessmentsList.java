@@ -16,6 +16,7 @@ import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.R;
 
 public class AssessmentsList extends AppCompatActivity {
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +27,21 @@ public class AssessmentsList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.assessmentsRecyclerView);
-        Repository repository = new Repository(getApplication());
+        repository = new Repository(getApplication());
 
         List<Assessment> assessmentList = repository.getmAllAssessments();
 
         final AssessmentsAdapter adapter = new AssessmentsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //List<Assessment> assessmentList = repository.getmAllAssessments();
+
+        adapter.setAssessmentArrayList(assessmentList);
+        //FloatingActionButton floatingActionButton = findViewById(R.id.assessmentAddFloatingButton);
     }
 
-    public void enterAssessmentDetails(View view){
+    public void enterAssessmentDetails(View view) {
         Intent intent = new Intent(AssessmentsList.this, AssessmentDetails.class);
         startActivity(intent);
     }

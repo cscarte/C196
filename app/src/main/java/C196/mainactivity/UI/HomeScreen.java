@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import C196.mainactivity.Database.Repository;
+import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
 
@@ -23,6 +24,12 @@ public class HomeScreen extends AppCompatActivity {
         Repository repository = new Repository(getApplication());
         Term term = new Term(0, "Intro To School", "12/01/22", "12/31/22");
         repository.insert(term);
+    }
+
+    public void SampleAssessmentData(View view){
+        Repository repository = new Repository(getApplication());
+        Assessment assessment = new Assessment(0, "Test Assessment", "11/01/22", "11/15/22", true, 1);
+        repository.insert(assessment);
     }
 
     public void enterCoursesScreen(View view){
