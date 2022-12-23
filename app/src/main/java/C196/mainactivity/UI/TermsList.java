@@ -22,10 +22,11 @@ public class TermsList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_list);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.mentorsRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.termsListRecyclerView);
         Repository repository = new Repository(getApplication());
 
         List<Term> termList = repository.getmAllTerms();

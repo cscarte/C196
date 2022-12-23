@@ -29,7 +29,7 @@ public class MentorsAdapter extends RecyclerView.Adapter<MentorsAdapter.MentorVi
 
         private MentorViewHolder(View view) {
             super(view);
-            mentorsItemView = view.findViewById(R.id.mentorsRecyclerView);
+            mentorsItemView = view.findViewById(R.id.termsListRecyclerView);
             view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -80,9 +80,5 @@ public class MentorsAdapter extends RecyclerView.Adapter<MentorsAdapter.MentorVi
     public void setMentorArrayList(List<Mentor> mentors) {
         mentorArrayList = mentors;
         notifyDataSetChanged();
-    }
-
-    public void setOnItemClickListenere(AdapterView.OnItemClickListener listener){
-        this.listener = listener;
     }
 }

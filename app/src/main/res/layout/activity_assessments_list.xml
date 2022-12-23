@@ -3,20 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addAssessmentDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        android:onClick="enterAssessmentDetails"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        tools:ignore="SpeakableTextPresentCheck" />
+    android:layout_height="wrap_content"
+    tools:context=".UI.AssessmentsList">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="408dp"
@@ -29,15 +17,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/assessmentsRecyclerView"
-            android:layout_width="409dp"
-            android:layout_height="558dp"
-            android:layout_marginBottom="169dp"
-            android:background="@color/teal_200"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addAssessmentDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:onClick="enterAssessmentDetails"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_add"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/assessmentsRecyclerView"
+            android:layout_width="411dp"
+            android:layout_height="643dp"
+            android:background="@color/teal_200"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

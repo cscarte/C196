@@ -35,10 +35,7 @@ public class AssessmentsList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //List<Assessment> assessmentList = repository.getmAllAssessments();
-
         adapter.setAssessmentArrayList(assessmentList);
-        //FloatingActionButton floatingActionButton = findViewById(R.id.assessmentAddFloatingButton);
     }
 
     public void enterAssessmentDetails(View view) {
