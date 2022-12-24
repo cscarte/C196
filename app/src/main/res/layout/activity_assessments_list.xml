@@ -32,11 +32,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/assessmentsRecyclerView"
-            android:layout_width="410dp"
-            android:layout_height="209dp"
-            android:layout_marginTop="240dp"
+            android:layout_width="408dp"
+            android:layout_height="406dp"
+            android:layout_marginTop="136dp"
             android:background="@color/teal_200"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
