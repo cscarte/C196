@@ -29,8 +29,8 @@ public class CoursesList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.coursesRecyclerView);
-
         repository = new Repository(getApplication());
+
         List<Course> courseList = repository.getmAllCourses();
 
         final CoursesAdapter adapter = new CoursesAdapter(this);

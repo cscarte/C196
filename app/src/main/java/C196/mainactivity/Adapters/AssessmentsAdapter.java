@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import C196.mainactivity.Entity.Assessment;
@@ -18,19 +19,17 @@ import C196.mainactivity.R;
 import C196.mainactivity.UI.AssessmentDetails;
 
 public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.AssessmentViewHolder> {
-    private List<Assessment> assessmentArrayList;
-    private List<Assessment> mAssessments;
+    private List<Assessment> assessmentArrayList = new ArrayList<>();
+    private AdapterView.OnItemClickListener listener;
     private final Context context;
     private final LayoutInflater mInflater;
-    private AdapterView.OnItemClickListener listener;
 
-    class AssessmentViewHolder extends RecyclerView.ViewHolder{
+    class AssessmentViewHolder extends RecyclerView.ViewHolder {
         private final TextView assessmentsItemView;
-
 
         private AssessmentViewHolder(View view){
             super(view);
-            assessmentsItemView = view.findViewById(R.id.assessmentsDetailsTextView);
+            assessmentsItemView = view.findViewById(R.id.assessmentsDetailsTextView1);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -59,19 +58,19 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
     @NonNull
     @Override
     public AssessmentsAdapter.AssessmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view  = mInflater.inflate(R.layout.activity_assessments_list, parent, false);
+        View view  = mInflater.inflate(R.layout.activity_assessments_details, parent, false);
         return new AssessmentViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AssessmentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AssessmentsAdapter.AssessmentViewHolder holder, int position) {
         if (assessmentArrayList != null){
-            Assessment current = assessmentArrayList.get(position);
+            Assessment current = assessmentArrayList.get(position);;
             String name = current.getAssessmentTitle();
             holder.assessmentsItemView.setText(name);
         } else {
             holder.assessmentsItemView.setText("No assessment name set");
-        };
+        }
     }
 
     @Override
@@ -81,7 +80,7 @@ public class AssessmentsAdapter extends RecyclerView.Adapter<AssessmentsAdapter.
         } else return 0;
     }
 
-    public void setAssessmentArrayList(List<Assessment> assessmentList){
+    public void setAssessmentList(List<Assessment> assessmentList){
         assessmentArrayList = assessmentList;
         notifyDataSetChanged();
     }

@@ -35,7 +35,7 @@ public class AssessmentsList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter.setAssessmentArrayList(assessmentList);
+        adapter.setAssessmentList(assessmentList);
     }
 
     public void enterAssessmentDetails(View view) {
