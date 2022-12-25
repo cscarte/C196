@@ -39,13 +39,10 @@ public class CoursesList extends AppCompatActivity {
 
         FloatingActionButton floatingActionButton = findViewById(R.id.addCourseDetailsButton);
         adapter.setCourseList(courseList);
+    }
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CoursesList.this, CourseDetails.class);
-                startActivity(intent);
-            }
-        });
+    public void enterCoursesDetails(View view){
+        Intent intent = new Intent(CoursesList.this, CourseDetails.class);
+        startActivity(intent);
     }
 }

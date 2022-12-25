@@ -49,6 +49,15 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".UI.TermDetails"
+            android:exported="false"
+            android:label="Term Details"
+            android:parentActivityName=".UI.TermsList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value=""/>
+        </activity>
+        <activity
             android:name=".UI.CoursesList"
             android:exported="false"
             android:label="Courses"
@@ -56,6 +65,15 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.CourseDetails"
+            android:exported="false"
+            android:label="Course Details"
+            android:parentActivityName=".UI.CoursesList">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value=""/>
         </activity>
         <activity
             android:name=".UI.HomeScreen"

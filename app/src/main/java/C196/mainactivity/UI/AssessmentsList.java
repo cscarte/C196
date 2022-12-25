@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
@@ -35,6 +37,7 @@ public class AssessmentsList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        FloatingActionButton floatingActionButton = findViewById(R.id.addAssessmentDetails);
         adapter.setAssessmentList(assessmentList);
     }
 

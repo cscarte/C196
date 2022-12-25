@@ -2,12 +2,13 @@ package C196.mainactivity.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
 
 public class TermsList extends AppCompatActivity {
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class TermsList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.termsListRecyclerView);
-        Repository repository = new Repository(getApplication());
+        repository = new Repository(getApplication());
 
         List<Term> termList = repository.getmAllTerms();
 
@@ -35,16 +37,12 @@ public class TermsList extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        FloatingActionButton floatingActionButton = findViewById(R.id.termDetailsAddButton);
         adapter.setTermsArrayList(termList);
     }
 
     public void enterTermDetails(View view){
         Intent intent = new Intent(TermsList.this, TermDetails.class);
         startActivity(intent);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu);
-        return false;
     }
 }
