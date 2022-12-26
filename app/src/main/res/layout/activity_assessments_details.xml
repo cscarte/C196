@@ -8,22 +8,27 @@
 
     <TextView
         android:id="@+id/assessmentDetailsNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="131dp"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="76dp"
         android:clickable="false"
         android:text="Assessment Title:"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/assessmentDetailsNamePlaceholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="128dp"
-        android:text="TextView"
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="211dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="76dp"
+        android:ems="10"
+        android:hint="Assessment Title Goes Here"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/assessmentDetailsNameLabel"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
