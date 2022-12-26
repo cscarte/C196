@@ -29,7 +29,7 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
 
         private TermViewHolder(View view) {
             super(view);
-            termsItemView = view.findViewById(R.id.termsDetailsTextView);
+            termsItemView = view.findViewById(R.id.termsRow);
             view.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -55,7 +55,7 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
     @NonNull
     @Override
     public TermsAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.activity_terms_cardview, parent, false);
+        View view = mInflater.inflate(R.layout.activity_terms_row, parent, false);
         return new TermViewHolder(view);
     }
 
