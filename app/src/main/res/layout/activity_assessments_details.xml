@@ -10,8 +10,8 @@
         android:id="@+id/assessmentTitleLabel"
         android:layout_width="120dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="124dp"
         android:clickable="false"
         android:text="Title:"
         android:textSize="16sp"
@@ -22,8 +22,8 @@
         android:id="@+id/editAssessmentTitle"
         android:layout_width="211dp"
         android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="124dp"
         android:ems="10"
         android:hint="Assessment Title"
         android:inputType="textPersonName"
@@ -32,11 +32,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/assessmentDueDate"
+        android:id="@+id/assessmentDueDateLabel"
         android:layout_width="120dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="200dp"
         android:clickable="false"
         android:text="Due Date"
         android:textSize="16sp"
@@ -47,21 +47,8 @@
         android:id="@+id/editAssessmentDueDate"
         android:layout_width="211dp"
         android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="152dp"
-        android:ems="10"
-        android:hint="Assessment Due Date"
-        android:inputType="textPersonName"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/assessmentTitleLabel"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editAssessmentDueDate2"
-        android:layout_width="211dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="200dp"
         android:ems="10"
         android:hint="Assessment Due Date"
         android:inputType="textPersonName"
@@ -70,23 +57,71 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/assessmentDueDate2"
+        android:id="@+id/assessmentGoalDateLabel"
         android:layout_width="120dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="268dp"
         android:clickable="false"
         android:text="Goal Date"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/editAssessmentGoalDate"
+        android:layout_width="211dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="268dp"
+        android:ems="10"
+        android:hint="Assessment Goal Date"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentTitleLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:id="@+id/assessmentDueDate3"
+        android:id="@+id/assessmentGoalDateLabel2"
         android:layout_width="120dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="316dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="340dp"
+        android:clickable="false"
+        android:text="Goal Date Alert"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentIDLabel"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="52dp"
+        android:clickable="false"
+        android:text="Assessment ID:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentIDLabelDisplay"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="52dp"
+        android:clickable="false"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentTypeLabel"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="424dp"
         android:clickable="false"
         android:text="Assessment Type"
         android:textSize="16sp"
@@ -98,18 +133,20 @@
         android:layout_width="209dp"
         android:layout_height="71dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="39dp"
-        app:layout_constraintStart_toEndOf="@+id/assessmentDueDate3"
-        app:layout_constraintTop_toBottomOf="@+id/editAssessmentDueDate2">
+        app:layout_constraintStart_toEndOf="@+id/assessmentTypeLabel"
+        tools:layout_editor_absoluteY="413dp">
 
         <RadioButton
             android:id="@+id/radioObjective"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="276dp"
+            android:layout_marginStart="277dp"
+            android:layout_marginLeft="277dp"
             android:layout_marginTop="316dp"
             android:text="Objective"
-            android:textSize="10dp" />
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioButton
             android:id="@+id/radioPerformance"
@@ -119,6 +156,49 @@
             android:layout_marginTop="316dp"
             android:text="Performance"
             android:textSize="10dp" />
+
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/courseIDLabel"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="516dp"
+        android:clickable="false"
+        android:text="Course ID:"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/courseIDLabelDisplay"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="516dp"
+        android:clickable="false"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveAssessmentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="36dp"
+        android:text="Save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseIDLabelDisplay" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="19dp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentGoalDateLabel2"
+        app:layout_constraintTop_toBottomOf="@+id/editAssessmentGoalDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
