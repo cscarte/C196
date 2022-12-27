@@ -3,32 +3,122 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".UI.AssessmentDetails">
 
     <TextView
-        android:id="@+id/assessmentDetailsNameLabel"
+        android:id="@+id/assessmentTitleLabel"
         android:layout_width="120dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="76dp"
         android:clickable="false"
-        android:text="Assessment Title:"
+        android:text="Title:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editAssessmentTitle"
         android:layout_width="211dp"
         android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="76dp"
         android:ems="10"
-        android:hint="Assessment Title Goes Here"
+        android:hint="Assessment Title"
         android:inputType="textPersonName"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/assessmentDetailsNameLabel"
+        app:layout_constraintStart_toEndOf="@+id/assessmentTitleLabel"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentDueDate"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="152dp"
+        android:clickable="false"
+        android:text="Due Date"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editAssessmentDueDate"
+        android:layout_width="211dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="152dp"
+        android:ems="10"
+        android:hint="Assessment Due Date"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentTitleLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editAssessmentDueDate2"
+        android:layout_width="211dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="220dp"
+        android:ems="10"
+        android:hint="Assessment Due Date"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentTitleLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentDueDate2"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="220dp"
+        android:clickable="false"
+        android:text="Goal Date"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/assessmentDueDate3"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="316dp"
+        android:clickable="false"
+        android:text="Assessment Type"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/assessmentType"
+        android:layout_width="209dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="39dp"
+        app:layout_constraintStart_toEndOf="@+id/assessmentDueDate3"
+        app:layout_constraintTop_toBottomOf="@+id/editAssessmentDueDate2">
+
+        <RadioButton
+            android:id="@+id/radioObjective"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="276dp"
+            android:layout_marginTop="316dp"
+            android:text="Objective"
+            android:textSize="10dp" />
+
+        <RadioButton
+            android:id="@+id/radioPerformance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="168dp"
+            android:layout_marginTop="316dp"
+            android:text="Performance"
+            android:textSize="10dp" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
