@@ -12,28 +12,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import C196.mainactivity.R;
 
 public class AssessmentDetails extends AppCompatActivity {
-    TextView assessmentID;
     EditText assessmentTitle;
-    EditText assessmentStatus;
     EditText assessmentDueDate;
     EditText assessmentGoalDate;
     CheckBox assessmentGoalDateAlert;
     Switch assessmentObjective;
-    TextView courseID;
+
+    String name;
+    String dueDate;
+    String goalDate;
+    int goalDateAlert;
+    int assessmentID;
+    int courseID;
 
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"WrongViewCast"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_details);
 
-        assessmentID = findViewById(R.id.assessmentIDLabelDisplay);
-        assessmentTitle = findViewById(R.id.editAssessmentTitle);
-        assessmentStatus = findViewById(R.id.editAssessmentStatus);
-        assessmentDueDate = findViewById(R.id.editAssessmentDueDate);
-        assessmentGoalDate = findViewById(R.id.editAssessmentGoalDate);
-        assessmentGoalDateAlert = findViewById(R.id.editGoalDateAlert);
-        assessmentObjective = findViewById(R.id.editAssessmentObjective);
-        courseID = findViewById(R.id.courseIDLabelDisplay);
+        assessmentID = getIntent().getIntExtra("assessmentID", -1);
+        courseID = getIntent().getIntExtra("courseID",-1);
+
+        assessmentTitle = findViewById(R.id.assessmentDetailsTitle);
+        name = getIntent().getStringExtra("assessmentTitle");
+        assessmentTitle.setText(name);
+
+        assessmentDueDate = findViewById(R.id.assessmentDetailsDueDate);
+        dueDate = getIntent().getStringExtra("assessmentDueDate");
+        assessmentDueDate.setText(dueDate);
+
+        assessmentGoalDate = findViewById(R.id.assessmentDetailsGoalDate);
+        goalDate = getIntent().getStringExtra("assessmentGoalDate");
+        assessmentGoalDate.setText(goalDate);
+
+        assessmentGoalDateAlert = findViewById(R.id.assessmentDetailsGoalDateAlertCheckBox);
+        goalDateAlert = getIntent().getIntExtra("assessmentObjective", 0);
     }
 }

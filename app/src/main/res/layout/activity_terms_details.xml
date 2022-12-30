@@ -1,46 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/termsDetailsTextView"
-        android:layout_width="160dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="Terms Details"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/termDetailsTermTitle"
-        android:layout_width="172dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="160dp"
-        android:width="100dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Term Title:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/termDetailsTermTitleTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:text="Term Title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/termsStartDate"
-        android:layout_width="169dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="240dp"
-        android:width="100dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/termDetailsTermTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="48dp"
+            android:ems="10"
+            android:hint="Term Title"
+            android:inputType="textPersonName"
+            android:outlineProvider="none"
+            app:layout_constraintStart_toEndOf="@+id/termDetailsTermTitleTextView"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/termDetailsStartDateTextView"
+            android:layout_width="100dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="41dp"
+            android:text="Start Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/termDetailsTermTitleTextView" />
+
+        <EditText
+            android:id="@+id/termDetailsTermStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="132dp"
+            android:ems="10"
+            android:hint="Term Start Date"
+            android:inputType="date"
+            app:layout_constraintStart_toEndOf="@+id/termDetailsStartDateTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/termDetailsEndDateTextView"
+            android:layout_width="100dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="41dp"
+            android:text="End Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/termDetailsStartDateTextView" />
+
+        <EditText
+            android:id="@+id/termDetailsTermEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="216dp"
+            android:ems="10"
+            android:hint="Term End Date"
+            android:inputType="date"
+            app:layout_constraintStart_toEndOf="@+id/termDetailsEndDateTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/termDetailsCourseTextView"
+            android:layout_width="100dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:text="Courses"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/termDetailsEndDateTextView" />
+
+        <ListView
+            android:id="@+id/termDetailsCourseList"
+            android:layout_width="258dp"
+            android:layout_height="393dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/termDetailsCourseTextView"
+            app:layout_constraintTop_toBottomOf="@+id/termDetailsTermEndDate" />
+
+        <Button
+            android:id="@+id/termDetailsSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="178dp"
+            android:layout_marginTop="48dp"
+            android:text="Save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/termDetailsCourseList" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

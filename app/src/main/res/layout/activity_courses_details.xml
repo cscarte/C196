@@ -1,212 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".UI.CourseDetails">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/courseDetailsCourseTitleTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:text="Course Title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseStatusTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="29dp"
+            android:text="Course Status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseTitleTextView" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseStartDateTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="34dp"
+            android:text="Course Start Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseStatusTextView" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseStartDateAlertTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="Course Start Date Alert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseStartDateTextView" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseEndDateTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="50dp"
+            android:text="Course End Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseStartDateAlertTextView" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseEndDateAlertTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Course End Date Alert"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseEndDateTextView" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseNotesTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="42dp"
+            android:text="Course Notes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseEndDateAlertTextView" />
+
+        <Button
+            android:id="@+id/courseDetailsShareNotesButton"
+            android:layout_width="103dp"
+            android:layout_height="67dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="Share Notes"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseNotesTextView" />
+
+        <TextView
+            android:id="@+id/courseDetailsCourseAssessmentsListTextView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="72dp"
+            android:text="Assessments"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsShareNotesButton" />
+
+        <EditText
+            android:id="@+id/courseDetailsCourseTitle"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:hint="Course Title"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseTitleTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/courseDetailsCourseStatus"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="36dp"
+            android:ems="10"
+            android:hint="Course Status"
+            android:inputType="textPersonName"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseStatusTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseTitle" />
+
+        <EditText
+            android:id="@+id/courseDetailsCourseStartDate"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="108dp"
+            android:ems="10"
+            android:hint="Course Start Date"
+            android:inputType="date"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseStatusTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseTitle" />
+
+        <EditText
+            android:id="@+id/courseDetailsCourseEndDate"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="60dp"
+            android:ems="10"
+            android:hint="Course End Date"
+            android:inputType="date"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseEndDateTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseStartDateAlertCheckBox" />
+
+        <CheckBox
+            android:id="@+id/courseDetailsCourseStartDateAlertCheckBox"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseStartDateAlertTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseStartDate" />
 
-            <TextView
-                android:id="@+id/courseDetailIDLabel"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="52dp"
-                android:clickable="false"
-                android:text="Course ID:"
-                android:textSize="16sp" />
+        <CheckBox
+            android:id="@+id/courseDetailsCourseEndDateAlertCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseEndDateAlertTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseEndDate" />
 
-            <TextView
-                android:id="@+id/courseDetailLabelDisplay"
-                android:layout_width="120dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="188dp"
-                android:layout_marginTop="52dp"
-                android:clickable="false"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </ScrollView>
+        <EditText
+            android:id="@+id/courseDetailsCourseNotesMultiLineText"
+            android:layout_width="223dp"
+            android:layout_height="129dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="35dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseNotesTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseEndDateAlertCheckBox" />
 
-    <TextView
-        android:id="@+id/courseDetailsStartDateAlert2"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="420dp"
-        android:clickable="false"
-        android:text="Course End Date Alert"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ListView
+            android:id="@+id/courseDetailsAssessmentsList"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="81dp"
+            app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseAssessmentsListTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseNotesMultiLineText" />
 
-    <TextView
-        android:id="@+id/courseDetailsNotesLabel"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="488dp"
-        android:clickable="false"
-        android:text="Notes"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/courseDetailsAssessmentLabel"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="632dp"
-        android:clickable="false"
-        android:text="Assessments"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/courseDetailsStartDateCheckBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginTop="420dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editCourseDetailsEditCourseStatus"
-        android:layout_width="184dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="188dp"
-        android:layout_marginTop="116dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Course Status"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/courseDetailStartDateLabel"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="208dp"
-        android:clickable="false"
-        android:text="Course Start Date:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/courseDetailsStartDateAlert"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="272dp"
-        android:clickable="false"
-        android:text="Course Start Date Alert:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/courseDetailStatusLabel"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        android:clickable="false"
-        android:text="Course Status:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/courseDetailEndDateLabel"
-        android:layout_width="120dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="356dp"
-        android:clickable="false"
-        android:text="Course End Date:"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/courseDetailsStartDateCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginTop="272dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/courseDetailsEditNotes"
-        android:layout_width="208dp"
-        android:layout_height="101dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="23dp"
-        android:ems="10"
-        android:inputType="textLongMessage"
-        app:layout_constraintStart_toEndOf="@+id/courseDetailsNotesLabel"
-        app:layout_constraintTop_toBottomOf="@+id/courseDetailsStartDateCheckBox2" />
-
-    <EditText
-        android:id="@+id/courseDetailsEditStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:hint="MM/DD/YYYY"
-        android:inputType="date"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@+id/courseDetailStartDateLabel"
-        app:layout_constraintTop_toBottomOf="@+id/editCourseDetailsEditCourseStatus" />
-
-    <EditText
-        android:id="@+id/courseDetailsEditEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="MM/DD/YYYY"
-        android:inputType="date"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@+id/courseDetailEndDateLabel"
-        app:layout_constraintTop_toBottomOf="@+id/courseDetailsStartDateCheckBox" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="15dp"
-        android:text="Share Notes"
-        android:textSize="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseDetailsNotesLabel" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/courseDetailsAssessmentList"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="34dp"
-        app:layout_constraintStart_toEndOf="@+id/courseDetailsAssessmentLabel"
-        app:layout_constraintTop_toBottomOf="@+id/courseDetailsEditNotes" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/courseDetailsSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="168dp"
+            android:layout_marginTop="96dp"
+            android:text="Save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsAssessmentsList" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
