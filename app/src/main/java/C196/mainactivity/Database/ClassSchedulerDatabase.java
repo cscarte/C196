@@ -15,7 +15,7 @@ import C196.mainactivity.Entity.Course;
 import C196.mainactivity.Entity.Mentor;
 import C196.mainactivity.Entity.Term;
 
-@Database(entities = {Assessment.class, Course.class, Mentor.class, Term.class}, version = 2, exportSchema = false)
+@Database(entities = {Assessment.class, Course.class, Mentor.class, Term.class}, version = 3, exportSchema = false)
 public abstract class ClassSchedulerDatabase extends RoomDatabase {
 
     public abstract AssessmentDAO assessmentDAO();

@@ -61,10 +61,15 @@
             android:id="@+id/assessmentDetailsAssessmentTypeSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="136dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="28dp"
+            android:elegantTextHeight="false"
             android:minWidth="48dp"
             android:minHeight="48dp"
+            android:showText="true"
+            android:text="Type: "
+            android:textOff="P"
+            android:textOn="O"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypeTextView"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsAssessmentTypeObjectiveTextView" />
 

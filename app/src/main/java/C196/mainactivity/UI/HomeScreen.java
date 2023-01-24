@@ -25,7 +25,7 @@ public class HomeScreen extends AppCompatActivity {
         Repository repository = new Repository(getApplication());
         Term term = new Term(0, "Intro To School", "12/01/22", "12/31/22");
         Course course = new Course(0, "Sample course", "In-progress", "12/01/2022", "12/30/2022", "Sample course notes");
-        Assessment assessment = new Assessment(0, "Sample Assessment", "12/23/2022", "12/30/2022", true, 1);
+        Assessment assessment = new Assessment(0, "Sample Assessment", "12/23/2022", "12/30/2022", true, false, 1);
         repository.insert(term);
         repository.insert(assessment);
         repository.insert(course);
@@ -33,7 +33,7 @@ public class HomeScreen extends AppCompatActivity {
 
     public void SampleAssessmentData(View view){
         Repository repository = new Repository(getApplication());
-        Assessment assessment = new Assessment(0, "Test Assessment", "11/01/22", "11/15/22", true, 1);
+        Assessment assessment = new Assessment(0, "Test Assessment", "11/01/22", "11/15/22", true, false , 1);
         repository.insert(assessment);
     }
 

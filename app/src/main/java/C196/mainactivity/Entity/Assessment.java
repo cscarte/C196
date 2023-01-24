@@ -11,9 +11,19 @@ public class Assessment {
     private String assessmentDueDate;
     private String assessmentGoalDate;
     private boolean assessmentObjective;
+
+    public boolean isAssessmentGoalDateAlert() {
+        return assessmentGoalDateAlert;
+    }
+
+    public void setAssessmentGoalDateAlert(boolean assessmentGoalDateAlert) {
+        this.assessmentGoalDateAlert = assessmentGoalDateAlert;
+    }
+
+    private boolean assessmentGoalDateAlert;
     private int courseID;
 
-    public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentObjective, int courseID) {
+    public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentGoalDateAlert, boolean assessmentObjective, int courseID) {
         this.assessmentID = assessmentID;
         this.assessmentTitle = assessmentTitle;
         this.assessmentDueDate = assessmentDueDate;
@@ -75,9 +85,10 @@ public class Assessment {
         return "Assessment{" +
                 "assessmentID=" + assessmentID +
                 ", assessmentTitle='" + assessmentTitle + '\'' +
-                ", assessmentDueDate=" + assessmentDueDate +
-                ", assessmentGoalDate=" + assessmentGoalDate +
+                ", assessmentDueDate='" + assessmentDueDate + '\'' +
+                ", assessmentGoalDate='" + assessmentGoalDate + '\'' +
                 ", assessmentObjective=" + assessmentObjective +
+                ", assessmentGoalDateAlert=" + assessmentGoalDateAlert +
                 ", courseID=" + courseID +
                 '}';
     }
