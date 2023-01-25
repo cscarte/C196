@@ -1,14 +1,24 @@
 package C196.mainactivity.UI;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
 
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
@@ -16,14 +26,16 @@ import C196.mainactivity.R;
 
 public class AssessmentDetails extends AppCompatActivity {
     EditText assessmentTitle;
-    EditText assessmentDueDate;
-    EditText assessmentGoalDate;
+    TextView assessmentDueDate;
+    TextView assessmentGoalDate;
     CheckBox assessmentGoalDateAlert;
     Switch assessmentObjectiveSwitch;
 
     String name;
     String dueDate;
+    private DatePickerDialog.OnDateSetListener startDateListener;
     String goalDate;
+    private DatePickerDialog.OnDateSetListener endDateListener;
     boolean goalDateAlert;
     boolean assessmentObjectiveBooleanValue;
 
@@ -47,6 +59,30 @@ public class AssessmentDetails extends AppCompatActivity {
         assessmentDueDate = findViewById(R.id.assessmentDetailsDueDate);
         dueDate = getIntent().getStringExtra("assessmentDueDate");
         assessmentDueDate.setText(dueDate);
+        assessmentDueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AssessmentDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener,year, month, day);
+
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                datePickerDialog.show();
+            }
+        });
+
+        startDateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+
+                String textViewDueDate = month + "/" + day + "/" + year;
+                assessmentDueDate.setText(textViewDueDate);
+            }
+        };
 
         assessmentGoalDate = findViewById(R.id.assessmentDetailsGoalDate);
         goalDate = getIntent().getStringExtra("assessmentGoalDate");
