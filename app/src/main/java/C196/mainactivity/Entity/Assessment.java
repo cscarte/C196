@@ -10,17 +10,8 @@ public class Assessment {
     private String assessmentTitle;
     private String assessmentDueDate;
     private String assessmentGoalDate;
-    private boolean assessmentObjective;
-
-    public boolean isAssessmentGoalDateAlert() {
-        return assessmentGoalDateAlert;
-    }
-
-    public void setAssessmentGoalDateAlert(boolean assessmentGoalDateAlert) {
-        this.assessmentGoalDateAlert = assessmentGoalDateAlert;
-    }
-
     private boolean assessmentGoalDateAlert;
+    private boolean assessmentObjective;
     private int courseID;
 
     public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentGoalDateAlert, boolean assessmentObjective, int courseID) {
@@ -28,8 +19,17 @@ public class Assessment {
         this.assessmentTitle = assessmentTitle;
         this.assessmentDueDate = assessmentDueDate;
         this.assessmentGoalDate = assessmentGoalDate;
+        this.assessmentGoalDateAlert = assessmentGoalDateAlert;
         this.assessmentObjective = assessmentObjective;
         this.courseID = courseID;
+    }
+
+    public boolean isAssessmentGoalDateAlert() {
+        return assessmentGoalDateAlert;
+    }
+
+    public void setAssessmentGoalDateAlert(boolean assessmentGoalDateAlert) {
+        this.assessmentGoalDateAlert = assessmentGoalDateAlert;
     }
 
     public int getAssessmentID() {

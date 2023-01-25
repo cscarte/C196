@@ -33,7 +33,7 @@ public class AssessmentsList extends AppCompatActivity {
 
         List<Assessment> assessmentList = repository.getmAllAssessments();
 
-        final AssessmentsAdapter adapter = new AssessmentsAdapter(this);
+        AssessmentsAdapter adapter = new AssessmentsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
