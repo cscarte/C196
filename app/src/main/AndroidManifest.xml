@@ -25,7 +25,8 @@
             android:name=".UI.AssessmentsList"
             android:exported="false"
             android:label="Assessments"
-            android:parentActivityName=".UI.HomeScreen">
+            android:parentActivityName=".UI.HomeScreen"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -34,7 +35,8 @@
             android:name=".UI.AssessmentDetails"
             android:exported="false"
             android:label="Assessment Details"
-            android:parentActivityName=".UI.AssessmentsList">
+            android:parentActivityName=".UI.AssessmentsList"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -43,7 +45,8 @@
             android:name=".UI.TermsList"
             android:exported="false"
             android:label="Terms"
-            android:parentActivityName=".UI.HomeScreen">
+            android:parentActivityName=".UI.HomeScreen"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -52,7 +55,8 @@
             android:name=".UI.TermDetails"
             android:exported="false"
             android:label="Term Details"
-            android:parentActivityName=".UI.TermsList">
+            android:parentActivityName=".UI.TermsList"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value=""/>
@@ -61,7 +65,8 @@
             android:name=".UI.CoursesList"
             android:exported="false"
             android:label="Courses"
-            android:parentActivityName=".UI.HomeScreen">
+            android:parentActivityName=".UI.HomeScreen"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -70,7 +75,8 @@
             android:name=".UI.CourseDetails"
             android:exported="false"
             android:label="Course Details"
-            android:parentActivityName=".UI.CoursesList">
+            android:parentActivityName=".UI.CoursesList"
+            android:noHistory="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value=""/>

@@ -36,6 +36,7 @@ public class AssessmentsList extends AppCompatActivity {
         AssessmentsAdapter adapter = new AssessmentsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.notifyDataSetChanged();
 
         FloatingActionButton floatingActionButton = findViewById(R.id.addAssessmentDetails);
         adapter.setAssessmentList(assessmentList);
@@ -43,6 +44,7 @@ public class AssessmentsList extends AppCompatActivity {
 
     public void enterAssessmentDetails(View view) {
         Intent intent = new Intent(AssessmentsList.this, AssessmentDetails.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

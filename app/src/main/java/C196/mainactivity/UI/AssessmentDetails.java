@@ -1,6 +1,7 @@
 package C196.mainactivity.UI;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -128,7 +129,7 @@ public class AssessmentDetails extends AppCompatActivity {
                     assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert, assessmentObjectiveBooleanValue, courseID);
                     repository.update(assessment);
 
-
+                    onBackPressed();
                 }
             }
         });
@@ -141,5 +142,12 @@ public class AssessmentDetails extends AppCompatActivity {
             assessmentObjectiveBooleanValue = false;
         }
         return assessmentObjectiveBooleanValue;
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(this, AssessmentsList.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
