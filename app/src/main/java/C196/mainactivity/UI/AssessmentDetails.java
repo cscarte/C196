@@ -58,6 +58,7 @@ public class AssessmentDetails extends AppCompatActivity {
         dueDate = getIntent().getStringExtra("assessmentDueDate");
         assessmentDueDate.setText(dueDate);
         assessmentDueDate.setOnClickListener(new View.OnClickListener() {
+            //Create and populate date picker menu when clicking on the due date
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
@@ -86,6 +87,7 @@ public class AssessmentDetails extends AppCompatActivity {
         goalDate = getIntent().getStringExtra("assessmentGoalDate");
         assessmentGoalDate.setText(goalDate);
         assessmentGoalDate.setOnClickListener(new View.OnClickListener() {
+            //Create and populate date picker menu when clicking on the goal date
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
@@ -110,9 +112,17 @@ public class AssessmentDetails extends AppCompatActivity {
             }
         };
 
-
         assessmentGoalDateAlert = findViewById(R.id.assessmentDetailsGoalDateAlertCheckBox);
-        goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDate", false);
+        goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
+        if (goalDateAlert == true){
+            assessmentGoalDateAlert.setChecked(true);
+        }
+
+        assessmentObjectiveSwitch = findViewById(R.id.assessmentDetailsAssessmentTypeSwitch);
+        assessmentObjectiveBooleanValue = getIntent().getBooleanExtra("assessmentObjective", false);
+        if (assessmentObjectiveBooleanValue == true){
+            assessmentObjectiveSwitch.setChecked(true);
+        }
 
         Repository repository = new Repository(getApplication());
 
@@ -121,12 +131,12 @@ public class AssessmentDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (assessmentID == -1) {
-                    assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert, assessmentObjectiveBooleanValue, courseID);
+                    assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), courseID);
                     repository.insert(assessment);
 
                     onBackPressed();
                 } else {
-                    assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert, assessmentObjectiveBooleanValue, courseID);
+                    assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), courseID);
                     repository.update(assessment);
 
                     onBackPressed();
