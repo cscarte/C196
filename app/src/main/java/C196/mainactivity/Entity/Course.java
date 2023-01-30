@@ -12,14 +12,44 @@ public class Course {
     private String courseStartDate;
     private String courseEndDate;
     private String courseShareNotes;
+    private String courseInstructorName;
+    private String courseInstructorPhone;
+    private String courseInstructorEmail;
 
-    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes) {
+    public String getCourseInstructorName() {
+        return courseInstructorName;
+    }
+
+    public void setCourseInstructorName(String courseInstructorName) {
+        this.courseInstructorName = courseInstructorName;
+    }
+
+    public String getCourseInstructorPhone() {
+        return courseInstructorPhone;
+    }
+
+    public void setCourseInstructorPhone(String courseInstructorPhone) {
+        this.courseInstructorPhone = courseInstructorPhone;
+    }
+
+    public String getCourseInstructorEmail() {
+        return courseInstructorEmail;
+    }
+
+    public void setCourseInstructorEmail(String courseInstructorEmail) {
+        this.courseInstructorEmail = courseInstructorEmail;
+    }
+
+    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStatus = courseStatus;
         this.courseStartDate = courseStartDate;
         this.courseEndDate = courseEndDate;
         this.courseShareNotes = courseShareNotes;
+        this.courseInstructorName = courseInstructorName;
+        this.courseInstructorPhone = courseInstructorPhone;
+        this.courseInstructorEmail = courseInstructorEmail;
     }
 
     public int getCourseID() {
@@ -76,9 +106,12 @@ public class Course {
                 "courseID=" + courseID +
                 ", courseName='" + courseName + '\'' +
                 ", courseStatus='" + courseStatus + '\'' +
-                ", courseStartDate=" + courseStartDate +
-                ", courseEndDate=" + courseEndDate +
+                ", courseStartDate='" + courseStartDate + '\'' +
+                ", courseEndDate='" + courseEndDate + '\'' +
                 ", courseShareNotes='" + courseShareNotes + '\'' +
+                ", courseInstructorName='" + courseInstructorName + '\'' +
+                ", courseInstructorPhone='" + courseInstructorPhone + '\'' +
+                ", courseInstructorEmail='" + courseInstructorEmail + '\'' +
                 '}';
     }
 
