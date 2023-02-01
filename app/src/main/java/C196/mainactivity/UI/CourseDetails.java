@@ -22,6 +22,10 @@ import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
+/** Add drop down menu for course status
+ * Add share notes feature
+ * Add checkbox logic
+*/
 public class CourseDetails extends AppCompatActivity {
     EditText courseName;
     TextView courseStatus;
@@ -34,7 +38,8 @@ public class CourseDetails extends AppCompatActivity {
     EditText courseInstructorPhone;
     EditText courseInstructorEmail;
 
-    Button  courseShareNotesButton;
+
+    Button courseShareNotesButton;
     Button courseSaveButton;
 
 
@@ -49,6 +54,8 @@ public class CourseDetails extends AppCompatActivity {
     String instructorName;
     String instructorPhone;
     String instructorEmail;
+    boolean startDateAlert;
+    boolean endDateAlert;
 
     int courseID;
     int assessmentID;
@@ -103,6 +110,19 @@ public class CourseDetails extends AppCompatActivity {
             }
         };
 
+        courseStartDateAlert = findViewById(R.id.courseDetailsCourseStartDateAlertCheckBox);
+        startDateAlert = getIntent().getBooleanExtra("courseStartDateAlert",false);
+        if (startDateAlert == true){
+            courseStartDateAlert.setChecked(true);
+        }
+
+        courseEndDateAlert = findViewById(R.id.courseDetailsCourseEndDateAlertCheckBox);
+        endDateAlert = getIntent().getBooleanExtra("courseEndDateAlert",false);
+        if (endDateAlert == true){
+            courseEndDateAlert.setChecked(true);
+        }
+
+
         courseEndDate = findViewById(R.id.courseDetailsCourseEndDate);
         endDate = getIntent().getStringExtra("courseEndDate");
         courseEndDate.setText(endDate);
@@ -153,17 +173,17 @@ public class CourseDetails extends AppCompatActivity {
         Repository repository = new Repository(getApplication());
 
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
-        // Add drop down menu for course status
+
         courseSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (courseID == -1){
-                    course = new Course(0, courseName.getText().toString(), courseStatus.getText().toString(), courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString());
+                    course = new Course(0, courseName.getText().toString(), courseStatus.getText().toString(), courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
                     repository.insert(course);
 
                     onBackPressed();
                 } else {
-                    course = new Course(courseID, courseName.getText().toString(), courseStatus.getText().toString(), courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString());
+                    course = new Course(courseID, courseName.getText().toString(), courseStatus.getText().toString(), courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
                     repository.update(course);
 
                     onBackPressed();

@@ -15,6 +15,8 @@ public class Course {
     private String courseInstructorName;
     private String courseInstructorPhone;
     private String courseInstructorEmail;
+    private Boolean courseStartDateAlert;
+    private Boolean courseEndDateAlert;
 
     public String getCourseInstructorName() {
         return courseInstructorName;
@@ -40,7 +42,7 @@ public class Course {
         this.courseInstructorEmail = courseInstructorEmail;
     }
 
-    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail) {
+    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, Boolean courseStartDateAlert, Boolean courseEndDateAlert) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStatus = courseStatus;
@@ -50,6 +52,8 @@ public class Course {
         this.courseInstructorName = courseInstructorName;
         this.courseInstructorPhone = courseInstructorPhone;
         this.courseInstructorEmail = courseInstructorEmail;
+        this.courseStartDateAlert = courseStartDateAlert;
+        this.courseEndDateAlert = courseEndDateAlert;
     }
 
     public int getCourseID() {
@@ -100,6 +104,22 @@ public class Course {
         this.courseShareNotes = courseShareNotes;
     }
 
+    public Boolean getCourseStartDateAlert() {
+        return courseStartDateAlert;
+    }
+
+    public void setCourseStartDateAlert(Boolean courseStartDateAlert) {
+        this.courseStartDateAlert = courseStartDateAlert;
+    }
+
+    public Boolean getCourseEndDateAlert() {
+        return courseEndDateAlert;
+    }
+
+    public void setCourseEndDateAlert(Boolean courseEndDateAlert) {
+        this.courseEndDateAlert = courseEndDateAlert;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -112,6 +132,8 @@ public class Course {
                 ", courseInstructorName='" + courseInstructorName + '\'' +
                 ", courseInstructorPhone='" + courseInstructorPhone + '\'' +
                 ", courseInstructorEmail='" + courseInstructorEmail + '\'' +
+                ", courseStartDateAlert=" + courseStartDateAlert +
+                ", courseEndDateAlert=" + courseEndDateAlert +
                 '}';
     }
 
