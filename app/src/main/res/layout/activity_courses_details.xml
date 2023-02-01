@@ -114,7 +114,7 @@
             app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseTitleTextView"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <TextView
             android:id="@+id/courseDetailsCourseStatus"
             android:layout_width="200dp"
             android:layout_height="48dp"
@@ -126,7 +126,7 @@
             app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseStatusTextView"
             app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseTitle" />
 
-        <EditText
+        <TextView
             android:id="@+id/courseDetailsCourseStartDate"
             android:layout_width="200dp"
             android:layout_height="48dp"
@@ -193,10 +193,76 @@
             android:id="@+id/courseDetailsSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="168dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginStart="180dp"
+            android:layout_marginTop="109dp"
             android:text="Save"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCourseInstructorEmail" />
+
+        <TextView
+            android:id="@+id/courseInstructorNameTextField"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="360dp"
+            android:text="Course Instructor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseAssessmentsListTextView" />
+
+        <TextView
+            android:id="@+id/courseInstructorPhoneTextField"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="40dp"
+            android:text="Instructor Phone Number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseInstructorNameTextField" />
+
+        <TextView
+            android:id="@+id/courseInstructorEmailTextField"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="132dp"
+            android:text="Instructor Email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseInstructorNameTextField" />
+
+        <EditText
+            android:id="@+id/editTextCourseInstructorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="105dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            app:layout_constraintStart_toEndOf="@+id/courseInstructorNameTextField"
             app:layout_constraintTop_toBottomOf="@+id/courseDetailsAssessmentsList" />
+
+        <EditText
+            android:id="@+id/editTextCourseInstructorPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Phone Number"
+            app:layout_constraintStart_toEndOf="@+id/courseInstructorPhoneTextField"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCourseInstructorName" />
+
+        <EditText
+            android:id="@+id/editTextCourseInstructorEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="45dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Email"
+            app:layout_constraintStart_toEndOf="@+id/courseInstructorEmailTextField"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCourseInstructorPhone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
