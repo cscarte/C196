@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,6 @@ import C196.mainactivity.UI.CourseDetails;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder> {
     private List<Course> courseArrayList = new ArrayList<>();
-    private AdapterView.OnItemClickListener listener;
     private final Context context;
     private final LayoutInflater mInflater;
 

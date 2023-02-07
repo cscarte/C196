@@ -36,9 +36,9 @@ public class CoursesList extends AppCompatActivity {
         final CoursesAdapter adapter = new CoursesAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.setCourseList(courseList);
 
         FloatingActionButton floatingActionButton = findViewById(R.id.addCourseDetailsButton);
-        adapter.setCourseList(courseList);
     }
 
     public void enterCoursesDetails(View view){

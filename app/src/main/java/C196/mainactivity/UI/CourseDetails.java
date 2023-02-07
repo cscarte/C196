@@ -15,10 +15,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Calendar;
+import java.util.List;
 
+import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
+import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
@@ -69,6 +74,7 @@ public class CourseDetails extends AppCompatActivity {
     @SuppressLint("WrongViewCast")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Repository repository = new Repository(getApplication());
         setContentView(R.layout.activity_courses_details);
 
         courseID = getIntent().getIntExtra("courseID", -1);
@@ -152,6 +158,16 @@ public class CourseDetails extends AppCompatActivity {
         };
 
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
+        List<Assessment> assessmentList = repository.getmAllAssessments();
+
+        final AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
+        recyclerViewAssessments.setAdapter(assessmentsAdapter);
+        recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
+        assessmentsAdapter.setAssessmentList(assessmentList);
+
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
@@ -170,7 +186,7 @@ public class CourseDetails extends AppCompatActivity {
         courseInstructorEmail.setText(instructorEmail);
 
 
-        Repository repository = new Repository(getApplication());
+
 
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
 
