@@ -88,8 +88,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         name = getIntent().getStringExtra("courseName");
         courseName.setText(name);
 
-        courseStatus = findViewById(R.id.courseDetailsCourseStatus);
-        status = getIntent().getStringExtra("courseStatus");
+
 
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
         startDate = getIntent().getStringExtra("courseStartDate");
@@ -189,12 +188,28 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         instructorEmail = getIntent().getStringExtra("courseInstructorEmail");
         courseInstructorEmail.setText(instructorEmail);
 
+        courseStatus = findViewById(R.id.courseDetailsCourseStatus);
+        status = getIntent().getStringExtra("courseStatus");
+
         Spinner spinnerCourseStatus = findViewById(R.id.courseDetailsCourseStatus);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.courseStatus, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCourseStatus.setAdapter(adapter);
         spinnerCourseStatus.setOnItemSelectedListener(this);
-        //String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
+
+        if (status.equals("In progress")){
+            spinnerCourseStatus.setSelection(0);
+        } else {
+            if (status.equals("Completed")) {
+                spinnerCourseStatus.setSelection(1);
+            } else {
+                if (status.equals("Dropped")) {
+                    spinnerCourseStatus.setSelection(2);
+                } else {
+                    spinnerCourseStatus.setSelection(3);
+                }
+            }
+        }
 
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
 
@@ -226,8 +241,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String text = adapterView.getItemAtPosition(i).toString();
-        //Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
