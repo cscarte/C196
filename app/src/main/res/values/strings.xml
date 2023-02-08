@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MainActivity</string>
+    
+    <string-array name="courseStatus">
+        <item>In progress</item>
+        <item>Completed</item>
+        <item>Dropped</item>
+        <item>Planned to take</item>
+    </string-array>
 </resources>

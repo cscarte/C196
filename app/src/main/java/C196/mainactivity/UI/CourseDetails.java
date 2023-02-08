@@ -8,11 +8,15 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,9 +35,9 @@ import C196.mainactivity.R;
  * Add share notes feature
  * Add checkbox logic
 */
-public class CourseDetails extends AppCompatActivity {
+public class CourseDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText courseName;
-    TextView courseStatus;
+    Spinner courseStatus;
     TextView courseStartDate;
     CheckBox courseStartDateAlert;
     TextView courseEndDate;
@@ -86,7 +90,6 @@ public class CourseDetails extends AppCompatActivity {
 
         courseStatus = findViewById(R.id.courseDetailsCourseStatus);
         status = getIntent().getStringExtra("courseStatus");
-        courseStatus.setText(status);
 
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
         startDate = getIntent().getStringExtra("courseStartDate");
@@ -160,6 +163,7 @@ public class CourseDetails extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /**
         RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
         List<Assessment> assessmentList = repository.getmAllAssessments();
 
@@ -167,7 +171,7 @@ public class CourseDetails extends AppCompatActivity {
         recyclerViewAssessments.setAdapter(assessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
         assessmentsAdapter.setAssessmentList(assessmentList);
-
+*/
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
@@ -185,21 +189,26 @@ public class CourseDetails extends AppCompatActivity {
         instructorEmail = getIntent().getStringExtra("courseInstructorEmail");
         courseInstructorEmail.setText(instructorEmail);
 
-
-
+        Spinner spinnerCourseStatus = findViewById(R.id.courseDetailsCourseStatus);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.courseStatus, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCourseStatus.setAdapter(adapter);
+        spinnerCourseStatus.setOnItemSelectedListener(this);
+        //String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
 
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
 
         courseSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
                 if (courseID == -1){
-                    course = new Course(0, courseName.getText().toString(), courseStatus.getText().toString(), courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
+                    course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
                     repository.insert(course);
 
                     onBackPressed();
                 } else {
-                    course = new Course(courseID, courseName.getText().toString(), courseStatus.getText().toString(), courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
+                    course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
                     repository.update(course);
 
                     onBackPressed();
@@ -213,5 +222,16 @@ public class CourseDetails extends AppCompatActivity {
         Intent intent = new Intent(this, CoursesList.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String text = adapterView.getItemAtPosition(i).toString();
+        //Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
