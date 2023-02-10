@@ -47,6 +47,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     EditText courseInstructorPhone;
     EditText courseInstructorEmail;
 
+    Repository repository;
 
     Button courseShareNotesButton;
     Button courseSaveButton;
@@ -78,7 +79,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @SuppressLint("WrongViewCast")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Repository repository = new Repository(getApplication());
+        repository = new Repository(getApplication());
         setContentView(R.layout.activity_courses_details);
 
         courseID = getIntent().getIntExtra("courseID", -1);
@@ -162,15 +163,15 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /**
+        //Cannot cast AssessmentsAdapter to a ListAdapter
         RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
         List<Assessment> assessmentList = repository.getmAllAssessments();
 
-        final AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
+        AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
         recyclerViewAssessments.setAdapter(assessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
         assessmentsAdapter.setAssessmentList(assessmentList);
-*/
+
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
