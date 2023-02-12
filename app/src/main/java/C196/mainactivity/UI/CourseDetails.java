@@ -31,10 +31,11 @@ import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
-/** Add drop down menu for course status
+/**
+ * Add drop down menu for course status
  * Add share notes feature
  * Add checkbox logic
-*/
+ */
 public class CourseDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText courseName;
     Spinner courseStatus;
@@ -90,7 +91,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseName.setText(name);
 
 
-
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
         startDate = getIntent().getStringExtra("courseStartDate");
         courseStartDate.setText(startDate);
@@ -120,14 +120,14 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         };
 
         courseStartDateAlert = findViewById(R.id.courseDetailsCourseStartDateAlertCheckBox);
-        startDateAlert = getIntent().getBooleanExtra("courseStartDateAlert",false);
-        if (startDateAlert == true){
+        startDateAlert = getIntent().getBooleanExtra("courseStartDateAlert", false);
+        if (startDateAlert == true) {
             courseStartDateAlert.setChecked(true);
         }
 
         courseEndDateAlert = findViewById(R.id.courseDetailsCourseEndDateAlertCheckBox);
-        endDateAlert = getIntent().getBooleanExtra("courseEndDateAlert",false);
-        if (endDateAlert == true){
+        endDateAlert = getIntent().getBooleanExtra("courseEndDateAlert", false);
+        if (endDateAlert == true) {
             courseEndDateAlert.setChecked(true);
         }
 
@@ -198,16 +198,18 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         spinnerCourseStatus.setAdapter(adapter);
         spinnerCourseStatus.setOnItemSelectedListener(this);
 
-        if (status.equals("In progress")){
-            spinnerCourseStatus.setSelection(0);
-        } else {
-            if (status.equals("Completed")) {
-                spinnerCourseStatus.setSelection(1);
+        if (status != null) {
+            if (status.equals("In progress")) {
+                spinnerCourseStatus.setSelection(0);
             } else {
-                if (status.equals("Dropped")) {
-                    spinnerCourseStatus.setSelection(2);
+                if (status.equals("Completed")) {
+                    spinnerCourseStatus.setSelection(1);
                 } else {
-                    spinnerCourseStatus.setSelection(3);
+                    if (status.equals("Dropped")) {
+                        spinnerCourseStatus.setSelection(2);
+                    } else {
+                        spinnerCourseStatus.setSelection(3);
+                    }
                 }
             }
         }
@@ -218,23 +220,25 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
                 String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
-                if (courseID == -1){
+                if (courseID == -1 && courseName != null && name != null) {
                     course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
                     repository.insert(course);
 
                     onBackPressed();
                 } else {
-                    course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
-                    repository.update(course);
+                    if (name != null && courseName != null) {
+                        course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
+                        repository.update(course);
 
-                    onBackPressed();
+                        onBackPressed();
+                    }
                 }
             }
         });
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(this, CoursesList.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
