@@ -16,25 +16,26 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import C196.mainactivity.Adapters.AssessmentsAdapter;
+import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
-/** Add drop down menu for course status
+/**
+ * Add drop down menu for course status
  * Add share notes feature
  * Add checkbox logic
-*/
+ */
 public class CourseDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText courseName;
     Spinner courseStatus;
@@ -71,6 +72,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     int assessmentID;
     Course course;
 
+    List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
+
     @Override
     public ComponentName getComponentName() {
         return super.getComponentName();
@@ -88,7 +91,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseName = findViewById(R.id.courseDetailsCourseTitle);
         name = getIntent().getStringExtra("courseName");
         courseName.setText(name);
-
 
 
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
@@ -120,14 +122,14 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         };
 
         courseStartDateAlert = findViewById(R.id.courseDetailsCourseStartDateAlertCheckBox);
-        startDateAlert = getIntent().getBooleanExtra("courseStartDateAlert",false);
-        if (startDateAlert == true){
+        startDateAlert = getIntent().getBooleanExtra("courseStartDateAlert", false);
+        if (startDateAlert == true) {
             courseStartDateAlert.setChecked(true);
         }
 
         courseEndDateAlert = findViewById(R.id.courseDetailsCourseEndDateAlertCheckBox);
-        endDateAlert = getIntent().getBooleanExtra("courseEndDateAlert",false);
-        if (endDateAlert == true){
+        endDateAlert = getIntent().getBooleanExtra("courseEndDateAlert", false);
+        if (endDateAlert == true) {
             courseEndDateAlert.setChecked(true);
         }
 
@@ -161,16 +163,20 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         };
 
 
+        setContentView(R.layout.activity_courses_details_assessmentlist);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Cannot cast AssessmentsAdapter to a ListAdapter
-        RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
-        List<Assessment> assessmentList = repository.getmAllAssessments();
+        courseDetailsAssessmentList = repository.getmAllAssessments();
 
-        AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
+        RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
+        /**
+         * Work on the CourseDetailsAssessmentAdapter first before writing this section.
+        CourseDetailsAssessmentsAdapter assessmentsAdapter = new CourseDetailsAssessmentsAdapter(this);
+
         recyclerViewAssessments.setAdapter(assessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
-        assessmentsAdapter.setAssessmentList(assessmentList);
+        assessmentsAdapter.setAssessmentArrayList(assessmentList);
+*/
 
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
@@ -198,16 +204,18 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         spinnerCourseStatus.setAdapter(adapter);
         spinnerCourseStatus.setOnItemSelectedListener(this);
 
-        if (status.equals("In progress")){
-            spinnerCourseStatus.setSelection(0);
-        } else {
-            if (status.equals("Completed")) {
-                spinnerCourseStatus.setSelection(1);
+        if (status != null) {
+            if (status.equals("In progress")) {
+                spinnerCourseStatus.setSelection(0);
             } else {
-                if (status.equals("Dropped")) {
-                    spinnerCourseStatus.setSelection(2);
+                if (status.equals("Completed")) {
+                    spinnerCourseStatus.setSelection(1);
                 } else {
-                    spinnerCourseStatus.setSelection(3);
+                    if (status.equals("Dropped")) {
+                        spinnerCourseStatus.setSelection(2);
+                    } else {
+                        spinnerCourseStatus.setSelection(3);
+                    }
                 }
             }
         }
@@ -218,7 +226,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
                 String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
-                if (courseID == -1){
+                if (courseID == -1) {
                     course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
                     repository.insert(course);
 
@@ -234,7 +242,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(this, CoursesList.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

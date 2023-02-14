@@ -180,7 +180,7 @@
             app:layout_constraintStart_toEndOf="@+id/courseDetailsCourseNotesTextView"
             app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseEndDateAlertCheckBox" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ListView
             android:id="@+id/courseDetailsAssessmentsList"
             android:layout_width="match_parent"
             android:layout_height="400dp"
