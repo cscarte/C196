@@ -22,30 +22,45 @@ public class HomeScreen extends AppCompatActivity {
     List coursesList;
     List assessmentsList;
 
-    Repository repository = new Repository(getApplication());
-
-    public HomeScreen() {
-        termsList = repository.getmAllTerms();
-        coursesList = repository.getmAllCourses();
-        assessmentsList = repository.getmAllAssessments();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (termsList == null){
-            Term term = new Term(0, "Intro To School", "12/01/22", "12/31/22");
-            Term term1 = new Term(0, "Capstone", "01/31/23", "02/28/23");
+        Repository repository = new Repository(getApplication());
+        assessmentsList = repository.getmAllAssessments();
+        coursesList = repository.getmAllCourses();
+        termsList = repository.getmAllTerms();
+
+        int assessmentsListSize = assessmentsList.size();
+        int courseListSize = coursesList.size();
+        int termListSize = termsList.size();
+
+        if (termListSize == 0){
+            Term term = new Term(1, "Intro To School", "01/01/23", "04/01/23");
+            Term term1 = new Term(2, "Capstone", "05/01/23", "07/31/23");
 
             repository.insert(term);
             repository.insert(term1);
         }
 
-        if (assessmentsList == null){
-            Assessment assessment = new Assessment(0, "Sample Assessment", "12/23/2022", "12/30/2022", true, false, 1);
+        if (courseListSize == 0){
+            Course course = new Course(1, "Course 1", "In progress", "02/15/23", "04/01/23", "This is a sample note", "Johnny Doe", "555-555-5555", "fakeemail@gmail.com", true, false, 1);
+            Course course1 = new Course(2, "Course 2", "Planned to take", "04/01/23", "05/01/23", "Finish homework on time", "Jack Black", "666-777-8888", "kungfupanda@gmail.com", false, false, 2);
 
+            repository.insert(course);
+            repository.insert(course1);
+        }
+
+        if (assessmentsListSize == 0){
+            Assessment assessment = new Assessment(1, "Assessment 1", "03/01/23", "03/31/23", true, true, 1);
+            Assessment assessment1 = new Assessment(2, "Assessment 2", "04/01/23", "04/28/23", false, true, 1);
+            Assessment assessment2 = new Assessment(3, "Assessment 3", "05/01/23", "05/15/23", false, false, 2);
+
+            repository.insert(assessment);
+            repository.insert(assessment1);
+            repository.insert(assessment2);
         }
     }
 

@@ -26,8 +26,8 @@ public interface AssessmentDAO {
     @Query("SELECT * FROM assessments ORDER BY assessmentID ASC")
     List<Assessment> getAllAssessments();
 
-    @Query("SELECT * FROM assessments WHERE courseID = :courseID")
-    LiveData<List<Assessment>> getAssessmentByCourseID(int courseID);
+    @Query("SELECT * FROM assessments WHERE assessmentCourseID = :assessmentCourseID")
+    LiveData<List<Assessment>> getAssessmentByCourseID(int assessmentCourseID);
 
     @Query("SELECT * FROM assessments ORDER BY assessmentDueDate")
     LiveData<List<Assessment>> getAllAssessmentsOrderByDueDate();
@@ -38,9 +38,9 @@ public interface AssessmentDAO {
     @Query("SELECT COUNT(*) FROM assessments")
     int getCountOfAssessments();
 
-    @Query("SELECT COUNT(*) FROM assessments WHERE courseID = :courseID")
-    int getAssessmentCountByCourseID(int courseID);
+    @Query("SELECT COUNT(*) FROM assessments WHERE assessmentCourseID = :assessmentCourseID")
+    int getAssessmentCountByCourseID(int assessmentCourseID);
 
-    @Query("SELECT COUNT(*) FROM assessments WHERE courseID IS NOT NULL")
+    @Query("SELECT COUNT(*) FROM assessments WHERE assessmentCourseID IS NOT NULL")
     int getAssessmentCountByNonNullCourses();
 }

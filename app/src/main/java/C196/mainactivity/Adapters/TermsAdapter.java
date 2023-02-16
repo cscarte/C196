@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import C196.mainactivity.Entity.Course;
 import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
+import C196.mainactivity.UI.CourseDetails;
 import C196.mainactivity.UI.TermDetails;
 
 public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHolder> {
@@ -41,7 +43,6 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
                     intent.putExtra("termTitle", current.getTermTitle());
                     intent.putExtra("termStartDate", current.getTermStartDate());
                     intent.putExtra("termEndDate", current.getTermEndDate());
-                    intent.putExtra("")
                     context.startActivity(intent);
                 }
             });

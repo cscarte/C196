@@ -171,10 +171,11 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
         courseDetailsAssessmentList = repository.getmAllAssessments();
 
-        RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
+
         /**
-         * Work on the CourseDetailsAssessmentAdapter first before writing this section.
+         * Recyclerview adapter error: null object reference
          * */
+        RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
         AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
         recyclerViewAssessments.setAdapter(assessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));

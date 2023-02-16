@@ -65,30 +65,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="138dp"
-        android:layout_height="86dp"
-        android:onClick="EnterHere"
-        android:text="Input Term Test Data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
-
-    <Button
-        android:id="@+id/testAssessmentData"
-        android:layout_width="138dp"
-        android:layout_height="86dp"
-        android:onClick="SampleAssessmentData"
-        android:text="Input Assessment Test Data"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.882"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
