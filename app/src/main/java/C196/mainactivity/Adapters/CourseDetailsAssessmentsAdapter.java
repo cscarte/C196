@@ -34,7 +34,7 @@ public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<Course
 
     @Override
     public void onBindViewHolder(@NonNull CourseDetailsAssessmentViewHolder holder, int position) {
-        holder.
+        //holder.
     }
 
     @Override
@@ -43,11 +43,15 @@ public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<Course
     }
 
     public static class CourseDetailsAssessmentViewHolder extends RecyclerView.ViewHolder {
+        /**
         private List<Assessment> assessmentArrayList = new ArrayList<>();
         private final TextView courseDetailsAssessmentItemView;
         private final CheckBox courseDetailsAssessmentCheckbox;
+        */
 
-        
+        public CourseDetailsAssessmentViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 
 

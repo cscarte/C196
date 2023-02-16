@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
@@ -72,7 +73,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     int assessmentID;
     Course course;
 
-    List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
+
 
     @Override
     public ComponentName getComponentName() {
@@ -84,6 +85,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         repository = new Repository(getApplication());
         setContentView(R.layout.activity_courses_details);
+
+        List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
 
         courseID = getIntent().getIntExtra("courseID", -1);
         assessmentID = getIntent().getIntExtra("assessmentID", -1);
@@ -171,12 +174,12 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
         /**
          * Work on the CourseDetailsAssessmentAdapter first before writing this section.
-        CourseDetailsAssessmentsAdapter assessmentsAdapter = new CourseDetailsAssessmentsAdapter(this);
-
+         * */
+        AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
         recyclerViewAssessments.setAdapter(assessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
-        assessmentsAdapter.setAssessmentArrayList(assessmentList);
-*/
+        assessmentsAdapter.notifyDataSetChanged();
+        assessmentsAdapter.setAssessmentList(courseDetailsAssessmentList);
 
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
@@ -227,12 +230,12 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             public void onClick(View view) {
                 String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
                 if (courseID == -1) {
-                    course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
+                    course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked(), courseID);
                     repository.insert(course);
 
                     onBackPressed();
                 } else {
-                    course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked());
+                    course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked(), courseID);
                     repository.update(course);
 
                     onBackPressed();

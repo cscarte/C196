@@ -17,6 +17,7 @@ public class Course {
     private String courseInstructorEmail;
     private Boolean courseStartDateAlert;
     private Boolean courseEndDateAlert;
+    private int courseTermID;
 
     public String getCourseInstructorName() {
         return courseInstructorName;
@@ -42,7 +43,7 @@ public class Course {
         this.courseInstructorEmail = courseInstructorEmail;
     }
 
-    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, Boolean courseStartDateAlert, Boolean courseEndDateAlert) {
+    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, Boolean courseStartDateAlert, Boolean courseEndDateAlert, int courseTermID) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStatus = courseStatus;
@@ -54,6 +55,7 @@ public class Course {
         this.courseInstructorEmail = courseInstructorEmail;
         this.courseStartDateAlert = courseStartDateAlert;
         this.courseEndDateAlert = courseEndDateAlert;
+        this.courseTermID = courseTermID;
     }
 
     public int getCourseID() {
@@ -120,6 +122,14 @@ public class Course {
         this.courseEndDateAlert = courseEndDateAlert;
     }
 
+    public int getCourseTermID() {
+        return courseTermID;
+    }
+
+    public void setCourseTermID(int courseTermID) {
+        this.courseTermID = courseTermID;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -134,6 +144,7 @@ public class Course {
                 ", courseInstructorEmail='" + courseInstructorEmail + '\'' +
                 ", courseStartDateAlert=" + courseStartDateAlert +
                 ", courseEndDateAlert=" + courseEndDateAlert +
+                ", courseTermID=" + courseTermID +
                 '}';
     }
 

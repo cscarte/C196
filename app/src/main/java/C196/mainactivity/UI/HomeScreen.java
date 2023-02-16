@@ -7,6 +7,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -15,10 +18,35 @@ import C196.mainactivity.R;
 
 public class HomeScreen extends AppCompatActivity {
 
+    List termsList;
+    List coursesList;
+    List assessmentsList;
+
+    Repository repository = new Repository(getApplication());
+
+    public HomeScreen() {
+        termsList = repository.getmAllTerms();
+        coursesList = repository.getmAllCourses();
+        assessmentsList = repository.getmAllAssessments();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (termsList == null){
+            Term term = new Term(0, "Intro To School", "12/01/22", "12/31/22");
+            Term term1 = new Term(0, "Capstone", "01/31/23", "02/28/23");
+
+            repository.insert(term);
+            repository.insert(term1);
+        }
+
+        if (assessmentsList == null){
+            Assessment assessment = new Assessment(0, "Sample Assessment", "12/23/2022", "12/30/2022", true, false, 1);
+
+        }
     }
 
     public void EnterHere(View view){

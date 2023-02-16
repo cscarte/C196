@@ -12,16 +12,16 @@ public class Assessment {
     private String assessmentGoalDate;
     private boolean assessmentGoalDateAlert;
     private boolean assessmentObjective;
-    private int courseID;
+    private int assessmentCourseID;
 
-    public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentGoalDateAlert, boolean assessmentObjective, int courseID) {
+    public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentGoalDateAlert, boolean assessmentObjective, int assessmentCourseID) {
         this.assessmentID = assessmentID;
         this.assessmentTitle = assessmentTitle;
         this.assessmentDueDate = assessmentDueDate;
         this.assessmentGoalDate = assessmentGoalDate;
         this.assessmentGoalDateAlert = assessmentGoalDateAlert;
         this.assessmentObjective = assessmentObjective;
-        this.courseID = courseID;
+        this.assessmentCourseID = assessmentCourseID;
     }
 
     public boolean isAssessmentGoalDateAlert() {
@@ -72,12 +72,12 @@ public class Assessment {
         this.assessmentObjective = assessmentObjective;
     }
 
-    public int getCourseID() {
-        return courseID;
+    public int getAssessmentCourseID() {
+        return assessmentCourseID;
     }
 
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
+    public void setAssessmentCourseID(int assessmentCourseID) {
+        this.assessmentCourseID = assessmentCourseID;
     }
 
     @Override
@@ -87,9 +87,9 @@ public class Assessment {
                 ", assessmentTitle='" + assessmentTitle + '\'' +
                 ", assessmentDueDate='" + assessmentDueDate + '\'' +
                 ", assessmentGoalDate='" + assessmentGoalDate + '\'' +
-                ", assessmentObjective=" + assessmentObjective +
                 ", assessmentGoalDateAlert=" + assessmentGoalDateAlert +
-                ", courseID=" + courseID +
+                ", assessmentObjective=" + assessmentObjective +
+                ", assessmentCourseID=" + assessmentCourseID +
                 '}';
     }
 
