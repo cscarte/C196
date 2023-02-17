@@ -1,10 +1,9 @@
 package C196.mainactivity.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,69 +14,59 @@ import java.util.List;
 
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.R;
-import C196.mainactivity.UI.AssessmentDetails;
 
 public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<CourseDetailsAssessmentsAdapter.CourseDetailsAssessmentViewHolder> {
-    Context context;
-    ArrayList<Assessment> assessmentArrayList;
+    private List<Assessment> courseDetailsAssessmentArray = new ArrayList<>();
+    private final Context context;
+    private final LayoutInflater cInflater;
 
-    public CourseDetailsAssessmentsAdapter(Context context, ArrayList<Assessment> assessmentArrayList){
+    class CourseDetailsAssessmentViewHolder extends RecyclerView.ViewHolder {
+        private final TextView courseAssessmentItemView;
+
+        public CourseDetailsAssessmentViewHolder(@NonNull View itemView) {
+            super(itemView);
+            courseAssessmentItemView = itemView.findViewById(R.id.courseDetailsAssessmentRowTextView);
+        }
+    }
+
+    public CourseDetailsAssessmentsAdapter(Context context) {
         this.context = context;
-        this.assessmentArrayList = assessmentArrayList;
+        cInflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
     public CourseDetailsAssessmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        /**
+         *         View view  = mInflater.inflate(R.layout.activity_assessments_row, parent, false);
+         *         return new AssessmentViewHolder(view);
+         */
+        View view = cInflater.inflate(R.layout.activity_courses_details_assessmentlist_item, parent, false);
+        return new CourseDetailsAssessmentViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CourseDetailsAssessmentViewHolder holder, int position) {
-        //holder.
+        if (courseDetailsAssessmentArray != null) {
+            Assessment current = courseDetailsAssessmentArray.get(position);
+            String name = current.getAssessmentTitle();
+            holder.courseAssessmentItemView.setText(name);
+        } else {
+            holder.courseAssessmentItemView.setText("No assessments in database");
+        }
     }
 
     @Override
     public int getItemCount() {
-        return assessmentArrayList.size();
+        if (courseDetailsAssessmentArray != null) {
+            return courseDetailsAssessmentArray.size();
+        } else return 0;
     }
 
-    public static class CourseDetailsAssessmentViewHolder extends RecyclerView.ViewHolder {
-        /**
-        private List<Assessment> assessmentArrayList = new ArrayList<>();
-        private final TextView courseDetailsAssessmentItemView;
-        private final CheckBox courseDetailsAssessmentCheckbox;
-        */
-
-        public CourseDetailsAssessmentViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
-
-/**
- * class AssessmentCourseViewHolder extends RecyclerView.ViewHolder{
- * private final CheckBox assessmentCourseCheckboxes;
- * <p>
- * public AssessmentCourseViewHolder(@NonNull View itemView) {
- * super(itemView);
- * assessmentCourseCheckboxes = itemView.findViewById(R.id.courseDetailsAssessmentsList);
- * itemView.setOnClickListener(new View.OnClickListener() {
- *
- * @Override public void onClick(View view) {
- * Intent intent = new Intent(context, AssessmentDetails.class);
- * int position = getAdapterPosition();
- * final Assessment current = assessmentArrayList.get(position);
- * intent.putExtra("assessmentID", current.getAssessmentID());
- * intent.putExtra("assessmentTitle", current.getAssessmentTitle());
- * intent.putExtra("assessmentDueDate", current.getAssessmentDueDate());
- * intent.putExtra("assessmentGoalDate", current.getAssessmentGoalDate());
- * intent.putExtra("assessmentGoalDateAlert", current.isAssessmentGoalDateAlert());
- * intent.putExtra("assessmentObjective", current.isAssessmentObjective());
- * intent.putExtra("courseID", current.getCourseID());
- * }
- * });
- * }
- * }
- */
+    /**
+     *     public void setAssessmentList(List<Assessment> assessmentList){
+     *         assessmentArrayList = assessmentList;
+     *         notifyDataSetChanged();
+     *     }
+     */
 }

@@ -21,12 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
-import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -83,10 +81,10 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @SuppressLint("WrongViewCast")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        repository = new Repository(getApplication());
+
         setContentView(R.layout.activity_courses_details);
 
-        List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
+
 
         courseID = getIntent().getIntExtra("courseID", -1);
         assessmentID = getIntent().getIntExtra("assessmentID", -1);
@@ -169,19 +167,23 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_courses_details_assessmentlist);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        courseDetailsAssessmentList = repository.getmAllAssessments();
+
 
 
         /**
          * Recyclerview adapter error: null object reference
          * */
-        RecyclerView recyclerViewAssessments = findViewById(R.id.courseDetailsAssessmentsList);
-        AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
+        RecyclerView recyclerViewAssessments = findViewById(R.id.recyclerViewCourseAssessmentList);
+        repository = new Repository(getApplication());
+
+        List<Assessment> courseDetailsAssessmentList = repository.getmAllAssessments();
+
+        /**
+        final AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
         recyclerViewAssessments.setAdapter(assessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
-        assessmentsAdapter.notifyDataSetChanged();
         assessmentsAdapter.setAssessmentList(courseDetailsAssessmentList);
-
+*/
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
