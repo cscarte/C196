@@ -195,9 +195,11 @@
             android:id="@+id/courseInstructorNameTextField"
             android:layout_width="100dp"
             android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="98dp"
             android:text="Course Instructor"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="1296dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewCourseAssessmentList" />
 
         <TextView
             android:id="@+id/courseInstructorEmailTextField"
@@ -223,12 +225,14 @@
             android:id="@+id/editTextCourseInstructorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="100dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:text="Name"
-            tools:layout_editor_absoluteX="168dp"
-            tools:layout_editor_absoluteY="1298dp" />
+            app:layout_constraintStart_toEndOf="@+id/courseInstructorNameTextField"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewCourseAssessmentList" />
 
         <EditText
             android:id="@+id/editTextCourseInstructorPhone"
@@ -256,13 +260,27 @@
             app:layout_constraintStart_toEndOf="@+id/courseInstructorEmailTextField"
             app:layout_constraintTop_toBottomOf="@+id/editTextCourseInstructorPhone" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCourseAssessmentList"
             android:layout_width="match_parent"
-            android:layout_height="515dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="28dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="9dp"
+            android:background="#E3E4D8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/courseDetailsCourseAssessmentsListTextView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

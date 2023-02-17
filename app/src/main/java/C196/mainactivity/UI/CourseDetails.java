@@ -21,10 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
+import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -71,7 +73,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     int assessmentID;
     Course course;
 
-
+    List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
 
     @Override
     public ComponentName getComponentName() {
@@ -83,7 +85,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_courses_details);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         courseID = getIntent().getIntExtra("courseID", -1);
@@ -164,9 +166,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         };
 
 
-        setContentView(R.layout.activity_courses_details_assessmentlist);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
 
 
@@ -176,18 +175,17 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         RecyclerView recyclerViewAssessments = findViewById(R.id.recyclerViewCourseAssessmentList);
         repository = new Repository(getApplication());
 
-        List<Assessment> courseDetailsAssessmentList = repository.getmAllAssessments();
 
-        /**
-        final AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
-        recyclerViewAssessments.setAdapter(assessmentsAdapter);
+        courseDetailsAssessmentList = repository.getmAllAssessments();
+
+        final CourseDetailsAssessmentsAdapter courseDetailsAssessmentsAdapter = new CourseDetailsAssessmentsAdapter(this);
+        recyclerViewAssessments.setAdapter(courseDetailsAssessmentsAdapter);
         recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
-        assessmentsAdapter.setAssessmentList(courseDetailsAssessmentList);
-*/
+        courseDetailsAssessmentsAdapter.setCourseDetailsAssessmentArray(courseDetailsAssessmentList);
+
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
-
 
         courseInstructorName = findViewById(R.id.editTextCourseInstructorName);
         instructorName = getIntent().getStringExtra("courseInstructorName");
@@ -250,7 +248,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, CoursesList.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
