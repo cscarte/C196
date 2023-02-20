@@ -1,12 +1,11 @@
 package C196.mainactivity.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,18 +18,15 @@ import C196.mainactivity.R;
 
 public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<CourseDetailsAssessmentsAdapter.CourseDetailsAssessmentViewHolder> {
     private List<Assessment> courseDetailsAssessmentArray = new ArrayList<>();
-    //private AdapterView
+    private static List<Integer> selectedAsssessmentIDs = new ArrayList<>();
     private final Context context;
     private final LayoutInflater cInflater;
 
     class CourseDetailsAssessmentViewHolder extends RecyclerView.ViewHolder {
-        //private final TextView courseAssessmentItemView;
         private final CheckBox checkBox;
 
         public CourseDetailsAssessmentViewHolder(@NonNull View itemView) {
             super(itemView);
-            //courseAssessmentItemView = itemView.findViewById(R.id.courseDetailsAssessmentRowTextView);
-            //itemView.setOnClickListener();
             checkBox = itemView.findViewById(R.id.courseAssessmentItemView);
         }
     }
@@ -48,11 +44,19 @@ public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<Course
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseDetailsAssessmentViewHolder holder, int position) {
-        if (courseDetailsAssessmentArray != null) {
+    public void onBindViewHolder(@NonNull CourseDetailsAssessmentViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        if (courseDetailsAssessmentArray != null && courseDetailsAssessmentArray.size() > 0) {
             Assessment current = courseDetailsAssessmentArray.get(position);
             String name = current.getAssessmentTitle();
             holder.checkBox.setText(name);
+
+            if (holder.checkBox.isChecked()) {
+                selectedAsssessmentIDs.add(position);
+            } else {
+                if (selectedAsssessmentIDs.contains(position)) {
+                    selectedAsssessmentIDs.remove(position);
+                }
+            }
         } else {
             holder.checkBox.setText("No assessments in database");
         }
@@ -65,8 +69,12 @@ public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<Course
         } else return 0;
     }
 
-    public void setCourseDetailsAssessmentArray(List<Assessment> courseDetailsAssessmentList){
+    public void setCourseDetailsAssessmentArray(List<Assessment> courseDetailsAssessmentList) {
         courseDetailsAssessmentArray = courseDetailsAssessmentList;
         notifyDataSetChanged();
+    }
+
+    public static List<Integer> getSelectedAsssessmentIDs() {
+        return selectedAsssessmentIDs;
     }
 }

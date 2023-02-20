@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
@@ -49,7 +48,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     EditText courseInstructorPhone;
     EditText courseInstructorEmail;
 
-    Repository repository;
+    Repository repository = new Repository(getApplication());
 
     Button courseShareNotesButton;
     Button courseSaveButton;
@@ -73,7 +72,10 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     int assessmentID;
     Course course;
 
+
     List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
+    List<Integer> assessmentsSelected = new ArrayList<>();
+    List<Assessment> fullAssessmentList = repository.getmAllAssessments();
 
     @Override
     public ComponentName getComponentName() {
@@ -87,9 +89,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_courses_details);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         courseID = getIntent().getIntExtra("courseID", -1);
-        assessmentID = getIntent().getIntExtra("assessmentID", -1);
+        //assessmentID = getIntent().getIntExtra("assessmentID", -1);
 
         courseName = findViewById(R.id.courseDetailsCourseTitle);
         name = getIntent().getStringExtra("courseName");
@@ -166,17 +167,13 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         };
 
 
-
-
-
         /**
-         * Recyclerview adapter error: null object reference
+         *
          * */
         RecyclerView recyclerViewAssessments = findViewById(R.id.recyclerViewCourseAssessmentList);
-        repository = new Repository(getApplication());
-
 
         courseDetailsAssessmentList = repository.getmAllAssessments();
+
 
         final CourseDetailsAssessmentsAdapter courseDetailsAssessmentsAdapter = new CourseDetailsAssessmentsAdapter(this);
         recyclerViewAssessments.setAdapter(courseDetailsAssessmentsAdapter);
@@ -230,6 +227,13 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View view) {
                 String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
+
+                assessmentsSelected = CourseDetailsAssessmentsAdapter.getSelectedAsssessmentIDs();
+
+                for (int element : assessmentsSelected) {
+                    assessmentID = courseID;
+                }
+
                 if (courseID == -1) {
                     course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked(), courseID);
                     repository.insert(course);
