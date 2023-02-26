@@ -43,7 +43,7 @@ public class Course {
         this.courseInstructorEmail = courseInstructorEmail;
     }
 
-    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, Boolean courseStartDateAlert, Boolean courseEndDateAlert, int courseTermID) {
+    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, int courseTermID) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStatus = courseStatus;
@@ -53,8 +53,6 @@ public class Course {
         this.courseInstructorName = courseInstructorName;
         this.courseInstructorPhone = courseInstructorPhone;
         this.courseInstructorEmail = courseInstructorEmail;
-        this.courseStartDateAlert = courseStartDateAlert;
-        this.courseEndDateAlert = courseEndDateAlert;
         this.courseTermID = courseTermID;
     }
 
@@ -132,20 +130,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" +
-                "courseID=" + courseID +
-                ", courseName='" + courseName + '\'' +
-                ", courseStatus='" + courseStatus + '\'' +
-                ", courseStartDate='" + courseStartDate + '\'' +
-                ", courseEndDate='" + courseEndDate + '\'' +
-                ", courseShareNotes='" + courseShareNotes + '\'' +
-                ", courseInstructorName='" + courseInstructorName + '\'' +
-                ", courseInstructorPhone='" + courseInstructorPhone + '\'' +
-                ", courseInstructorEmail='" + courseInstructorEmail + '\'' +
-                ", courseStartDateAlert=" + courseStartDateAlert +
-                ", courseEndDateAlert=" + courseEndDateAlert +
-                ", courseTermID=" + courseTermID +
-                '}';
+        return courseName;
     }
 
     public Course() {

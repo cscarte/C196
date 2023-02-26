@@ -6,21 +6,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import C196.mainactivity.Entity.Assessment;
+import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
+import C196.mainactivity.UI.AssessmentsList;
+import C196.mainactivity.UI.CourseDetails;
 
 public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<CourseDetailsAssessmentsAdapter.CourseDetailsAssessmentViewHolder> {
     private List<Assessment> courseDetailsAssessmentArray = new ArrayList<>();
     private static List<Integer> selectedAsssessmentIDs = new ArrayList<>();
+    private static List<Assessment> selectedAssessmentList = new ArrayList<>();
+
     private final Context context;
     private final LayoutInflater cInflater;
+
+    //private int courseID = CourseDetails.
 
     class CourseDetailsAssessmentViewHolder extends RecyclerView.ViewHolder {
         private final CheckBox checkBox;
@@ -76,5 +86,9 @@ public class CourseDetailsAssessmentsAdapter extends RecyclerView.Adapter<Course
 
     public static List<Integer> getSelectedAsssessmentIDs() {
         return selectedAsssessmentIDs;
+    }
+
+    public static List<Assessment> getSelectedAssessments(){
+        return selectedAssessmentList;
     }
 }

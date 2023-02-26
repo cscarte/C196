@@ -82,15 +82,7 @@ public class Assessment {
 
     @Override
     public String toString() {
-        return "Assessment{" +
-                "assessmentID=" + assessmentID +
-                ", assessmentTitle='" + assessmentTitle + '\'' +
-                ", assessmentDueDate='" + assessmentDueDate + '\'' +
-                ", assessmentGoalDate='" + assessmentGoalDate + '\'' +
-                ", assessmentGoalDateAlert=" + assessmentGoalDateAlert +
-                ", assessmentObjective=" + assessmentObjective +
-                ", assessmentCourseID=" + assessmentCourseID +
-                '}';
+        return assessmentTitle;
     }
 
     public Assessment() {

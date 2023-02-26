@@ -1,9 +1,10 @@
 package C196.mainactivity.UI;
 
+import static C196.mainactivity.R.id.assessmentsCourseDetailsRecyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.ComponentName;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,8 +12,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,24 +24,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
-/**
- * Add drop down menu for course status
- * Add share notes feature
- * Add checkbox logic
- */
 public class CourseDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText courseName;
     Spinner courseStatus;
     TextView courseStartDate;
-    CheckBox courseStartDateAlert;
     TextView courseEndDate;
-    CheckBox courseEndDateAlert;
     EditText courseNotes;
     EditText courseInstructorName;
     EditText courseInstructorPhone;
@@ -65,17 +58,18 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     String instructorName;
     String instructorPhone;
     String instructorEmail;
-    boolean startDateAlert;
-    boolean endDateAlert;
 
     int courseID;
-    int assessmentID;
+    int courseTermID;
+    int assessmentCourseID;
+
     Course course;
 
-
     List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
-    List<Integer> assessmentsSelected = new ArrayList<>();
-    List<Assessment> fullAssessmentList = repository.getmAllAssessments();
+
+    List<Assessment> assessmentsToUpdateCourseID = new ArrayList<>();
+
+    List<Integer> assessmentIDsSelected = new ArrayList<>();
 
     @Override
     public ComponentName getComponentName() {
@@ -87,10 +81,10 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_courses_details);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         courseID = getIntent().getIntExtra("courseID", -1);
-        //assessmentID = getIntent().getIntExtra("assessmentID", -1);
+        courseTermID = getIntent().getIntExtra("courseTermID", -1);
+
 
         courseName = findViewById(R.id.courseDetailsCourseTitle);
         name = getIntent().getStringExtra("courseName");
@@ -100,85 +94,50 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
         startDate = getIntent().getStringExtra("courseStartDate");
         courseStartDate.setText(startDate);
-        courseStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+        courseStartDate.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(CourseDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(CourseDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener, year, month, day);
 
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-            }
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
         });
 
-        startDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
+        startDateListener = (datePicker, year, month, day) -> {
+            month = month + 1;
 
-                String textViewDueDate = month + "/" + day + "/" + year;
-                courseStartDate.setText(textViewDueDate);
-            }
+            String textViewDueDate = month + "/" + day + "/" + year;
+            courseStartDate.setText(textViewDueDate);
         };
-
-        courseStartDateAlert = findViewById(R.id.courseDetailsCourseStartDateAlertCheckBox);
-        startDateAlert = getIntent().getBooleanExtra("courseStartDateAlert", false);
-        if (startDateAlert == true) {
-            courseStartDateAlert.setChecked(true);
-        }
-
-        courseEndDateAlert = findViewById(R.id.courseDetailsCourseEndDateAlertCheckBox);
-        endDateAlert = getIntent().getBooleanExtra("courseEndDateAlert", false);
-        if (endDateAlert == true) {
-            courseEndDateAlert.setChecked(true);
-        }
 
 
         courseEndDate = findViewById(R.id.courseDetailsCourseEndDate);
         endDate = getIntent().getStringExtra("courseEndDate");
         courseEndDate.setText(endDate);
-        courseEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+        courseEndDate.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(CourseDetails.this, android.R.style.Theme_Holo_Light_Dialog, endDateListener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(CourseDetails.this, android.R.style.Theme_Holo_Light_Dialog, endDateListener, year, month, day);
 
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-            }
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
         });
 
-        endDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
+        endDateListener = (datePicker, year, month, day) -> {
+            month = month + 1;
 
-                String textViewDueDate = month + "/" + day + "/" + year;
-                courseEndDate.setText(textViewDueDate);
-            }
+            String textViewDueDate = month + "/" + day + "/" + year;
+            courseEndDate.setText(textViewDueDate);
         };
 
 
-        /**
-         *
-         * */
-        RecyclerView recyclerViewAssessments = findViewById(R.id.recyclerViewCourseAssessmentList);
-
         courseDetailsAssessmentList = repository.getmAllAssessments();
-
-
-        final CourseDetailsAssessmentsAdapter courseDetailsAssessmentsAdapter = new CourseDetailsAssessmentsAdapter(this);
-        recyclerViewAssessments.setAdapter(courseDetailsAssessmentsAdapter);
-        recyclerViewAssessments.setLayoutManager(new LinearLayoutManager(this));
-        courseDetailsAssessmentsAdapter.setCourseDetailsAssessmentArray(courseDetailsAssessmentList);
 
         courseNotes = findViewById(R.id.courseDetailsCourseNotesMultiLineText);
         notes = getIntent().getStringExtra("courseShareNotes");
@@ -199,60 +158,63 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseStatus = findViewById(R.id.courseDetailsCourseStatus);
         status = getIntent().getStringExtra("courseStatus");
 
-        Spinner spinnerCourseStatus = findViewById(R.id.courseDetailsCourseStatus);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.courseStatus, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCourseStatus.setAdapter(adapter);
-        spinnerCourseStatus.setOnItemSelectedListener(this);
+        courseStatus.setAdapter(adapter);
+        courseStatus.setOnItemSelectedListener(this);
 
         if (status != null) {
             if (status.equals("In progress")) {
-                spinnerCourseStatus.setSelection(0);
+                courseStatus.setSelection(0);
             } else {
                 if (status.equals("Completed")) {
-                    spinnerCourseStatus.setSelection(1);
+                    courseStatus.setSelection(1);
                 } else {
                     if (status.equals("Dropped")) {
-                        spinnerCourseStatus.setSelection(2);
+                        courseStatus.setSelection(2);
                     } else {
-                        spinnerCourseStatus.setSelection(3);
+                        courseStatus.setSelection(3);
                     }
                 }
             }
         }
 
+        assessmentIDsSelected = CourseDetailsAssessmentsAdapter.getSelectedAsssessmentIDs();
+        assessmentsToUpdateCourseID = CourseDetailsAssessmentsAdapter.getSelectedAssessments();
+
+        RecyclerView recyclerView = findViewById(assessmentsCourseDetailsRecyclerView);
+        repository = new Repository(getApplication());
+
+        List<Assessment> assessmentList = repository.getmAllAssessments();
+        List<Assessment> assessmentList1 = new ArrayList<>();
+        
+        for (Assessment assessment : assessmentList){
+            if (assessment.getAssessmentCourseID() == courseID){
+                assessmentList1.add(assessment);
+            }
+        }
+
+        AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
+        recyclerView.setAdapter(assessmentsAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        assessmentsAdapter.setAssessmentList(assessmentList1);
+
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
+        courseSaveButton.setOnClickListener(view -> {
+            String spinnerText = courseStatus.getSelectedItem().toString();
 
-        courseSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String spinnerText = spinnerCourseStatus.getSelectedItem().toString();
+            if (courseID == -1) {
+                course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
+                repository.insert(course);
 
-                assessmentsSelected = CourseDetailsAssessmentsAdapter.getSelectedAsssessmentIDs();
+                onBackPressed();
+            } else {
+                course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
+                repository.update(course);
 
-                for (int element : assessmentsSelected) {
-                    assessmentID = courseID;
-                }
-
-                if (courseID == -1) {
-                    course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked(), courseID);
-                    repository.insert(course);
-
-                    onBackPressed();
-                } else {
-                    course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseStartDateAlert.isChecked(), courseEndDateAlert.isChecked(), courseID);
-                    repository.update(course);
-
-                    onBackPressed();
-                }
+                onBackPressed();
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, CoursesList.class);
-        startActivity(intent);
     }
 
     @Override

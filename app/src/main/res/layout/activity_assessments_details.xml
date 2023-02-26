@@ -25,12 +25,15 @@
             android:id="@+id/assessmentDetailsTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
+            android:layout_marginStart="68dp"
             android:layout_marginTop="16dp"
+            android:background="#E0EAE9"
             android:ems="10"
+            android:gravity="center"
             android:hint="Title"
             android:inputType="textPersonName"
             android:minHeight="48dp"
+            android:shadowColor="#E0EAE9"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsTitleTextView"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,10 +41,11 @@
             android:id="@+id/assessmentDetailsDueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="36dp"
             android:background="#E0EAE9"
             android:ems="10"
+            android:gravity="center"
             android:hint="Due Date"
             android:inputType="date"
             android:minHeight="48dp"
@@ -49,39 +53,31 @@
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsDueDateTextView"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsTitle" />
 
-        <TextView
-            android:id="@+id/assessmentDetailsAssessmentTypeObjectiveTextView"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="140dp"
-            android:text="Objective"
-            app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypePerformanceTextView"
-            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsGoalDate" />
-
         <Switch
             android:id="@+id/assessmentDetailsAssessmentTypeSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="116dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginStart="59dp"
+            android:layout_marginTop="100dp"
+            android:background="#E0EAE9"
             android:elegantTextHeight="false"
+            android:gravity="center"
             android:minWidth="48dp"
             android:minHeight="48dp"
             android:showText="true"
             android:text="Type: "
             android:textOff="P"
             android:textOn="O"
-            app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypeTextView"
-            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsAssessmentTypeObjectiveTextView" />
+            app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypePerformanceTextView"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsGoalDate" />
 
         <TextView
             android:id="@+id/assessmentDetailsAssessmentTypePerformanceTextView"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="140dp"
-            android:text="Performance"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="100dp"
+            android:text="Performance or Objective"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypeTextView"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsGoalDate" />
 
@@ -109,8 +105,10 @@
             android:id="@+id/assessmentDetailsGoalDateAlertCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="124dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="28dp"
+            android:background="#E0EAE9"
+            android:gravity="center"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsGoalDateAlertTextView"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsGoalDate" />
 
@@ -118,21 +116,31 @@
             android:id="@+id/assessmentDetailsSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="160dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="156dp"
+            android:layout_marginTop="64dp"
             android:text="Save"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsAssessmentTypeSwitch" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerCourseID" />
 
         <TextView
             android:id="@+id/assessmentDetailsAssessmentTypeTextView"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="176dp"
+            android:layout_marginTop="104dp"
             android:text="Assessment Type"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsGoalDateTextView" />
+
+        <TextView
+            android:id="@+id/assessmentDetailsAssessmentTypeTextView2"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="28dp"
+            android:text="Course"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsAssessmentTypeTextView" />
 
         <TextView
             android:id="@+id/assessmentDetailsGoalDateTextView"
@@ -148,16 +156,28 @@
             android:id="@+id/assessmentDetailsGoalDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="48dp"
             android:background="#E0EAE9"
             android:ems="10"
+            android:gravity="center"
             android:hint="Goal Date"
             android:inputType="date"
             android:minHeight="48dp"
             android:textAlignment="center"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsGoalDateTextView"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsDueDate" />
+
+        <Spinner
+            android:id="@+id/spinnerCourseID"
+            android:layout_width="242dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="25dp"
+            android:background="#E0EAE9"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypeTextView2"
+            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsAssessmentTypePerformanceTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

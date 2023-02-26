@@ -1,5 +1,6 @@
 package C196.mainactivity.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +8,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -18,33 +17,30 @@ import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.R;
 
 public class AssessmentsList extends AppCompatActivity {
-    private Repository repository;
+    static RecyclerView recyclerView;
+    static AssessmentsAdapter adapter;
+    static Repository repository;
+    static List<Assessment> assessmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_list);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        RecyclerView recyclerView = findViewById(R.id.assessmentsRecyclerView);
+        recyclerView = findViewById(R.id.assessmentsRecyclerView);
         repository = new Repository(getApplication());
 
-        List<Assessment> assessmentList = repository.getmAllAssessments();
+        assessmentList = repository.getmAllAssessments();
 
-        AssessmentsAdapter adapter = new AssessmentsAdapter(this);
+        adapter = new AssessmentsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.notifyDataSetChanged();
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.addAssessmentDetails);
         adapter.setAssessmentList(assessmentList);
     }
 
     public void enterAssessmentDetails(View view) {
         Intent intent = new Intent(AssessmentsList.this, AssessmentDetails.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 }

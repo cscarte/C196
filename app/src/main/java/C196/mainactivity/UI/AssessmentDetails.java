@@ -1,163 +1,189 @@
 package C196.mainactivity.UI;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
-import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
+import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
-public class AssessmentDetails extends AppCompatActivity {
-    EditText assessmentTitle;
-    TextView assessmentDueDate;
-    TextView assessmentGoalDate;
-    CheckBox assessmentGoalDateAlert;
-    Switch assessmentObjectiveSwitch;
+public class AssessmentDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private EditText assessmentTitle;
+    private TextView assessmentDueDate;
+    private TextView assessmentGoalDate;
+    private CheckBox assessmentGoalDateAlert;
 
-    String name;
-    String dueDate;
+    private Course course;
+
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private Switch assessmentObjectiveSwitch;
+
     private DatePickerDialog.OnDateSetListener startDateListener;
-    String goalDate;
     private DatePickerDialog.OnDateSetListener endDateListener;
     boolean goalDateAlert;
     boolean assessmentObjectiveBooleanValue;
 
-    int assessmentID;
-    int courseID;
+    private int assessmentID;
+    private int originalCourseID;
+    private String selectedCourseIDString;
+    private int selectedCourseID;
+
+    private Spinner courseIDSpinner;
+
+    private final Repository repository = new Repository(getApplication());
+    List<Course> courseList = repository.getmAllCourses();
+    ArrayList<Course> courseArrayList = new ArrayList<>();
 
     Assessment assessment;
 
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_details);
 
+        courseIDSpinner = findViewById(R.id.spinnerCourseID);
+
         assessmentID = getIntent().getIntExtra("assessmentID", -1);
-        courseID = getIntent().getIntExtra("courseID", -1);
+        originalCourseID = getIntent().getIntExtra("courseID", -1);
 
         assessmentTitle = findViewById(R.id.assessmentDetailsTitle);
-        name = getIntent().getStringExtra("assessmentTitle");
+        String name = getIntent().getStringExtra("assessmentTitle");
         assessmentTitle.setText(name);
 
         assessmentDueDate = findViewById(R.id.assessmentDetailsDueDate);
-        dueDate = getIntent().getStringExtra("assessmentDueDate");
+        String dueDate = getIntent().getStringExtra("assessmentDueDate");
         assessmentDueDate.setText(dueDate);
-        assessmentDueDate.setOnClickListener(new View.OnClickListener() {
-            //Create and populate date picker menu when clicking on the due date
+        //Create and populate date picker menu when clicking on the due date
+        assessmentDueDate.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AssessmentDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener, year, month, day);
+
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+        });
+
+        //////////////////////////////////////////////////////////////////////////
+        //Setting up spinner data for course IDs from course Entity
+
+
+        courseArrayList.addAll(courseList);
+
+        final ArrayAdapter<Course> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseArrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        courseIDSpinner.setAdapter(adapter);
+        courseIDSpinner.setOnItemSelectedListener(this);
+
+        courseIDSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                course = (Course) adapterView.getSelectedItem();
+            }
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AssessmentDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener, year, month, day);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
             }
         });
 
-        startDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
 
-                String textViewDueDate = month + "/" + day + "/" + year;
-                assessmentDueDate.setText(textViewDueDate);
-            }
+
+        //////////////////////////////////////////////////////////////////////////
+
+        startDateListener = (datePicker, year, month, day) -> {
+            month = month + 1;
+
+            String textViewDueDate = month + "/" + day + "/" + year;
+            assessmentDueDate.setText(textViewDueDate);
         };
 
         assessmentGoalDate = findViewById(R.id.assessmentDetailsGoalDate);
-        goalDate = getIntent().getStringExtra("assessmentGoalDate");
+        String goalDate = getIntent().getStringExtra("assessmentGoalDate");
         assessmentGoalDate.setText(goalDate);
-        assessmentGoalDate.setOnClickListener(new View.OnClickListener() {
-            //Create and populate date picker menu when clicking on the goal date
-            @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+        assessmentGoalDate.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AssessmentDetails.this, android.R.style.Theme_Holo_Light_Dialog, endDateListener, year, month, day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(AssessmentDetails.this, android.R.style.Theme_Holo_Light_Dialog, endDateListener, year, month, day);
 
-                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                datePickerDialog.show();
-            }
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
         });
 
-        endDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
+        endDateListener = (datePicker, year, month, day) -> {
+            month = month + 1;
 
-                String textViewGoalDate = month + "/" + day + "/" + year;
-                assessmentGoalDate.setText(textViewGoalDate);
-            }
+            String textViewGoalDate = month + "/" + day + "/" + year;
+            assessmentGoalDate.setText(textViewGoalDate);
         };
 
         assessmentGoalDateAlert = findViewById(R.id.assessmentDetailsGoalDateAlertCheckBox);
         goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
-        if (goalDateAlert == true){
+        if (goalDateAlert) {
             assessmentGoalDateAlert.setChecked(true);
         }
 
         assessmentObjectiveSwitch = findViewById(R.id.assessmentDetailsAssessmentTypeSwitch);
         assessmentObjectiveBooleanValue = getIntent().getBooleanExtra("assessmentObjective", false);
-        if (assessmentObjectiveBooleanValue == true){
+        if (assessmentObjectiveBooleanValue) {
             assessmentObjectiveSwitch.setChecked(true);
         }
 
-        Repository repository = new Repository(getApplication());
+
 
         Button saveButton = findViewById(R.id.assessmentDetailsSaveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (assessmentID == -1) {
-                    assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), courseID);
-                    repository.insert(assessment);
-
-                    onBackPressed();
-                } else {
-                    assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), courseID);
-                    repository.update(assessment);
-
-                    onBackPressed();
-                }
-            }
-        });
+        saveButton.setOnClickListener(view -> saveAssessment());
     }
 
-    public boolean assessmentObjectiveBoolean(Switch assessmentObjectiveSwitch) {
-        if (assessmentObjectiveSwitch.isChecked()) {
-            assessmentObjectiveBooleanValue = true;
+    public void saveAssessment() {
+        Repository repository = new Repository(getApplication());
+
+        course = (Course) courseIDSpinner.getSelectedItem();
+        selectedCourseID = course.getCourseID();
+
+        if (assessmentID == -1) {
+            assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+            repository.insert(assessment);
+
         } else {
-            assessmentObjectiveBooleanValue = false;
+            assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+            repository.update(assessment);
         }
-        return assessmentObjectiveBooleanValue;
+        finish();
     }
 
     @Override
-    public void onBackPressed(){
-        Intent intent = new Intent(this, AssessmentsList.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

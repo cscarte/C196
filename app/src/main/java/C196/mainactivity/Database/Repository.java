@@ -2,6 +2,8 @@ package C196.mainactivity.Database;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,11 +24,14 @@ public class Repository {
     private TermDAO mTermDAO;
 
     private List<Assessment> mAllAssessments;
+    private List<Assessment> mAllAssessmentsByAssessmentID;
+    private List<Assessment> mAssessmentsByCourseID;
     private List<Course> mAllCourses;
     private List<Mentor> mAllMentors;
     private List<Term> mAllTerms;
+    private LiveData<List<Assessment>> mAllAssessmentsLiveData;
 
-    private static int NUMBER_OF_THREADS=2;
+    private static int NUMBER_OF_THREADS = 2;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public Repository(Application application) {
@@ -38,12 +43,12 @@ public class Repository {
         mTermDAO = db.termDAO();
     }
 
-    public List<Assessment> getmAllAssessments(){
-        databaseExecutor.execute(() ->{
+    public List<Assessment> getmAllAssessments() {
+        databaseExecutor.execute(() -> {
             mAllAssessments = mAssessmentDAO.getAllAssessments();
 
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -51,33 +56,65 @@ public class Repository {
         return mAllAssessments;
     }
 
-    public void insert(Assessment assessment){
-        databaseExecutor.execute(() ->{
+    public List<Assessment> getmAssessmentsByCourseID() {
+        databaseExecutor.execute(() -> {
+        });
+
+        return mAssessmentsByCourseID;
+    }
+
+    public LiveData<List<Assessment>> getmAllAssessmentsLiveData() {
+        databaseExecutor.execute(() -> {
+            mAllAssessmentsLiveData = mAssessmentDAO.getAllAssessmentsLiveData();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mAllAssessmentsLiveData;
+    }
+
+    public List<Assessment> getmAssessmentsByAssessmentID() {
+        databaseExecutor.execute(() -> {
+            mAllAssessmentsByAssessmentID = (List<Assessment>) mAssessmentDAO.getAssessmentByAssessmentID(1);
+
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mAllAssessmentsByAssessmentID;
+    }
+
+    public void insert(Assessment assessment) {
+        databaseExecutor.execute(() -> {
             mAssessmentDAO.insert(assessment);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Assessment assessment){
+    public void update(Assessment assessment) {
         databaseExecutor.execute(() -> {
             mAssessmentDAO.update(assessment);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(Assessment assessment){
+    public void delete(Assessment assessment) {
         databaseExecutor.execute(() -> {
             mAssessmentDAO.delete(assessment);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -85,12 +122,12 @@ public class Repository {
     }
 
 
-    public List<Course> getmAllCourses(){
-        databaseExecutor.execute(() ->{
+    public List<Course> getmAllCourses() {
+        databaseExecutor.execute(() -> {
             mAllCourses = mCourseDAO.getAllCourses();
 
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -98,33 +135,33 @@ public class Repository {
         return mAllCourses;
     }
 
-    public void insert(Course course){
-        databaseExecutor.execute(() ->{
+    public void insert(Course course) {
+        databaseExecutor.execute(() -> {
             mCourseDAO.insert(course);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Course course){
+    public void update(Course course) {
         databaseExecutor.execute(() -> {
             mCourseDAO.update(course);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(Course course){
+    public void delete(Course course) {
         databaseExecutor.execute(() -> {
             mCourseDAO.delete(course);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -132,12 +169,12 @@ public class Repository {
     }
 
 
-    public List<Mentor> getmAllMentors(){
-        databaseExecutor.execute(() ->{
+    public List<Mentor> getmAllMentors() {
+        databaseExecutor.execute(() -> {
             mAllMentors = mMentorDAO.getAllMentors();
 
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -145,45 +182,45 @@ public class Repository {
         return mAllMentors;
     }
 
-    public void insert(Mentor mentor){
-        databaseExecutor.execute(() ->{
+    public void insert(Mentor mentor) {
+        databaseExecutor.execute(() -> {
             mMentorDAO.insert(mentor);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Mentor mentor){
+    public void update(Mentor mentor) {
         databaseExecutor.execute(() -> {
             mMentorDAO.update(mentor);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(Mentor mentor){
+    public void delete(Mentor mentor) {
         databaseExecutor.execute(() -> {
             mMentorDAO.delete(mentor);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public List<Term> getmAllTerms(){
-        databaseExecutor.execute(() ->{
+    public List<Term> getmAllTerms() {
+        databaseExecutor.execute(() -> {
             mAllTerms = mTermDAO.getAllTerms();
 
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -191,37 +228,40 @@ public class Repository {
         return mAllTerms;
     }
 
-    public void insert(Term term){
-        databaseExecutor.execute(() ->{
+    public void insert(Term term) {
+        databaseExecutor.execute(() -> {
             mTermDAO.insert(term);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void update(Term term){
+    public void update(Term term) {
         databaseExecutor.execute(() -> {
             mTermDAO.update(term);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void delete(Term term){
+    public void delete(Term term) {
         databaseExecutor.execute(() -> {
             mTermDAO.delete(term);
         });
-        try{
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void update(int i) {
     }
 
     //add method for comparing all assessments courseIDs with current courseID, display only current course ID
