@@ -1,6 +1,7 @@
 package C196.mainactivity.UI;
 
 import static C196.mainactivity.R.id.assessmentsCourseDetailsRecyclerView;
+import static C196.mainactivity.R.id.courseTermSpinner;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -25,10 +26,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
-import C196.mainactivity.Adapters.CourseDetailsAssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
+import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
 
 public class CourseDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -41,11 +42,10 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     EditText courseInstructorPhone;
     EditText courseInstructorEmail;
 
-    Repository repository = new Repository(getApplication());
-
     Button courseShareNotesButton;
     Button courseSaveButton;
 
+    Spinner termSpinner;
 
     private DatePickerDialog.OnDateSetListener startDateListener;
     private DatePickerDialog.OnDateSetListener endDateListener;
@@ -61,22 +61,22 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
     int courseID;
     int courseTermID;
-    int assessmentCourseID;
 
     Course course;
+    Term term;
 
     List<Assessment> courseDetailsAssessmentList = new ArrayList<>();
 
-    List<Assessment> assessmentsToUpdateCourseID = new ArrayList<>();
-
-    List<Integer> assessmentIDsSelected = new ArrayList<>();
+    private final Repository repository = new Repository(getApplication());
+    List<Term> allTermsList = repository.getmAllTerms();
+    ArrayList<Term> termArrayList = new ArrayList<>();
 
     @Override
     public ComponentName getComponentName() {
         return super.getComponentName();
     }
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -143,6 +143,30 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
 
+        /////////////////////////////////////////////////////
+        termSpinner = findViewById(R.id.courseTermSpinner);
+
+        termArrayList.addAll(allTermsList);
+
+        final ArrayAdapter<Term> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termArrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        termSpinner.setAdapter(adapter);
+        termSpinner.setOnItemSelectedListener(this);
+
+        termSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                term = (Term) adapterView.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        /////////////////////////////////////////////////////
+
         courseInstructorName = findViewById(R.id.editTextCourseInstructorName);
         instructorName = getIntent().getStringExtra("courseInstructorName");
         courseInstructorName.setText(instructorName);
@@ -158,9 +182,9 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseStatus = findViewById(R.id.courseDetailsCourseStatus);
         status = getIntent().getStringExtra("courseStatus");
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.courseStatus, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        courseStatus.setAdapter(adapter);
+        ArrayAdapter<CharSequence> courseStatusAdapter = ArrayAdapter.createFromResource(this, R.array.courseStatus, android.R.layout.simple_spinner_item);
+        courseStatusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        courseStatus.setAdapter(courseStatusAdapter);
         courseStatus.setOnItemSelectedListener(this);
 
         if (status != null) {
@@ -179,17 +203,13 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             }
         }
 
-        assessmentIDsSelected = CourseDetailsAssessmentsAdapter.getSelectedAsssessmentIDs();
-        assessmentsToUpdateCourseID = CourseDetailsAssessmentsAdapter.getSelectedAssessments();
-
         RecyclerView recyclerView = findViewById(assessmentsCourseDetailsRecyclerView);
-        repository = new Repository(getApplication());
 
         List<Assessment> assessmentList = repository.getmAllAssessments();
         List<Assessment> assessmentList1 = new ArrayList<>();
-        
-        for (Assessment assessment : assessmentList){
-            if (assessment.getAssessmentCourseID() == courseID){
+
+        for (Assessment assessment : assessmentList) {
+            if (assessment.getAssessmentCourseID() == courseID) {
                 assessmentList1.add(assessment);
             }
         }
@@ -202,6 +222,9 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
         courseSaveButton.setOnClickListener(view -> {
             String spinnerText = courseStatus.getSelectedItem().toString();
+
+            term = (Term) termSpinner.getSelectedItem();
+            courseTermID = term.getTermID();
 
             if (courseID == -1) {
                 course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);

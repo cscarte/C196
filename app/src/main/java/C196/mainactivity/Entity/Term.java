@@ -52,12 +52,7 @@ public class Term {
 
     @Override
     public String toString() {
-        return "Term{" +
-                "termID=" + termID +
-                ", termTitle='" + termTitle + '\'' +
-                ", termStartDate=" + termStartDate +
-                ", termEndDate=" + termEndDate +
-                '}';
+        return termTitle;
     }
 
     public Term() {

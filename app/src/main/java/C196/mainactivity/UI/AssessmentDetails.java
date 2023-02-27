@@ -85,6 +85,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             datePickerDialog.show();
         });
 
+
         //////////////////////////////////////////////////////////////////////////
         //Setting up spinner data for course IDs from course Entity
 
@@ -108,7 +109,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
             }
         });
-
 
 
         //////////////////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             assessmentGoalDate.setText(textViewGoalDate);
         };
 
-        assessmentGoalDateAlert = findViewById(R.id.assessmentDetailsGoalDateAlertCheckBox);
+        assessmentGoalDateAlert = findViewById(R.id.dueGoalAlertCheckBox);
         goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
         if (goalDateAlert) {
             assessmentGoalDateAlert.setChecked(true);
@@ -153,7 +153,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         if (assessmentObjectiveBooleanValue) {
             assessmentObjectiveSwitch.setChecked(true);
         }
-
 
 
         Button saveButton = findViewById(R.id.assessmentDetailsSaveButton);

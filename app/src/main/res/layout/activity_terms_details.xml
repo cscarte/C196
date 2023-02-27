@@ -22,10 +22,11 @@
 
         <EditText
             android:id="@+id/termDetailsTermTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="48dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="48dp"
+            android:background="#E0EAE9"
             android:ems="10"
             android:hint="Term Title"
             android:inputType="textPersonName"
@@ -45,10 +46,11 @@
 
         <EditText
             android:id="@+id/termDetailsTermStartDate"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="48dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="132dp"
+            android:background="#E0EAE9"
             android:ems="10"
             android:hint="Term Start Date"
             android:inputType="date"
@@ -67,44 +69,26 @@
 
         <EditText
             android:id="@+id/termDetailsTermEndDate"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="48dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="216dp"
+            android:background="#E0EAE9"
             android:ems="10"
             android:hint="Term End Date"
             android:inputType="date"
             app:layout_constraintStart_toEndOf="@+id/termDetailsEndDateTextView"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/termDetailsCourseTextView"
-            android:layout_width="100dp"
-            android:layout_height="43dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
-            android:text="Courses"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/termDetailsEndDateTextView" />
-
-        <ListView
-            android:id="@+id/termDetailsCourseList"
-            android:layout_width="258dp"
-            android:layout_height="393dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toEndOf="@+id/termDetailsCourseTextView"
-            app:layout_constraintTop_toBottomOf="@+id/termDetailsTermEndDate" />
-
         <Button
             android:id="@+id/termDetailsSaveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="178dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="97dp"
             android:text="Save"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/termDetailsCourseList" />
+            app:layout_constraintTop_toBottomOf="@+id/termDetailsTermEndDate" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
