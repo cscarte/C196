@@ -48,7 +48,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
     private int assessmentID;
     private int originalCourseID;
-    private String selectedCourseIDString;
     private int selectedCourseID;
 
     private Spinner courseIDSpinner;
@@ -64,10 +63,10 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_details);
 
-        courseIDSpinner = findViewById(R.id.spinnerCourseID);
-
         assessmentID = getIntent().getIntExtra("assessmentID", -1);
-        originalCourseID = getIntent().getIntExtra("courseID", -1);
+        originalCourseID = getIntent().getIntExtra("assessmentCourseID", -1);
+
+        courseIDSpinner = findViewById(R.id.spinnerCourseID);
 
         assessmentTitle = findViewById(R.id.assessmentDetailsTitle);
         String name = getIntent().getStringExtra("assessmentTitle");
@@ -100,8 +99,12 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         courseIDSpinner.setAdapter(adapter);
-        courseIDSpinner.setOnItemSelectedListener(this);
 
+        if (originalCourseID > 0) {
+            courseIDSpinner.setSelection(originalCourseID - 1);
+        }
+
+        courseIDSpinner.setOnItemSelectedListener(this);
         courseIDSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -117,17 +120,24 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
         //////////////////////////////////////////////////////////////////////////
 
-        startDateListener = (datePicker, year, month, day) -> {
+        startDateListener = (datePicker, year, month, day) ->
+
+        {
             month = month + 1;
 
             String textViewDueDate = month + "/" + day + "/" + year;
             assessmentDueDate.setText(textViewDueDate);
-        };
+        }
+
+        ;
 
         assessmentGoalDate = findViewById(R.id.assessmentDetailsGoalDate);
+
         String goalDate = getIntent().getStringExtra("assessmentGoalDate");
         assessmentGoalDate.setText(goalDate);
-        assessmentGoalDate.setOnClickListener(view -> {
+        assessmentGoalDate.setOnClickListener(view ->
+
+        {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
@@ -139,20 +149,26 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             datePickerDialog.show();
         });
 
-        endDateListener = (datePicker, year, month, day) -> {
+        endDateListener = (datePicker, year, month, day) ->
+
+        {
             month = month + 1;
 
             String textViewGoalDate = month + "/" + day + "/" + year;
             assessmentGoalDate.setText(textViewGoalDate);
-        };
+        }
+
+        ;
 
         assessmentGoalDateAlert = findViewById(R.id.dueGoalAlertCheckBox);
+
         goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
         if (goalDateAlert) {
             assessmentGoalDateAlert.setChecked(true);
         }
 
         assessmentObjectiveSwitch = findViewById(R.id.assessmentDetailsAssessmentTypeSwitch);
+
         assessmentObjectiveBooleanValue = getIntent().getBooleanExtra("assessmentObjective", false);
         if (assessmentObjectiveBooleanValue) {
             assessmentObjectiveSwitch.setChecked(true);
@@ -160,7 +176,9 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
 
         Button saveButton = findViewById(R.id.assessmentDetailsSaveButton);
-        saveButton.setOnClickListener(view -> saveAssessment());
+        saveButton.setOnClickListener(view ->
+
+                saveAssessment());
     }
 
     public void saveAssessment() {
@@ -199,9 +217,8 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.saveActionBarButton:
-                saveAssessment();
+        if (item.getItemId() == R.id.saveActionBarButton) {
+            saveAssessment();
         }
         return super.onOptionsItemSelected(item);
     }

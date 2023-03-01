@@ -61,6 +61,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
     int courseID;
     int courseTermID;
+    int originalTermID;
 
     Course course;
     Term term;
@@ -83,8 +84,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_courses_details);
 
         courseID = getIntent().getIntExtra("courseID", -1);
-        courseTermID = getIntent().getIntExtra("courseTermID", -1);
-
+        originalTermID = getIntent().getIntExtra("courseTermID", -1);
 
         courseName = findViewById(R.id.courseDetailsCourseTitle);
         name = getIntent().getStringExtra("courseName");
@@ -146,12 +146,19 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         /////////////////////////////////////////////////////
         termSpinner = findViewById(R.id.courseTermSpinner);
 
+
+
         termArrayList.addAll(allTermsList);
 
         final ArrayAdapter<Term> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termArrayList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         termSpinner.setAdapter(adapter);
+
+        if (originalTermID > 0){
+            termSpinner.setSelection(originalTermID - 1);
+        }
+
         termSpinner.setOnItemSelectedListener(this);
 
         termSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
