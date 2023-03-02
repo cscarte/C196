@@ -9,6 +9,9 @@ import android.content.ComponentName;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -82,6 +86,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_courses_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         courseID = getIntent().getIntExtra("courseID", -1);
         originalTermID = getIntent().getIntExtra("courseTermID", -1);
@@ -147,7 +152,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         termSpinner = findViewById(R.id.courseTermSpinner);
 
 
-
         termArrayList.addAll(allTermsList);
 
         final ArrayAdapter<Term> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, termArrayList);
@@ -155,7 +159,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
         termSpinner.setAdapter(adapter);
 
-        if (originalTermID > 0){
+        if (originalTermID > 0) {
             termSpinner.setSelection(originalTermID - 1);
         }
 
@@ -227,24 +231,27 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         assessmentsAdapter.setAssessmentList(assessmentList1);
 
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
-        courseSaveButton.setOnClickListener(view -> {
-            String spinnerText = courseStatus.getSelectedItem().toString();
+        courseSaveButton.setOnClickListener(view -> saveCourse());
+    }
 
-            term = (Term) termSpinner.getSelectedItem();
-            courseTermID = term.getTermID();
+    public void saveCourse(){
+        Repository repository = new Repository(getApplication());
 
-            if (courseID == -1) {
-                course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
-                repository.insert(course);
+        String spinnerText = courseStatus.getSelectedItem().toString();
+        term = (Term) termSpinner.getSelectedItem();
+        courseTermID = term.getTermID();
 
-                onBackPressed();
-            } else {
-                course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
-                repository.update(course);
+        if (courseID == -1) {
+            course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
+            repository.insert(course);
 
-                onBackPressed();
-            }
-        });
+            onBackPressed();
+        } else {
+            course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
+            repository.update(course);
+
+            onBackPressed();
+        }
     }
 
     @Override
@@ -255,5 +262,20 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_saveactionbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.saveActionBarButton) {
+            saveCourse();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

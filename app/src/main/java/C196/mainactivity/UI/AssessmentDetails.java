@@ -62,6 +62,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_details);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         assessmentID = getIntent().getIntExtra("assessmentID", -1);
         originalCourseID = getIntent().getIntExtra("assessmentCourseID", -1);
@@ -176,9 +177,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
 
         Button saveButton = findViewById(R.id.assessmentDetailsSaveButton);
-        saveButton.setOnClickListener(view ->
-
-                saveAssessment());
+        saveButton.setOnClickListener(view -> saveAssessment());
     }
 
     public void saveAssessment() {
