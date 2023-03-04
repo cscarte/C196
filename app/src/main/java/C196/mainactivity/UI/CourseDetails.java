@@ -217,7 +217,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         }
 
 
-
         List<Assessment> assessmentList = repository.getmAllAssessments();
         List<Assessment> assessmentList1 = new ArrayList<>();
 

@@ -25,6 +25,7 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
     private AdapterView.OnItemClickListener listener;
     private final Context context;
     private final LayoutInflater mInflater;
+    public static boolean termsListClickEnabled = true;
 
     class TermViewHolder extends RecyclerView.ViewHolder {
         private final TextView termsItemView;
@@ -36,14 +37,17 @@ public class TermsAdapter extends RecyclerView.Adapter<TermsAdapter.TermViewHold
 
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final Term current = termArrayList.get(position);
-                    Intent intent = new Intent(context, TermDetails.class);
-                    intent.putExtra("termID", current.getTermID());
-                    intent.putExtra("termTitle", current.getTermTitle());
-                    intent.putExtra("termStartDate", current.getTermStartDate());
-                    intent.putExtra("termEndDate", current.getTermEndDate());
-                    context.startActivity(intent);
+                    if (termsListClickEnabled) {
+                        termsListClickEnabled = false;
+                        int position = getAdapterPosition();
+                        final Term current = termArrayList.get(position);
+                        Intent intent = new Intent(context, TermDetails.class);
+                        intent.putExtra("termID", current.getTermID());
+                        intent.putExtra("termTitle", current.getTermTitle());
+                        intent.putExtra("termStartDate", current.getTermStartDate());
+                        intent.putExtra("termEndDate", current.getTermEndDate());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

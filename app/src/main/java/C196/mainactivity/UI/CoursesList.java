@@ -45,4 +45,10 @@ public class CoursesList extends AppCompatActivity {
         Intent intent = new Intent(CoursesList.this, CourseDetails.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CoursesAdapter.courseListClickEnabled = true;
+    }
 }

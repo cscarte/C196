@@ -43,4 +43,10 @@ public class TermsList extends AppCompatActivity {
         Intent intent = new Intent(TermsList.this, TermDetails.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TermsAdapter.termsListClickEnabled = true;
+    }
 }

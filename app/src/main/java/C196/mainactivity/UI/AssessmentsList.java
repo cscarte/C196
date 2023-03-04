@@ -45,4 +45,10 @@ public class AssessmentsList extends AppCompatActivity {
         Intent intent = new Intent(AssessmentsList.this, AssessmentDetails.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AssessmentsAdapter.clickedEnabled = true;
+    }
 }

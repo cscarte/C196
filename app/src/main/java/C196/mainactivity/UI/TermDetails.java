@@ -14,11 +14,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 
+import C196.mainactivity.Adapters.CoursesAdapter;
+import C196.mainactivity.Adapters.TermsAdapter;
 import C196.mainactivity.Database.Repository;
+import C196.mainactivity.Entity.Course;
 import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
 
@@ -36,8 +43,13 @@ public class TermDetails extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener termEndDateListener;
 
     Term term;
-    Repository repository;
+    Repository repository = new Repository(getApplication());
 
+    List<Course> courseList = new ArrayList<>();
+
+    RecyclerView recyclerView;
+
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_details);
@@ -91,7 +103,23 @@ public class TermDetails extends AppCompatActivity {
             termEndDate.setText(textViewTermEndDate);
         };
 
-        repository = new Repository(getApplication());
+        courseList = repository.getmAllCourses();
+        List<Course> associatedCourseList = new ArrayList<>();
+
+        for (Course course : courseList){
+            if (course.getCourseTermID() == termID){
+                associatedCourseList.add(course);
+            }
+        }
+
+        CoursesAdapter coursesAdapter = new CoursesAdapter(this);
+
+        recyclerView = findViewById(R.id.recyclerViewTermCourses);
+        recyclerView.setAdapter(coursesAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        coursesAdapter.setCourseList(associatedCourseList);
+        CoursesAdapter.courseListClickEnabled = false;
+
 
         Button saveButton = findViewById(R.id.termDetailsSaveButton);
         saveButton.setOnClickListener(view -> saveTerm());
@@ -99,7 +127,6 @@ public class TermDetails extends AppCompatActivity {
 
     @SuppressLint("NotifyDataSetChanged")
     public void saveTerm() {
-        Repository repository = new Repository(getApplication());
         if (termID == -1) {
             term = new Term(0, termTitle.getText().toString(), termStartDate.getText().toString(), termEndDate.getText().toString());
             repository.insert(term);
@@ -112,6 +139,7 @@ public class TermDetails extends AppCompatActivity {
         TermsList.termList.clear();
         TermsList.termList.addAll(repository.getmAllTerms());
         TermsList.termsAdapter.notifyDataSetChanged();
+        TermsAdapter.termsListClickEnabled = true;
         finish();
     }
 
@@ -128,5 +156,11 @@ public class TermDetails extends AppCompatActivity {
             saveTerm();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        TermsAdapter.termsListClickEnabled = true;
     }
 }
