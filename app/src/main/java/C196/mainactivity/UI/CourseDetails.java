@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
+import C196.mainactivity.Adapters.CoursesAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -230,11 +231,12 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         assessmentsAdapter.setAssessmentList(assessmentList1);
 
+
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
         courseSaveButton.setOnClickListener(view -> saveCourse());
     }
 
-    public void saveCourse(){
+    public void saveCourse() {
         Repository repository = new Repository(getApplication());
 
         String spinnerText = courseStatus.getSelectedItem().toString();
@@ -244,14 +246,15 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         if (courseID == -1) {
             course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
             repository.insert(course);
-
-            onBackPressed();
         } else {
             course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
             repository.update(course);
-
-            onBackPressed();
         }
+
+        CoursesList.courseList.clear();
+        CoursesList.courseList.addAll(repository.getmAllCourses());
+        CoursesList.coursesAdapter.notifyDataSetChanged();
+        finish();
     }
 
     @Override

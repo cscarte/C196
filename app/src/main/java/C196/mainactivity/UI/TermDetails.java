@@ -1,5 +1,6 @@
 package C196.mainactivity.UI;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Term;
@@ -39,7 +41,7 @@ public class TermDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_details);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         termID = getIntent().getIntExtra("termID", -1);
 
@@ -86,7 +88,7 @@ public class TermDetails extends AppCompatActivity {
             month = month + 1;
 
             String textViewTermEndDate = month + "/" + day + "/" + year;
-            termStartDate.setText(textViewTermEndDate);
+            termEndDate.setText(textViewTermEndDate);
         };
 
         repository = new Repository(getApplication());
@@ -95,19 +97,22 @@ public class TermDetails extends AppCompatActivity {
         saveButton.setOnClickListener(view -> saveTerm());
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void saveTerm() {
         Repository repository = new Repository(getApplication());
         if (termID == -1) {
             term = new Term(0, termTitle.getText().toString(), termStartDate.getText().toString(), termEndDate.getText().toString());
             repository.insert(term);
 
-            onBackPressed();
         } else {
             term = new Term(termID, termTitle.getText().toString(), termStartDate.getText().toString(), termEndDate.getText().toString());
             repository.update(term);
-
-            onBackPressed();
         }
+
+        TermsList.termList.clear();
+        TermsList.termList.addAll(repository.getmAllTerms());
+        TermsList.termsAdapter.notifyDataSetChanged();
+        finish();
     }
 
     @Override

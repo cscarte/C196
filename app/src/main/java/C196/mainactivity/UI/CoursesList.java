@@ -18,26 +18,27 @@ import C196.mainactivity.Entity.Course;
 import C196.mainactivity.R;
 
 public class CoursesList extends AppCompatActivity {
+    static RecyclerView recyclerView;
     private Repository repository;
+    static CoursesAdapter coursesAdapter;
+    static List<Course> courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses_list);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        RecyclerView recyclerView = findViewById(R.id.coursesRecyclerView);
+        recyclerView = findViewById(R.id.coursesRecyclerView);
         repository = new Repository(getApplication());
 
-        List<Course> courseList = repository.getmAllCourses();
+        courseList = repository.getmAllCourses();
 
-        final CoursesAdapter adapter = new CoursesAdapter(this);
-        recyclerView.setAdapter(adapter);
+        coursesAdapter = new CoursesAdapter(this);
+        recyclerView.setAdapter(coursesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.setCourseList(courseList);
-
-        FloatingActionButton floatingActionButton = findViewById(R.id.addCourseDetailsButton);
+        coursesAdapter.setCourseList(courseList);
     }
 
     public void enterCoursesDetails(View view){

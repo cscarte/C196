@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.List;
+import java.util.Objects;
 
 import C196.mainactivity.Adapters.TermsAdapter;
 import C196.mainactivity.Database.Repository;
@@ -18,26 +17,26 @@ import C196.mainactivity.Entity.Term;
 import C196.mainactivity.R;
 
 public class TermsList extends AppCompatActivity {
-    private Repository repository;
+    static TermsAdapter termsAdapter;
+    static List<Term> termList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_list);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.termsListRecyclerView);
-        repository = new Repository(getApplication());
+        Repository repository = new Repository(getApplication());
 
-        List<Term> termList = repository.getmAllTerms();
+        termList = repository.getmAllTerms();
 
-        final TermsAdapter adapter = new TermsAdapter(this);
-        recyclerView.setAdapter(adapter);
+        termsAdapter = new TermsAdapter(this);
+        recyclerView.setAdapter(termsAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.termDetailsAddButton);
-        adapter.setTermsArrayList(termList);
+        termsAdapter.setTermsArrayList(termList);
     }
 
     public void enterTermDetails(View view){

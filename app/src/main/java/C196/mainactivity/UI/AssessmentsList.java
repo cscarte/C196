@@ -1,19 +1,15 @@
 package C196.mainactivity.UI;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
@@ -31,7 +27,7 @@ public class AssessmentsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_list);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.assessmentsRecyclerView);
         repository = new Repository(getApplication());
@@ -49,6 +45,4 @@ public class AssessmentsList extends AppCompatActivity {
         Intent intent = new Intent(AssessmentsList.this, AssessmentDetails.class);
         startActivity(intent);
     }
-
-
 }

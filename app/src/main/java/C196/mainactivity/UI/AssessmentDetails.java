@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
@@ -47,8 +48,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     boolean assessmentObjectiveBooleanValue;
 
     private int assessmentID;
-    private int originalCourseID;
-    private int selectedCourseID;
 
     private Spinner courseIDSpinner;
 
@@ -62,10 +61,10 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessments_details);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         assessmentID = getIntent().getIntExtra("assessmentID", -1);
-        originalCourseID = getIntent().getIntExtra("assessmentCourseID", -1);
+        int originalCourseID = getIntent().getIntExtra("assessmentCourseID", -1);
 
         courseIDSpinner = findViewById(R.id.spinnerCourseID);
 
@@ -88,11 +87,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
         });
-
-
-        //////////////////////////////////////////////////////////////////////////
-        //Setting up spinner data for course IDs from course Entity
-
 
         courseArrayList.addAll(courseList);
 
@@ -118,27 +112,18 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             }
         });
 
-
-        //////////////////////////////////////////////////////////////////////////
-
-        startDateListener = (datePicker, year, month, day) ->
-
-        {
+        startDateListener = (datePicker, year, month, day) -> {
             month = month + 1;
 
             String textViewDueDate = month + "/" + day + "/" + year;
             assessmentDueDate.setText(textViewDueDate);
-        }
-
-        ;
+        };
 
         assessmentGoalDate = findViewById(R.id.assessmentDetailsGoalDate);
 
         String goalDate = getIntent().getStringExtra("assessmentGoalDate");
         assessmentGoalDate.setText(goalDate);
-        assessmentGoalDate.setOnClickListener(view ->
-
-        {
+        assessmentGoalDate.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
@@ -150,16 +135,12 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             datePickerDialog.show();
         });
 
-        endDateListener = (datePicker, year, month, day) ->
-
-        {
+        endDateListener = (datePicker, year, month, day) -> {
             month = month + 1;
 
             String textViewGoalDate = month + "/" + day + "/" + year;
             assessmentGoalDate.setText(textViewGoalDate);
-        }
-
-        ;
+        };
 
         assessmentGoalDateAlert = findViewById(R.id.dueGoalAlertCheckBox);
 
@@ -175,16 +156,16 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             assessmentObjectiveSwitch.setChecked(true);
         }
 
-
         Button saveButton = findViewById(R.id.assessmentDetailsSaveButton);
         saveButton.setOnClickListener(view -> saveAssessment());
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void saveAssessment() {
         Repository repository = new Repository(getApplication());
 
         course = (Course) courseIDSpinner.getSelectedItem();
-        selectedCourseID = course.getCourseID();
+        int selectedCourseID = course.getCourseID();
 
         if (assessmentID == -1) {
             assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
@@ -194,6 +175,10 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
             repository.update(assessment);
         }
+
+        AssessmentsList.assessmentList.clear();
+        AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
+        AssessmentsList.adapter.notifyDataSetChanged();
         finish();
     }
 
@@ -220,5 +205,11 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             saveAssessment();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }
