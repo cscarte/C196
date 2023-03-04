@@ -21,6 +21,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
     private List<Course> courseArrayList = new ArrayList<>();
     private final Context context;
     private final LayoutInflater mInflater;
+    public static boolean courseListClickEnabled = true;
 
     class CoursesViewHolder extends RecyclerView.ViewHolder {
         private final TextView coursesItemView;
@@ -32,22 +33,25 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
 
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final Course current = courseArrayList.get(position);
-                    Intent intent = new Intent(context, CourseDetails.class);
-                    intent.putExtra("courseID", current.getCourseID());
-                    intent.putExtra("courseName", current.getCourseName());
-                    intent.putExtra("courseStatus", current.getCourseStatus());
-                    intent.putExtra("courseStartDate", current.getCourseStartDate());
-                    intent.putExtra("courseEndDate", current.getCourseEndDate());
-                    intent.putExtra("courseShareNotes", current.getCourseShareNotes());
-                    intent.putExtra("courseInstructorName", current.getCourseInstructorName());
-                    intent.putExtra("courseInstructorPhone", current.getCourseInstructorPhone());
-                    intent.putExtra("courseInstructorEmail", current.getCourseInstructorEmail());
-                    intent.putExtra("courseStartDateAlert", current.getCourseStartDateAlert());
-                    intent.putExtra("courseEndDateAlert", current.getCourseEndDateAlert());
-                    intent.putExtra("courseTermID", current.getCourseTermID());
-                    context.startActivity(intent);
+                    if (courseListClickEnabled) {
+                        courseListClickEnabled = false;
+                        int position = getAdapterPosition();
+                        final Course current = courseArrayList.get(position);
+                        Intent intent = new Intent(context, CourseDetails.class);
+                        intent.putExtra("courseID", current.getCourseID());
+                        intent.putExtra("courseName", current.getCourseName());
+                        intent.putExtra("courseStatus", current.getCourseStatus());
+                        intent.putExtra("courseStartDate", current.getCourseStartDate());
+                        intent.putExtra("courseEndDate", current.getCourseEndDate());
+                        intent.putExtra("courseShareNotes", current.getCourseShareNotes());
+                        intent.putExtra("courseInstructorName", current.getCourseInstructorName());
+                        intent.putExtra("courseInstructorPhone", current.getCourseInstructorPhone());
+                        intent.putExtra("courseInstructorEmail", current.getCourseInstructorEmail());
+                        intent.putExtra("courseStartDateAlert", current.getCourseStartDateAlert());
+                        intent.putExtra("courseEndDateAlert", current.getCourseEndDateAlert());
+                        intent.putExtra("courseTermID", current.getCourseTermID());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }
@@ -67,7 +71,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
 
     @Override
     public void onBindViewHolder(@NonNull CoursesAdapter.CoursesViewHolder holder, int position) {
-        if (courseArrayList != null){
+        if (courseArrayList != null) {
             Course current = courseArrayList.get(position);
             String name = current.getCourseName();
             holder.coursesItemView.setText(name);
@@ -78,12 +82,12 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesV
 
     @Override
     public int getItemCount() {
-        if (courseArrayList != null){
+        if (courseArrayList != null) {
             return courseArrayList.size();
         } else return 0;
     }
 
-    public void setCourseList(List<Course> courses){
+    public void setCourseList(List<Course> courses) {
         courseArrayList = courses;
         notifyDataSetChanged();
     }

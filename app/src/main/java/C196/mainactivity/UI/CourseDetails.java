@@ -1,6 +1,5 @@
 package C196.mainactivity.UI;
 
-import static C196.mainactivity.R.id.assessmentsCourseDetailsRecyclerView;
 import static C196.mainactivity.R.id.courseTermSpinner;
 
 import android.annotation.SuppressLint;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import C196.mainactivity.Adapters.AssessmentsAdapter;
+import C196.mainactivity.Adapters.AssessmentViewOnlyAdapter;
 import C196.mainactivity.Adapters.CoursesAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
@@ -76,6 +75,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     private final Repository repository = new Repository(getApplication());
     List<Term> allTermsList = repository.getmAllTerms();
     ArrayList<Term> termArrayList = new ArrayList<>();
+
+    RecyclerView recyclerView;
 
     @Override
     public ComponentName getComponentName() {
@@ -150,7 +151,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseNotes.setText(notes);
 
         /////////////////////////////////////////////////////
-        termSpinner = findViewById(R.id.courseTermSpinner);
+        termSpinner = findViewById(courseTermSpinner);
 
 
         termArrayList.addAll(allTermsList);
@@ -215,7 +216,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             }
         }
 
-        RecyclerView recyclerView = findViewById(assessmentsCourseDetailsRecyclerView);
+
 
         List<Assessment> assessmentList = repository.getmAllAssessments();
         List<Assessment> assessmentList1 = new ArrayList<>();
@@ -226,11 +227,19 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             }
         }
 
-        AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
-        recyclerView.setAdapter(assessmentsAdapter);
+        AssessmentViewOnlyAdapter assessmentViewOnlyAdapter = new AssessmentViewOnlyAdapter(this);
+        recyclerView = findViewById(R.id.assessmentListRecyclerView);
+        recyclerView.setAdapter(assessmentViewOnlyAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        assessmentsAdapter.setAssessmentList(assessmentList1);
+        assessmentViewOnlyAdapter.setAssessmentList(assessmentList1);
 
+        /**
+         AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
+         recyclerView.setAdapter(assessmentsAdapter);
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+         assessmentsAdapter.setAssessmentList(assessmentList1);
+
+         */
 
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
         courseSaveButton.setOnClickListener(view -> saveCourse());
@@ -254,12 +263,13 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         CoursesList.courseList.clear();
         CoursesList.courseList.addAll(repository.getmAllCourses());
         CoursesList.coursesAdapter.notifyDataSetChanged();
+        CoursesAdapter.courseListClickEnabled = true;
         finish();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        recyclerView.setEnabled(false);
     }
 
     @Override
@@ -280,5 +290,11 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             saveCourse();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CoursesAdapter.courseListClickEnabled = true;
     }
 }

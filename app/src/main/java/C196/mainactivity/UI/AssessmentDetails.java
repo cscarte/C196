@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import C196.mainactivity.Adapters.AssessmentsAdapter;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -179,6 +180,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         AssessmentsList.assessmentList.clear();
         AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
         AssessmentsList.adapter.notifyDataSetChanged();
+        AssessmentsAdapter.clickedEnabled = true;
         finish();
     }
 
@@ -210,6 +212,11 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        AssessmentsAdapter.clickedEnabled = true;
     }
 }
