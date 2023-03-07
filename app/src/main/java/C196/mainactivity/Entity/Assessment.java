@@ -9,16 +9,18 @@ public class Assessment {
     private int assessmentID;
     private String assessmentTitle;
     private String assessmentDueDate;
+    private boolean assessmentDueDateAlert;
     private String assessmentGoalDate;
     private boolean assessmentGoalDateAlert;
     private boolean assessmentObjective;
     private int assessmentCourseID;
 
-    public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentGoalDateAlert, boolean assessmentObjective, int assessmentCourseID) {
+    public Assessment(int assessmentID, String assessmentTitle, String assessmentDueDate, String assessmentGoalDate, boolean assessmentDueDateAlert, boolean assessmentGoalDateAlert, boolean assessmentObjective, int assessmentCourseID) {
         this.assessmentID = assessmentID;
         this.assessmentTitle = assessmentTitle;
         this.assessmentDueDate = assessmentDueDate;
         this.assessmentGoalDate = assessmentGoalDate;
+        this.assessmentDueDateAlert = assessmentDueDateAlert;
         this.assessmentGoalDateAlert = assessmentGoalDateAlert;
         this.assessmentObjective = assessmentObjective;
         this.assessmentCourseID = assessmentCourseID;
@@ -78,6 +80,14 @@ public class Assessment {
 
     public void setAssessmentCourseID(int assessmentCourseID) {
         this.assessmentCourseID = assessmentCourseID;
+    }
+
+    public boolean isAssessmentDueDateAlert() {
+        return assessmentDueDateAlert;
+    }
+
+    public void setAssessmentDueDateAlert(boolean assessmentDueDateAlert) {
+        this.assessmentDueDateAlert = assessmentDueDateAlert;
     }
 
     @Override

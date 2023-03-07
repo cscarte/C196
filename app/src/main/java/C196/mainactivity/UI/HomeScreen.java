@@ -54,9 +54,9 @@ public class HomeScreen extends AppCompatActivity {
         }
 
         if (assessmentsListSize == 0) {
-            Assessment assessment = new Assessment(1, "Assessment 1", "03/01/23", "03/31/23", true, true, 1);
-            Assessment assessment1 = new Assessment(2, "Assessment 2", "04/01/23", "04/28/23", false, true, 1);
-            Assessment assessment2 = new Assessment(3, "Assessment 3", "05/01/23", "05/15/23", false, false, 2);
+            Assessment assessment = new Assessment(1, "Assessment 1", "03/01/23", "03/31/23", true, true, true, 1);
+            Assessment assessment1 = new Assessment(2, "Assessment 2", "04/01/23", "04/28/23", false, false, true, 1);
+            Assessment assessment2 = new Assessment(3, "Assessment 3", "05/01/23", "05/15/23", true, false, false, 2);
 
             repository.insert(assessment);
             repository.insert(assessment1);

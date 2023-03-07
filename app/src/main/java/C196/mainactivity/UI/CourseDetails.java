@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import C196.mainactivity.Adapters.AssessmentViewOnlyAdapter;
 import C196.mainactivity.Adapters.CoursesAdapter;
@@ -88,7 +89,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_courses_details);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         courseID = getIntent().getIntExtra("courseID", -1);
         originalTermID = getIntent().getIntExtra("courseTermID", -1);
@@ -232,18 +233,11 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         assessmentViewOnlyAdapter.setAssessmentList(assessmentList1);
 
-        /**
-         AssessmentsAdapter assessmentsAdapter = new AssessmentsAdapter(this);
-         recyclerView.setAdapter(assessmentsAdapter);
-         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-         assessmentsAdapter.setAssessmentList(assessmentList1);
-
-         */
-
         courseSaveButton = findViewById(R.id.courseDetailsSaveButton);
         courseSaveButton.setOnClickListener(view -> saveCourse());
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void saveCourse() {
         Repository repository = new Repository(getApplication());
 
@@ -296,4 +290,24 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         super.onBackPressed();
         CoursesAdapter.courseListClickEnabled = true;
     }
+
+    private void _scheduleAlertCourseEditor(int id, String time, String title, String text){
+        long now = DateConverter.nowDate();
+        long alertTime = DateConverter.toTimestampString(time);
+        if (now <= DateConverter.toTimestampString(time)){
+            Notifications.scheduleCourseAlarm(getApplicationContext(), id, alertTime, text, title + ", occurring a: " + time);
+        }
+    }
+
+    public void scheduleAlertCourseEditor(MenuItem menuItem){
+        String dateText = courseStartDate.getText().toString();
+        String textStartDate = "Course Starts Today";
+        String courseNameText = courseName.getText().toString();
+        _scheduleAlertCourseEditor(courseID, dateText, courseNameText, textStartDate);
+
+        dateText = courseEndDate.getText().toString();
+        String textEndDate = "Course Ends Today";
+        _scheduleAlertCourseEditor(courseID, dateText, courseNameText, textEndDate);
+    }
+
 }

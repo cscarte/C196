@@ -21,9 +21,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import C196.mainactivity.Adapters.AssessmentsAdapter;
@@ -36,6 +38,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     private EditText assessmentTitle;
     private TextView assessmentDueDate;
     private TextView assessmentGoalDate;
+    private CheckBox assessmentDueDateAlert;
     private CheckBox assessmentGoalDateAlert;
 
     private Course course;
@@ -46,6 +49,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     private DatePickerDialog.OnDateSetListener startDateListener;
     private DatePickerDialog.OnDateSetListener endDateListener;
     boolean goalDateAlert;
+    boolean dueDateAlert;
     boolean assessmentObjectiveBooleanValue;
 
     private int assessmentID;
@@ -55,6 +59,8 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     private final Repository repository = new Repository(getApplication());
     List<Course> courseList = repository.getmAllCourses();
     ArrayList<Course> courseArrayList = new ArrayList<>();
+
+    String assessmentDueDateString;
 
     Assessment assessment;
 
@@ -84,6 +90,9 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(AssessmentDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener, year, month, day);
+            String formattedDate = "MM/dd/yy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate, Locale.US);
+            assessmentDueDateString = String.valueOf(simpleDateFormat);
 
             datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             datePickerDialog.show();
@@ -143,7 +152,13 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             assessmentGoalDate.setText(textViewGoalDate);
         };
 
+        assessmentDueDateAlert = findViewById(R.id.dueDateAlertCheckBox);
         assessmentGoalDateAlert = findViewById(R.id.dueGoalAlertCheckBox);
+
+        dueDateAlert = getIntent().getBooleanExtra("assessmentDueDateAlert", false);
+        if (dueDateAlert) {
+            assessmentDueDateAlert.setChecked(true);
+        }
 
         goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
         if (goalDateAlert) {
@@ -169,11 +184,11 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         int selectedCourseID = course.getCourseID();
 
         if (assessmentID == -1) {
-            assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+            assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDateString, assessmentGoalDate.getText().toString(), dueDateAlert = assessmentDueDateAlert.isChecked(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
             repository.insert(assessment);
 
         } else {
-            assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+            assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert = assessmentDueDateAlert.isChecked(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
             repository.update(assessment);
         }
 
