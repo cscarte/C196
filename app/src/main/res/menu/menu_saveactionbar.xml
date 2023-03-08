@@ -5,4 +5,14 @@
         android:icon="@drawable/ic_save_icon"
         android:title="Save"
         app:showAsAction="ifRoom"/>
+    <item android:id="@+id/shareCourseNotes"
+        android:title="Share Notes"
+        android:icon="@drawable/ic_baseline_note_24"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/deleteMenuButton"
+        android:title="Delete"
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="ifRoom"
+        />
 </menu>

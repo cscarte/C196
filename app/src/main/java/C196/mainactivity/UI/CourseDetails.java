@@ -5,6 +5,7 @@ import static C196.mainactivity.R.id.courseTermSpinner;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.ComponentName;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -151,6 +152,12 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         notes = getIntent().getStringExtra("courseShareNotes");
         courseNotes.setText(notes);
 
+        courseShareNotesButton = findViewById(R.id.courseDetailsShareNotesButton);
+        courseShareNotesButton.setOnClickListener(view -> {
+                    shareNotes();
+                }
+        );
+
         /////////////////////////////////////////////////////
         termSpinner = findViewById(courseTermSpinner);
 
@@ -253,6 +260,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             repository.update(course);
         }
 
+        //scheduleAlertCourseEditor(course);
+
         CoursesList.courseList.clear();
         CoursesList.courseList.addAll(repository.getmAllCourses());
         CoursesList.coursesAdapter.notifyDataSetChanged();
@@ -279,8 +288,12 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.saveActionBarButton) {
-            saveCourse();
+        switch (item.getItemId()) {
+            case R.id.saveActionBarButton:
+                saveCourse();
+                return true;
+            case R.id.shareCourseNotes:
+                shareNotes();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -291,23 +304,34 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         CoursesAdapter.courseListClickEnabled = true;
     }
 
-    private void _scheduleAlertCourseEditor(int id, String time, String title, String text){
+    private void _scheduleAlertCourseEditor(int id, String time, String title, String text) {
         long now = DateConverter.nowDate();
         long alertTime = DateConverter.toTimestampString(time);
-        if (now <= DateConverter.toTimestampString(time)){
-            Notifications.scheduleCourseAlarm(getApplicationContext(), id, alertTime, text, title + ", occurring a: " + time);
+        if (now <= DateConverter.toTimestampString(time)) {
+            //Notifications.scheduleCourseAlarm(getApplicationContext(), id, alertTime, text, title + ", occurring a: " + time);
         }
     }
 
-    public void scheduleAlertCourseEditor(MenuItem menuItem){
+    public void scheduleAlertCourseEditor(MenuItem menuItem) {
         String dateText = courseStartDate.getText().toString();
         String textStartDate = "Course Starts Today";
         String courseNameText = courseName.getText().toString();
-        _scheduleAlertCourseEditor(courseID, dateText, courseNameText, textStartDate);
+        //_scheduleAlertCourseEditor(courseID, dateText, courseNameText, textStartDate);
 
         dateText = courseEndDate.getText().toString();
         String textEndDate = "Course Ends Today";
-        _scheduleAlertCourseEditor(courseID, dateText, courseNameText, textEndDate);
+        //_scheduleAlertCourseEditor(courseID, dateText, courseNameText, textEndDate);
     }
 
+
+    public void shareNotes() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, courseNotes.getText().toString());
+        intent.putExtra(Intent.EXTRA_TITLE, "Share Message");
+        intent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(intent, "Share notes from " + courseName.getText().toString());
+        startActivity(shareIntent);
+    }
 }

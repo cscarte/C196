@@ -1,7 +1,9 @@
+/**
 package C196.mainactivity.UI;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -108,7 +110,7 @@ public class Notifications extends BroadcastReceiver {
             notificationManager.createNotificationChannel(courseNotificationChannel);
             notificationManager.createNotificationChannel(termNotificationChannel);
         }
-    }*/
+
 
     public static boolean scheduleCourseAlarm(Context context, int id, long time, String title, String text){
         return scheduleAlarm(context, id, time, title, text, "course", courseAlarmsChannel);
@@ -119,4 +121,4 @@ public class Notifications extends BroadcastReceiver {
     }
 
 
-}
+}*/
