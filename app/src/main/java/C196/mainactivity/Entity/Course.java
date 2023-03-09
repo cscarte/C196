@@ -3,6 +3,8 @@ package C196.mainactivity.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "courses")
 public class Course {
     @PrimaryKey(autoGenerate = true)
@@ -19,31 +21,7 @@ public class Course {
     private Boolean courseEndDateAlert;
     private int courseTermID;
 
-    public String getCourseInstructorName() {
-        return courseInstructorName;
-    }
-
-    public void setCourseInstructorName(String courseInstructorName) {
-        this.courseInstructorName = courseInstructorName;
-    }
-
-    public String getCourseInstructorPhone() {
-        return courseInstructorPhone;
-    }
-
-    public void setCourseInstructorPhone(String courseInstructorPhone) {
-        this.courseInstructorPhone = courseInstructorPhone;
-    }
-
-    public String getCourseInstructorEmail() {
-        return courseInstructorEmail;
-    }
-
-    public void setCourseInstructorEmail(String courseInstructorEmail) {
-        this.courseInstructorEmail = courseInstructorEmail;
-    }
-
-    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, int courseTermID) {
+    public Course(int courseID, String courseName, String courseStatus, String courseStartDate, String courseEndDate, String courseShareNotes, String courseInstructorName, String courseInstructorPhone, String courseInstructorEmail, Boolean courseStartDateAlert, Boolean courseEndDateAlert, int courseTermID) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStatus = courseStatus;
@@ -53,6 +31,8 @@ public class Course {
         this.courseInstructorName = courseInstructorName;
         this.courseInstructorPhone = courseInstructorPhone;
         this.courseInstructorEmail = courseInstructorEmail;
+        this.courseStartDateAlert = courseStartDateAlert;
+        this.courseEndDateAlert = courseEndDateAlert;
         this.courseTermID = courseTermID;
     }
 
@@ -102,6 +82,30 @@ public class Course {
 
     public void setCourseShareNotes(String courseShareNotes) {
         this.courseShareNotes = courseShareNotes;
+    }
+
+    public String getCourseInstructorName() {
+        return courseInstructorName;
+    }
+
+    public void setCourseInstructorName(String courseInstructorName) {
+        this.courseInstructorName = courseInstructorName;
+    }
+
+    public String getCourseInstructorPhone() {
+        return courseInstructorPhone;
+    }
+
+    public void setCourseInstructorPhone(String courseInstructorPhone) {
+        this.courseInstructorPhone = courseInstructorPhone;
+    }
+
+    public String getCourseInstructorEmail() {
+        return courseInstructorEmail;
+    }
+
+    public void setCourseInstructorEmail(String courseInstructorEmail) {
+        this.courseInstructorEmail = courseInstructorEmail;
     }
 
     public Boolean getCourseStartDateAlert() {

@@ -46,11 +46,11 @@ public class HomeScreen extends AppCompatActivity {
         }
 
         if (courseListSize == 0) {
-            Course course = new Course(1, "Course 1", "In progress", "02/15/23", "04/01/23", "This is a sample note", "Johnny Doe", "555-555-5555", "fakeemail@gmail.com", 1);
-            Course course1 = new Course(2, "Course 2", "Planned to take", "04/01/23", "05/01/23", "Finish homework on time", "Jack Black", "666-777-8888", "kungfupanda@gmail.com", 2);
+            //Course course = new Course(1, "Course 1", "In progress", "null", "null", "This is a sample note", "Johnny Doe", "555-555-5555", "fakeemail@gmail.com", 1);
+            //Course course1 = new Course(2, "Course 2", "Planned to take", "null", "null", "Finish homework on time", "Jack Black", "666-777-8888", "kungfupanda@gmail.com", 2);
 
-            repository.insert(course);
-            repository.insert(course1);
+            //repository.insert(course);
+           // repository.insert(course1);
         }
 
         if (assessmentsListSize == 0) {

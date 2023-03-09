@@ -6,8 +6,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,9 +25,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import C196.mainactivity.Adapters.AssessmentViewOnlyAdapter;
@@ -52,18 +56,27 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     Button courseSaveButton;
 
     Spinner termSpinner;
+    final Calendar calendarStartDate = Calendar.getInstance();
+    final Calendar calendarEndDate = Calendar.getInstance();
 
     private DatePickerDialog.OnDateSetListener startDateListener;
     private DatePickerDialog.OnDateSetListener endDateListener;
 
     String name;
     String status;
-    String startDate;
-    String endDate;
+    String startDateString;
+    Date startDate;
+    String endDateString;
+    Date endDate;
     String notes;
     String instructorName;
     String instructorPhone;
     String instructorEmail;
+    Boolean booleanStartDate;
+    Boolean booleanEndDate;
+
+    static CheckBox alertStartDate;
+    static CheckBox alertEndDate;
 
     int courseID;
     int courseTermID;
@@ -92,6 +105,9 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_courses_details);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        String dateFormat = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat, Locale.US);
+
         courseID = getIntent().getIntExtra("courseID", -1);
         originalTermID = getIntent().getIntExtra("courseTermID", -1);
 
@@ -99,50 +115,66 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         name = getIntent().getStringExtra("courseName");
         courseName.setText(name);
 
+        alertStartDate = findViewById(R.id.alertStartDateCheckBox);
+        alertEndDate = findViewById(R.id.alertEndDateCheckBox);
+
+        booleanStartDate = getIntent().getBooleanExtra("courseStartDateAlert", false);
+        booleanEndDate = getIntent().getBooleanExtra("courseEndDateAlert", false);
 
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
-        startDate = getIntent().getStringExtra("courseStartDate");
-        courseStartDate.setText(startDate);
-        courseStartDate.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+        courseStartDate.setText(getIntent().getStringExtra("courseStartDate"));
+        courseStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String dateStartString = courseStartDate.getText().toString();
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(CourseDetails.this, android.R.style.Theme_Holo_Light_Dialog, startDateListener, year, month, day);
-
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            datePickerDialog.show();
+                try {
+                    calendarStartDate.setTime(simpleDateFormat.parse(dateStartString));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                new DatePickerDialog(CourseDetails.this, startDateListener, calendarStartDate.get(Calendar.YEAR), calendarStartDate.get(Calendar.MONTH), calendarStartDate.get(Calendar.DAY_OF_MONTH)).show();
+            }
         });
 
-        startDateListener = (datePicker, year, month, day) -> {
-            month = month + 1;
+        startDateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendarStartDate.set(Calendar.YEAR, year);
+                calendarStartDate.set(Calendar.MONTH, month);
+                calendarStartDate.set(Calendar.DAY_OF_MONTH, day);
 
-            String textViewDueDate = month + "/" + day + "/" + year;
-            courseStartDate.setText(textViewDueDate);
+                updateLabelStart();
+            }
         };
 
 
         courseEndDate = findViewById(R.id.courseDetailsCourseEndDate);
-        endDate = getIntent().getStringExtra("courseEndDate");
-        courseEndDate.setText(endDate);
-        courseEndDate.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+        endDateString = getIntent().getStringExtra("courseEndDate");
+        courseEndDate.setText(endDateString);
+        courseEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String dateEndString = courseEndDate.getText().toString();
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(CourseDetails.this, android.R.style.Theme_Holo_Light_Dialog, endDateListener, year, month, day);
-
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            datePickerDialog.show();
+                try {
+                    calendarEndDate.setTime((simpleDateFormat).parse(dateEndString));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                new DatePickerDialog(CourseDetails.this, endDateListener, calendarEndDate.get(Calendar.YEAR), calendarEndDate.get(Calendar.MONTH), calendarEndDate.get(Calendar.DAY_OF_MONTH)).show();
+            }
         });
 
-        endDateListener = (datePicker, year, month, day) -> {
-            month = month + 1;
+        endDateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                calendarEndDate.set(Calendar.YEAR, year);
+                calendarEndDate.set(Calendar.MONTH, month);
+                calendarEndDate.set(Calendar.DAY_OF_MONTH, day);
 
-            String textViewDueDate = month + "/" + day + "/" + year;
-            courseEndDate.setText(textViewDueDate);
+                updateLabelEnd();
+            }
         };
 
 
@@ -154,7 +186,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
         courseShareNotesButton = findViewById(R.id.courseDetailsShareNotesButton);
         courseShareNotesButton.setOnClickListener(view -> {
-                    shareNotes();
+                    shareCourseNotes();
                 }
         );
 
@@ -225,6 +257,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         }
 
 
+
+
         List<Assessment> assessmentList = repository.getmAllAssessments();
         List<Assessment> assessmentList1 = new ArrayList<>();
 
@@ -252,11 +286,20 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         term = (Term) termSpinner.getSelectedItem();
         courseTermID = term.getTermID();
 
+        String formattedStartDate = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
+
+        try {
+            startDate = simpleDateFormat.parse(courseStartDate.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         if (courseID == -1) {
-            course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
+            course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), booleanStartDate, booleanEndDate, courseTermID);
             repository.insert(course);
         } else {
-            course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), courseTermID);
+            course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), booleanStartDate, booleanEndDate, courseTermID);
             repository.update(course);
         }
 
@@ -293,7 +336,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 saveCourse();
                 return true;
             case R.id.shareCourseNotes:
-                shareNotes();
+                shareCourseNotes();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -304,27 +347,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         CoursesAdapter.courseListClickEnabled = true;
     }
 
-    private void _scheduleAlertCourseEditor(int id, String time, String title, String text) {
-        long now = DateConverter.nowDate();
-        long alertTime = DateConverter.toTimestampString(time);
-        if (now <= DateConverter.toTimestampString(time)) {
-            //Notifications.scheduleCourseAlarm(getApplicationContext(), id, alertTime, text, title + ", occurring a: " + time);
-        }
-    }
 
-    public void scheduleAlertCourseEditor(MenuItem menuItem) {
-        String dateText = courseStartDate.getText().toString();
-        String textStartDate = "Course Starts Today";
-        String courseNameText = courseName.getText().toString();
-        //_scheduleAlertCourseEditor(courseID, dateText, courseNameText, textStartDate);
-
-        dateText = courseEndDate.getText().toString();
-        String textEndDate = "Course Ends Today";
-        //_scheduleAlertCourseEditor(courseID, dateText, courseNameText, textEndDate);
-    }
-
-
-    public void shareNotes() {
+    public void shareCourseNotes() {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, courseNotes.getText().toString());
@@ -333,5 +357,19 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
         Intent shareIntent = Intent.createChooser(intent, "Share notes from " + courseName.getText().toString());
         startActivity(shareIntent);
+    }
+
+    private void updateLabelStart() {
+        String formattedStartDate = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
+
+        courseStartDate.setText(simpleDateFormat.format(calendarStartDate.getTime()));
+    }
+
+    private void updateLabelEnd() {
+        String formattedStartDate = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
+
+        courseEndDate.setText(simpleDateFormat.format(calendarEndDate.getTime()));
     }
 }
