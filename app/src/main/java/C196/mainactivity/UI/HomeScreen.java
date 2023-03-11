@@ -22,6 +22,7 @@ public class HomeScreen extends AppCompatActivity {
     List coursesList;
     List assessmentsList;
 
+    public static int alertInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class HomeScreen extends AppCompatActivity {
             //Course course1 = new Course(2, "Course 2", "Planned to take", "null", "null", "Finish homework on time", "Jack Black", "666-777-8888", "kungfupanda@gmail.com", 2);
 
             //repository.insert(course);
-           // repository.insert(course1);
+            // repository.insert(course1);
         }
 
         if (assessmentsListSize == 0) {

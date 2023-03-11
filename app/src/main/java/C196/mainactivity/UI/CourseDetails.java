@@ -4,6 +4,7 @@ import static C196.mainactivity.R.id.courseTermSpinner;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import java.util.Objects;
 
 import C196.mainactivity.Adapters.AssessmentViewOnlyAdapter;
 import C196.mainactivity.Adapters.CoursesAdapter;
+import C196.mainactivity.Database.AlertReceiver;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -190,7 +192,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 }
         );
 
-        /////////////////////////////////////////////////////
         termSpinner = findViewById(courseTermSpinner);
 
 
@@ -337,6 +338,31 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 return true;
             case R.id.shareCourseNotes:
                 shareCourseNotes();
+            case R.id.setAlertButton:
+                String startDateFromTextView = courseStartDate.getText().toString();
+                String endDateFromTextView = courseEndDate.getText().toString();
+
+                String formattedDate = "MM/dd/yy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate, Locale.US);
+
+                Date startDate = null;
+                Date endDate = null;
+
+                try {
+                    startDate = simpleDateFormat.parse(startDateFromTextView);
+                    endDate = simpleDateFormat.parse(endDateFromTextView);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Long triggerStartDateAlert = startDate.getTime();
+                Long triggerEndDateAlert = endDate.getTime();
+
+                Intent intent = new Intent(CourseDetails.this, AlertReceiver.class);
+                intent.putExtra("Start Date Alert", triggerStartDateAlert + " begins today");
+                intent.putExtra("End Date Alert", triggerEndDateAlert + " ends today");
+
+                //PendingIntent pendingIntent = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent, )
         }
         return super.onOptionsItemSelected(item);
     }

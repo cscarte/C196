@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MainActivity</string>
-    
+    <string name="channelName">Channel Name</string>
+    <string name="channelDescription">Channel Descriptions</string>
+
     <string-array name="courseStatus">
         <item>In progress</item>
         <item>Completed</item>
