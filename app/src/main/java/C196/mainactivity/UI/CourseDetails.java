@@ -3,9 +3,11 @@ package C196.mainactivity.UI;
 import static C196.mainactivity.R.id.courseTermSpinner;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -359,10 +361,12 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 Long triggerEndDateAlert = endDate.getTime();
 
                 Intent intent = new Intent(CourseDetails.this, AlertReceiver.class);
-                intent.putExtra("Start Date Alert", triggerStartDateAlert + " begins today");
-                intent.putExtra("End Date Alert", triggerEndDateAlert + " ends today");
+                intent.putExtra("startAlert", triggerStartDateAlert + " start date alert has been set");
+                intent.putExtra("endAlert", triggerEndDateAlert + " end date alert has been set");
 
-                //PendingIntent pendingIntent = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent, )
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, triggerStartDateAlert, pendingIntent);
         }
         return super.onOptionsItemSelected(item);
     }
