@@ -39,7 +39,6 @@ import java.util.Objects;
 
 import C196.mainactivity.Adapters.AssessmentViewOnlyAdapter;
 import C196.mainactivity.Adapters.CoursesAdapter;
-import C196.mainactivity.Database.AlertReceiver;
 import C196.mainactivity.Database.Repository;
 import C196.mainactivity.Entity.Assessment;
 import C196.mainactivity.Entity.Course;
@@ -260,8 +259,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         }
 
 
-
-
         List<Assessment> assessmentList = repository.getmAllAssessments();
         List<Assessment> assessmentList1 = new ArrayList<>();
 
@@ -340,33 +337,54 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 return true;
             case R.id.shareCourseNotes:
                 shareCourseNotes();
-            case R.id.setAlertButton:
+            case R.id.setStartDateAlertButton:
                 String startDateFromTextView = courseStartDate.getText().toString();
-                String endDateFromTextView = courseEndDate.getText().toString();
 
-                String formattedDate = "MM/dd/yy";
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedDate, Locale.US);
+                String formattedStartDate = "MM/dd/yy";
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
 
                 Date startDate = null;
-                Date endDate = null;
 
                 try {
                     startDate = simpleDateFormat.parse(startDateFromTextView);
-                    endDate = simpleDateFormat.parse(endDateFromTextView);
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
 
                 Long triggerStartDateAlert = startDate.getTime();
-                Long triggerEndDateAlert = endDate.getTime();
 
                 Intent intent = new Intent(CourseDetails.this, AlertReceiver.class);
-                intent.putExtra("startAlert", triggerStartDateAlert + " start date alert has been set");
-                intent.putExtra("endAlert", triggerEndDateAlert + " end date alert has been set");
+                intent.putExtra("startAlert", courseName.getText().toString() + " is starting today!");
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent, PendingIntent.FLAG_IMMUTABLE);
+
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, triggerStartDateAlert, pendingIntent);
+                return true;
+            case R.id.setEndDateAlertButton:
+                String endDateFromTextView = courseEndDate.getText().toString();
+
+                String formattedEndDate = "MM/dd/yy";
+                SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat(formattedEndDate, Locale.US);
+
+                Date endDate = null;
+
+                try {
+                    endDate = simpleDateFormat2.parse(endDateFromTextView);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                Long triggerEndDateAlert = endDate.getTime();
+
+                Intent intent2 = new Intent(CourseDetails.this, AlertReceiver.class);
+                intent2.putExtra("startAlert", courseName.getText().toString() + " is ending today!");
+
+                PendingIntent pendingIntent2 = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent2, PendingIntent.FLAG_IMMUTABLE);
+
+                AlarmManager alarmManager2 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager2.set(AlarmManager.RTC_WAKEUP, triggerEndDateAlert, pendingIntent2);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

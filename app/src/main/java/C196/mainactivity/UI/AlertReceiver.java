@@ -1,4 +1,4 @@
-package C196.mainactivity.Database;
+package C196.mainactivity.UI;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -16,12 +16,9 @@ public class AlertReceiver extends BroadcastReceiver {
     String channelID = "test";
     static int notificationID;
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        //throw new UnsupportedOperationException("Not yet implemented");
         Toast.makeText(context, intent.getStringExtra("startAlert"), Toast.LENGTH_LONG).show();
         createNotificationChannel(context, channelID);
 

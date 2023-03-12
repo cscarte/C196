@@ -5,16 +5,19 @@
         android:icon="@drawable/ic_save_icon"
         android:title="Save"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/setAlertButton"
-        android:title="Set Alert"
-        android:icon="@drawable/ic_baseline_alarm_24"
-        app:showAsAction="ifRoom"
-        />
     <item android:id="@+id/shareCourseNotes"
         android:title="Share Notes"
         android:icon="@drawable/ic_baseline_note_24"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/setStartDateAlertButton"
+        android:icon="@drawable/ic_baseline_alarm_24"
+        android:title="Set Start Date Alert"
+        app:showAsAction="ifRoom" />
+    <item
+        android:title="Set End Date Alert"
+        android:icon="@drawable/ic_baseline_alarm_24"
+        android:id="@+id/setEndDateAlertButton"/>
     <item
         android:id="@+id/deleteMenuButton"
         android:title="Delete"
