@@ -2,8 +2,6 @@ package C196.mainactivity.UI;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,15 +9,19 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import C196.mainactivity.Adapters.CoursesAdapter;
@@ -39,6 +41,9 @@ public class TermDetails extends AppCompatActivity {
     String stringStartDate;
     String stringEndDate;
 
+    final Calendar calendarStartDate = Calendar.getInstance();
+    final Calendar calendarEndDate = Calendar.getInstance();
+
     private DatePickerDialog.OnDateSetListener termStartDateListener;
     private DatePickerDialog.OnDateSetListener termEndDateListener;
 
@@ -55,6 +60,9 @@ public class TermDetails extends AppCompatActivity {
         setContentView(R.layout.activity_terms_details);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
+        String dateFormat = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormat);
+
         termID = getIntent().getIntExtra("termID", -1);
 
         termTitle = findViewById(R.id.termDetailsTermTitle);
@@ -64,50 +72,52 @@ public class TermDetails extends AppCompatActivity {
         termStartDate = findViewById(R.id.termDetailsTermStartDate);
         stringStartDate = getIntent().getStringExtra("termStartDate");
         termStartDate.setText(stringStartDate);
-        termStartDate.setOnClickListener(View -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+        termStartDate.setOnClickListener(view -> {
+            String termStartDateString = termStartDate.getText().toString();
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(TermDetails.this, android.R.style.Theme_Holo_Light_Dialog, termStartDateListener, year, month, day);
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            datePickerDialog.show();
+            try {
+                calendarStartDate.setTime(Objects.requireNonNull(simpleDateFormat.parse(termStartDateString)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            new DatePickerDialog(TermDetails.this, termStartDateListener, calendarStartDate.get(Calendar.YEAR), calendarStartDate.get(Calendar.MONTH), calendarStartDate.get(Calendar.DAY_OF_MONTH)).show();
         });
 
         termStartDateListener = (datePicker, year, month, day) -> {
-            month = month + 1;
+            calendarStartDate.set(Calendar.YEAR, year);
+            calendarStartDate.set(Calendar.MONTH, month);
+            calendarStartDate.set(Calendar.DAY_OF_MONTH, day);
 
-            String textViewTermStartDate = month + "/" + day + "/" + year;
-            termStartDate.setText(textViewTermStartDate);
+            updateLabelStart();
         };
 
         termEndDate = findViewById(R.id.termDetailsTermEndDate);
         stringEndDate = getIntent().getStringExtra("termEndDate");
         termEndDate.setText(stringEndDate);
         termEndDate.setOnClickListener(View -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            String termEndDateString = termEndDate.getText().toString();
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(TermDetails.this, android.R.style.Theme_Holo_Light_Dialog, termEndDateListener, year, month, day);
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            datePickerDialog.show();
+            try {
+                calendarEndDate.setTime(Objects.requireNonNull(simpleDateFormat.parse(termEndDateString)));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            new DatePickerDialog(TermDetails.this, termEndDateListener, calendarEndDate.get(Calendar.YEAR), calendarEndDate.get(Calendar.MONTH), calendarEndDate.get(Calendar.DAY_OF_MONTH)).show();
         });
 
         termEndDateListener = (datePicker, year, month, day) -> {
-            month = month + 1;
+            calendarEndDate.set(Calendar.YEAR, year);
+            calendarEndDate.set(Calendar.MONTH, month);
+            calendarEndDate.set(Calendar.DAY_OF_MONTH, day);
 
-            String textViewTermEndDate = month + "/" + day + "/" + year;
-            termEndDate.setText(textViewTermEndDate);
+            updateLabelEnd();
         };
 
         courseList = repository.getmAllCourses();
         List<Course> associatedCourseList = new ArrayList<>();
 
-        for (Course course : courseList){
-            if (course.getCourseTermID() == termID){
+        for (Course course : courseList) {
+            if (course.getCourseTermID() == termID) {
                 associatedCourseList.add(course);
             }
         }
@@ -146,14 +156,47 @@ public class TermDetails extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_saveactionbar, menu);
+        menuInflater.inflate(R.menu.menu_termsactionbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.saveActionBarButton) {
-            saveTerm();
+        switch (item.getItemId()) {
+            case R.id.termDetailsSaveButton:
+                saveTerm();
+                return true;
+            case R.id.termDeleteButton:
+                Term currentTerm = null;
+                int numberOfCourses = 0;
+
+                for (Term term : repository.getmAllTerms()){
+                    if (term.getTermID() == termID){
+                        currentTerm = term;
+
+                        for (Course course : repository.getmAllCourses()){
+                            if (course.getCourseTermID() == termID){
+                                numberOfCourses++;
+                            }
+                        }
+
+                        if (numberOfCourses < 1){
+                            repository.delete(currentTerm);
+                            Toast.makeText(TermDetails.this, currentTerm.getTermTitle() + " was deleted", Toast.LENGTH_LONG).show();
+                            TermsList.termList.clear();
+                            TermsList.termList.addAll(repository.getmAllTerms());
+                            TermsList.termsAdapter.notifyDataSetChanged();
+                            finish();
+                        } else {
+                            Toast.makeText(TermDetails.this, "Cannot delete term with courses assigned to it.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+
+
+
+                }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -162,5 +205,19 @@ public class TermDetails extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         TermsAdapter.termsListClickEnabled = true;
+    }
+
+    private void updateLabelStart() {
+        String formattedStartDate = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
+
+        termStartDate.setText(simpleDateFormat.format(calendarStartDate.getTime()));
+    }
+
+    private void updateLabelEnd() {
+        String formattedEndDate = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedEndDate, Locale.US);
+
+        termEndDate.setText(simpleDateFormat.format(calendarEndDate.getTime()));
     }
 }

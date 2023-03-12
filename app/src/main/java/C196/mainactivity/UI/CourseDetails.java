@@ -22,6 +22,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -325,7 +326,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_saveactionbar, menu);
+        menuInflater.inflate(R.menu.menu_courseactionbar, menu);
         return true;
     }
 
@@ -348,13 +349,13 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 try {
                     startDate = simpleDateFormat.parse(startDateFromTextView);
                 } catch (ParseException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
 
                 Long triggerStartDateAlert = startDate.getTime();
 
                 Intent intent = new Intent(CourseDetails.this, AlertReceiver.class);
-                intent.putExtra("startAlert", courseName.getText().toString() + " is starting today!");
+                intent.putExtra("alert", courseName.getText().toString() + " starts on " + courseStartDate.getText().toString() + "!");
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent, PendingIntent.FLAG_IMMUTABLE);
 
@@ -372,18 +373,45 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 try {
                     endDate = simpleDateFormat2.parse(endDateFromTextView);
                 } catch (ParseException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
 
                 Long triggerEndDateAlert = endDate.getTime();
 
                 Intent intent2 = new Intent(CourseDetails.this, AlertReceiver.class);
-                intent2.putExtra("startAlert", courseName.getText().toString() + " is ending today!");
+                intent2.putExtra("alert", courseName.getText().toString() + "'s end date is " + courseEndDate.getText().toString() + "!");
 
                 PendingIntent pendingIntent2 = PendingIntent.getBroadcast(CourseDetails.this, HomeScreen.alertInt++, intent2, PendingIntent.FLAG_IMMUTABLE);
 
                 AlarmManager alarmManager2 = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmManager2.set(AlarmManager.RTC_WAKEUP, triggerEndDateAlert, pendingIntent2);
+                return true;
+            case R.id.deleteCourseMenuButton:
+                Course currentCourse = null;
+                int numberOfAssessments = 0;
+
+                for (Course course : repository.getmAllCourses()) {
+                    if (course.getCourseID() == courseID) {
+                        currentCourse = course;
+
+                        for (Assessment assessment : repository.getmAllAssessments()) {
+                            if (assessment.getAssessmentCourseID() == courseID) {
+                                numberOfAssessments++;
+                            }
+                        }
+
+                        if (numberOfAssessments < 1) {
+                            repository.delete(currentCourse);
+                            Toast.makeText(CourseDetails.this, currentCourse.getCourseName() + " was deleted", Toast.LENGTH_LONG).show();
+                            CoursesList.courseList.clear();
+                            CoursesList.courseList.addAll(repository.getmAllCourses());
+                            CoursesList.coursesAdapter.notifyDataSetChanged();
+                            finish();
+                        } else {
+                            Toast.makeText(CourseDetails.this, "Cannot delete with assessments assigned to this course", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

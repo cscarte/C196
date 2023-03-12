@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/termDetailsSaveButton"
+        android:title="Save Term"
+        android:icon="@drawable/ic_save_icon"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/termDeleteButton"
+        android:title="Delete Term"
+        android:icon="@drawable/ic_baseline_delete_24"
+        app:showAsAction="collapseActionView"
+        />
+</menu>

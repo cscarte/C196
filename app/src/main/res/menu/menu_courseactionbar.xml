@@ -13,15 +13,16 @@
         android:id="@+id/setStartDateAlertButton"
         android:icon="@drawable/ic_baseline_alarm_24"
         android:title="Set Start Date Alert"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView" />
     <item
         android:title="Set End Date Alert"
         android:icon="@drawable/ic_baseline_alarm_24"
-        android:id="@+id/setEndDateAlertButton"/>
+        android:id="@+id/setEndDateAlertButton"
+        app:showAsAction="collapseActionView"/>
     <item
-        android:id="@+id/deleteMenuButton"
+        android:id="@+id/deleteCourseMenuButton"
         android:title="Delete"
         android:icon="@drawable/ic_baseline_delete_24"
-        app:showAsAction="ifRoom"
+        app:showAsAction="collapseActionView"
         />
 </menu>

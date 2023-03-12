@@ -19,12 +19,12 @@ public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
-        Toast.makeText(context, intent.getStringExtra("startAlert"), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, intent.getStringExtra("alert"), Toast.LENGTH_LONG).show();
         createNotificationChannel(context, channelID);
 
         Notification startNotification = new NotificationCompat.Builder(context, channelID)
                 .setSmallIcon(R.drawable.ic_baseline_alarm_24)
-                .setContentText(intent.getStringExtra("startAlert"))
+                .setContentText(intent.getStringExtra("alert"))
                 .setContentTitle("Notification Test").build();
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID++, startNotification);
