@@ -6,8 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,7 +51,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch assessmentObjectiveSwitch;
 
-    private DatePickerDialog.OnDateSetListener startDateListener;
     private DatePickerDialog.OnDateSetListener endDateListener;
     boolean goalDateAlert;
     boolean dueDateAlert;
@@ -77,6 +74,9 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
 
     Assessment assessment;
 
+    public AssessmentDetails() {
+    }
+
     @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,28 +99,22 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         String dueDate = getIntent().getStringExtra("assessmentDueDate");
         assessmentDueDate.setText(dueDate);
         //Create and populate date picker menu when clicking on the due date
-        assessmentDueDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String dateDueString = assessmentDueDate.getText().toString();
-                try {
-                    calendarDueDate.setTime(simpleDateFormat.parse(dateDueString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                new DatePickerDialog(AssessmentDetails.this, dueDateListener, calendarDueDate.get(Calendar.YEAR), calendarDueDate.get(Calendar.MONTH), calendarDueDate.get(Calendar.DAY_OF_MONTH)).show();
+        assessmentDueDate.setOnClickListener(view -> {
+            String dateDueString = assessmentDueDate.getText().toString();
+            try {
+                calendarDueDate.setTime(Objects.requireNonNull(simpleDateFormat.parse(dateDueString)));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            new DatePickerDialog(AssessmentDetails.this, dueDateListener, calendarDueDate.get(Calendar.YEAR), calendarDueDate.get(Calendar.MONTH), calendarDueDate.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        dueDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarDueDate.set(Calendar.YEAR, year);
-                calendarDueDate.set(Calendar.MONTH, month);
-                calendarDueDate.set(Calendar.DAY_OF_MONTH, day);
+        dueDateListener = (datePicker, year, month, day) -> {
+            calendarDueDate.set(Calendar.YEAR, year);
+            calendarDueDate.set(Calendar.MONTH, month);
+            calendarDueDate.set(Calendar.DAY_OF_MONTH, day);
 
-                updateLabelDue();
-            }
+            updateLabelDue();
         };
 
         courseArrayList.addAll(courseList);
@@ -147,13 +141,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             }
         });
 
-        startDateListener = (datePicker, year, month, day) -> {
-            month = month + 1;
-
-            String textViewDueDate = month + "/" + day + "/" + year;
-            assessmentDueDate.setText(textViewDueDate);
-        };
-
         assessmentGoalDate = findViewById(R.id.assessmentDetailsGoalDate);
 
         String goalDate = getIntent().getStringExtra("assessmentGoalDate");
@@ -161,7 +148,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         assessmentGoalDate.setOnClickListener(view -> {
             String dateDueString = assessmentGoalDate.getText().toString();
             try {
-                calendarGoalDate.setTime(simpleDateFormat.parse(dateDueString));
+                calendarGoalDate.setTime(Objects.requireNonNull(simpleDateFormat.parse(dateDueString)));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -209,11 +196,11 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
         int selectedCourseID = course.getCourseID();
 
         if (assessmentID == -1) {
-            assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDateString, assessmentGoalDate.getText().toString(), dueDateAlert = assessmentDueDateAlert.isChecked(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+            assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDateString, assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
             repository.insert(assessment);
 
         } else {
-            assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert = assessmentDueDateAlert.isChecked(), goalDateAlert = assessmentGoalDateAlert.isChecked(), assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+            assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
             repository.update(assessment);
         }
 

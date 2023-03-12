@@ -17,8 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -68,19 +66,14 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
     String name;
     String status;
-    String startDateString;
     Date startDate;
     String endDateString;
-    Date endDate;
     String notes;
     String instructorName;
     String instructorPhone;
     String instructorEmail;
     Boolean booleanStartDate;
     Boolean booleanEndDate;
-
-    static CheckBox alertStartDate;
-    static CheckBox alertEndDate;
 
     int courseID;
     int courseTermID;
@@ -127,58 +120,46 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
 
         courseStartDate = findViewById(R.id.courseDetailsCourseStartDate);
         courseStartDate.setText(getIntent().getStringExtra("courseStartDate"));
-        courseStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String dateStartString = courseStartDate.getText().toString();
+        courseStartDate.setOnClickListener(view -> {
+            String dateStartString = courseStartDate.getText().toString();
 
-                try {
-                    calendarStartDate.setTime(simpleDateFormat.parse(dateStartString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                new DatePickerDialog(CourseDetails.this, startDateListener, calendarStartDate.get(Calendar.YEAR), calendarStartDate.get(Calendar.MONTH), calendarStartDate.get(Calendar.DAY_OF_MONTH)).show();
+            try {
+                calendarStartDate.setTime(Objects.requireNonNull(simpleDateFormat.parse(dateStartString)));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            new DatePickerDialog(CourseDetails.this, startDateListener, calendarStartDate.get(Calendar.YEAR), calendarStartDate.get(Calendar.MONTH), calendarStartDate.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        startDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarStartDate.set(Calendar.YEAR, year);
-                calendarStartDate.set(Calendar.MONTH, month);
-                calendarStartDate.set(Calendar.DAY_OF_MONTH, day);
+        startDateListener = (datePicker, year, month, day) -> {
+            calendarStartDate.set(Calendar.YEAR, year);
+            calendarStartDate.set(Calendar.MONTH, month);
+            calendarStartDate.set(Calendar.DAY_OF_MONTH, day);
 
-                updateLabelStart();
-            }
+            updateLabelStart();
         };
 
 
         courseEndDate = findViewById(R.id.courseDetailsCourseEndDate);
         endDateString = getIntent().getStringExtra("courseEndDate");
         courseEndDate.setText(endDateString);
-        courseEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String dateEndString = courseEndDate.getText().toString();
+        courseEndDate.setOnClickListener(view -> {
+            String dateEndString = courseEndDate.getText().toString();
 
-                try {
-                    calendarEndDate.setTime((simpleDateFormat).parse(dateEndString));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                new DatePickerDialog(CourseDetails.this, endDateListener, calendarEndDate.get(Calendar.YEAR), calendarEndDate.get(Calendar.MONTH), calendarEndDate.get(Calendar.DAY_OF_MONTH)).show();
+            try {
+                calendarEndDate.setTime(Objects.requireNonNull((simpleDateFormat).parse(dateEndString)));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            new DatePickerDialog(CourseDetails.this, endDateListener, calendarEndDate.get(Calendar.YEAR), calendarEndDate.get(Calendar.MONTH), calendarEndDate.get(Calendar.DAY_OF_MONTH)).show();
         });
 
-        endDateListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendarEndDate.set(Calendar.YEAR, year);
-                calendarEndDate.set(Calendar.MONTH, month);
-                calendarEndDate.set(Calendar.DAY_OF_MONTH, day);
+        endDateListener = (datePicker, year, month, day) -> {
+            calendarEndDate.set(Calendar.YEAR, year);
+            calendarEndDate.set(Calendar.MONTH, month);
+            calendarEndDate.set(Calendar.DAY_OF_MONTH, day);
 
-                updateLabelEnd();
-            }
+            updateLabelEnd();
         };
 
 
@@ -189,9 +170,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         courseNotes.setText(notes);
 
         courseShareNotesButton = findViewById(R.id.courseDetailsShareNotesButton);
-        courseShareNotesButton.setOnClickListener(view -> {
-                    shareCourseNotes();
-                }
+        courseShareNotesButton.setOnClickListener(view -> shareCourseNotes()
         );
 
         termSpinner = findViewById(courseTermSpinner);
@@ -304,8 +283,6 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             repository.update(course);
         }
 
-        //scheduleAlertCourseEditor(course);
-
         CoursesList.courseList.clear();
         CoursesList.courseList.addAll(repository.getmAllCourses());
         CoursesList.coursesAdapter.notifyDataSetChanged();
@@ -330,6 +307,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -387,7 +365,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 alarmManager2.set(AlarmManager.RTC_WAKEUP, triggerEndDateAlert, pendingIntent2);
                 return true;
             case R.id.deleteCourseMenuButton:
-                Course currentCourse = null;
+                Course currentCourse;
                 int numberOfAssessments = 0;
 
                 for (Course course : repository.getmAllCourses()) {
