@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -191,25 +192,29 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     @SuppressLint("NotifyDataSetChanged")
     public void saveAssessment() {
         Repository repository = new Repository(getApplication());
+        if (repository.getmAllCourses().size() == 0) {
+            Toast.makeText(AssessmentDetails.this, "Please create a course first before creating an assessment", Toast.LENGTH_LONG).show();
+        } else {
 
         course = (Course) courseIDSpinner.getSelectedItem();
-        int selectedCourseID = course.getCourseID();
+        int selectedCourseID = 0;
+        if (course.getCourseID() != 0)
 
-        if (assessmentID == -1) {
-            assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDateString, assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
-            repository.insert(assessment);
+            if (assessmentID == -1) {
+                assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDateString, assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+                repository.insert(assessment);
 
-        } else {
-            assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
-            repository.update(assessment);
-        }
+            } else {
+                assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+                repository.update(assessment);
+            }
 
         AssessmentsList.assessmentList.clear();
         AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
         AssessmentsList.adapter.notifyDataSetChanged();
         AssessmentsAdapter.clickedEnabled = true;
         finish();
-    }
+    }}
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

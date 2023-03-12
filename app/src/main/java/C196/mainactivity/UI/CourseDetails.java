@@ -261,6 +261,9 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @SuppressLint("NotifyDataSetChanged")
     public void saveCourse() {
         Repository repository = new Repository(getApplication());
+        if(repository.getmAllTerms().size() == 0){
+            Toast.makeText(CourseDetails.this, "Please create a term first before creating a course", Toast.LENGTH_LONG).show();
+        } else {
 
         String spinnerText = courseStatus.getSelectedItem().toString();
         term = (Term) termSpinner.getSelectedItem();
@@ -288,7 +291,7 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         CoursesList.coursesAdapter.notifyDataSetChanged();
         CoursesAdapter.courseListClickEnabled = true;
         finish();
-    }
+    }}
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

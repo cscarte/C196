@@ -37,32 +37,6 @@ public class HomeScreen extends AppCompatActivity {
         int assessmentsListSize = assessmentsList.size();
         int courseListSize = coursesList.size();
         int termListSize = termsList.size();
-
-        if (termListSize == 0) {
-            Term term = new Term(1, "Intro To School", "01/01/23", "04/01/23");
-            Term term1 = new Term(2, "Capstone", "05/01/23", "07/31/23");
-
-            repository.insert(term);
-            repository.insert(term1);
-        }
-
-        if (courseListSize == 0) {
-            //Course course = new Course(1, "Course 1", "In progress", "null", "null", "This is a sample note", "Johnny Doe", "555-555-5555", "fakeemail@gmail.com", 1);
-            //Course course1 = new Course(2, "Course 2", "Planned to take", "null", "null", "Finish homework on time", "Jack Black", "666-777-8888", "kungfupanda@gmail.com", 2);
-
-            //repository.insert(course);
-            // repository.insert(course1);
-        }
-
-        if (assessmentsListSize == 0) {
-            Assessment assessment = new Assessment(1, "Assessment 1", "03/01/23", "03/31/23", true, true, true, 1);
-            Assessment assessment1 = new Assessment(2, "Assessment 2", "04/01/23", "04/28/23", false, false, true, 1);
-            Assessment assessment2 = new Assessment(3, "Assessment 3", "05/01/23", "05/15/23", true, false, false, 2);
-
-            repository.insert(assessment);
-            repository.insert(assessment1);
-            repository.insert(assessment2);
-        }
     }
 
     public void enterCoursesScreen(View view) {
