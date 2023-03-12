@@ -119,8 +119,8 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
         name = getIntent().getStringExtra("courseName");
         courseName.setText(name);
 
-        alertStartDate = findViewById(R.id.alertStartDateCheckBox);
-        alertEndDate = findViewById(R.id.alertEndDateCheckBox);
+        //alertStartDate = findViewById(R.id.alertStartDateCheckBox);
+        //alertEndDate = findViewById(R.id.alertEndDateCheckBox);
 
         booleanStartDate = getIntent().getBooleanExtra("courseStartDateAlert", false);
         booleanEndDate = getIntent().getBooleanExtra("courseEndDateAlert", false);

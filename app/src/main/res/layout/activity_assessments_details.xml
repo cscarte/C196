@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="211dp"
             android:background="#E0EAE9"
             android:elegantTextHeight="false"
             android:gravity="center"
@@ -69,7 +69,7 @@
             android:textOff="P"
             android:textOn="O"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypePerformanceTextView"
-            app:layout_constraintTop_toBottomOf="@+id/dueGoalAlertCheckBox" />
+            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsTitle" />
 
         <TextView
             android:id="@+id/assessmentDetailsAssessmentTypeTextView"
@@ -157,26 +157,6 @@
             android:gravity="center"
             app:layout_constraintStart_toEndOf="@+id/assessmentDetailsAssessmentTypeTextView2"
             app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsAssessmentTypePerformanceTextView" />
-
-        <CheckBox
-            android:id="@+id/dueDateAlertCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="36dp"
-            android:text="Set Alert"
-            app:layout_constraintStart_toEndOf="@+id/assessmentDetailsDueDate"
-            app:layout_constraintTop_toBottomOf="@+id/assessmentDetailsTitle" />
-
-        <CheckBox
-            android:id="@+id/dueGoalAlertCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:text="Set Alert"
-            app:layout_constraintStart_toEndOf="@+id/assessmentDetailsGoalDate"
-            app:layout_constraintTop_toBottomOf="@+id/dueDateAlertCheckBox" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -176,18 +176,19 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             updateLabelGoal();
         };
 
-        assessmentDueDateAlert = findViewById(R.id.dueDateAlertCheckBox);
-        assessmentGoalDateAlert = findViewById(R.id.dueGoalAlertCheckBox);
+        /**assessmentDueDateAlert = findViewById(R.id.dueDateAlertCheckBox);
+         assessmentGoalDateAlert = findViewById(R.id.dueGoalAlertCheckBox);
 
-        dueDateAlert = getIntent().getBooleanExtra("assessmentDueDateAlert", false);
-        if (dueDateAlert) {
-            assessmentDueDateAlert.setChecked(true);
-        }
+         dueDateAlert = getIntent().getBooleanExtra("assessmentDueDateAlert", false);
+         if (dueDateAlert) {
+         assessmentDueDateAlert.setChecked(true);
+         }
 
-        goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
-        if (goalDateAlert) {
-            assessmentGoalDateAlert.setChecked(true);
-        }
+         goalDateAlert = getIntent().getBooleanExtra("assessmentGoalDateAlert", false);
+         if (goalDateAlert) {
+         assessmentGoalDateAlert.setChecked(true);
+         }
+         */
 
         assessmentObjectiveSwitch = findViewById(R.id.assessmentDetailsAssessmentTypeSwitch);
 
@@ -288,7 +289,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
                 Long triggerGoalDateAlert = goalDate.getTime();
 
                 Intent intent2 = new Intent(AssessmentDetails.this, AlertReceiver.class);
-                intent2.putExtra("alert", assessmentTitle.getText().toString() + "'s goal date is "+ assessmentGoalDate.getText().toString() +"!");
+                intent2.putExtra("alert", assessmentTitle.getText().toString() + "'s goal date is " + assessmentGoalDate.getText().toString() + "!");
 
                 PendingIntent pendingIntent2 = PendingIntent.getBroadcast(AssessmentDetails.this, HomeScreen.alertInt++, intent2, PendingIntent.FLAG_IMMUTABLE);
 

@@ -191,10 +191,6 @@ public class TermDetails extends AppCompatActivity {
                             Toast.makeText(TermDetails.this, "Cannot delete term with courses assigned to it.", Toast.LENGTH_LONG).show();
                         }
                     }
-
-
-
-
                 }
                 return true;
         }
