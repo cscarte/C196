@@ -16,8 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -46,16 +44,12 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     private EditText assessmentTitle;
     private TextView assessmentDueDate;
     private TextView assessmentGoalDate;
-    private CheckBox assessmentDueDateAlert;
-    private CheckBox assessmentGoalDateAlert;
 
     private Course course;
     private Course courseSelected;
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch assessmentObjectiveSwitch;
-
-    private DatePickerDialog.OnDateSetListener endDateListener;
     boolean goalDateAlert;
     boolean dueDateAlert;
     boolean assessmentObjectiveBooleanValue;
@@ -73,8 +67,6 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     private final Repository repository = new Repository(getApplication());
     List<Course> courseList = repository.getmAllCourses();
     ArrayList<Course> courseArrayList = new ArrayList<>();
-
-    String assessmentDueDateString;
 
     Assessment assessment;
 

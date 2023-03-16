@@ -178,17 +178,17 @@ public class TermDetails extends AppCompatActivity {
                         Term currentTerm = null;
                         int numberOfCourses = 0;
 
-                        for (Term term : repository.getmAllTerms()){
-                            if (term.getTermID() == termID){
+                        for (Term term : repository.getmAllTerms()) {
+                            if (term.getTermID() == termID) {
                                 currentTerm = term;
 
-                                for (Course course : repository.getmAllCourses()){
-                                    if (course.getCourseTermID() == termID){
+                                for (Course course : repository.getmAllCourses()) {
+                                    if (course.getCourseTermID() == termID) {
                                         numberOfCourses++;
                                     }
                                 }
 
-                                if (numberOfCourses < 1){
+                                if (numberOfCourses < 1) {
                                     repository.delete(currentTerm);
                                     Toast.makeText(TermDetails.this, currentTerm.getTermTitle() + " was deleted", Toast.LENGTH_LONG).show();
                                     TermsList.termList.clear();
