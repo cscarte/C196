@@ -2,9 +2,11 @@ package C196.mainactivity.UI;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -48,6 +50,7 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
     private CheckBox assessmentGoalDateAlert;
 
     private Course course;
+    private Course courseSelected;
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch assessmentObjectiveSwitch;
@@ -196,25 +199,27 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
             Toast.makeText(AssessmentDetails.this, "Please create a course first before creating an assessment", Toast.LENGTH_LONG).show();
         } else {
 
-        course = (Course) courseIDSpinner.getSelectedItem();
-        int selectedCourseID = 0;
-        if (course.getCourseID() != 0)
+            courseSelected = (Course) courseIDSpinner.getSelectedItem();
+            int selectedCourseID = courseSelected.getCourseID();
 
-            if (assessmentID == -1) {
-                assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDateString, assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
-                repository.insert(assessment);
+            if (course.getCourseID() != 0)
 
-            } else {
-                assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
-                repository.update(assessment);
-            }
+                if (assessmentID == -1) {
+                    assessment = new Assessment(0, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+                    repository.insert(assessment);
 
-        AssessmentsList.assessmentList.clear();
-        AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
-        AssessmentsList.adapter.notifyDataSetChanged();
-        AssessmentsAdapter.clickedEnabled = true;
-        finish();
-    }}
+                } else {
+                    assessment = new Assessment(assessmentID, assessmentTitle.getText().toString(), assessmentDueDate.getText().toString(), assessmentGoalDate.getText().toString(), dueDateAlert, goalDateAlert, assessmentObjectiveBooleanValue = assessmentObjectiveSwitch.isChecked(), selectedCourseID);
+                    repository.update(assessment);
+                }
+
+            AssessmentsList.assessmentList.clear();
+            AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
+            AssessmentsList.adapter.notifyDataSetChanged();
+            AssessmentsAdapter.clickedEnabled = true;
+            finish();
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -289,16 +294,31 @@ public class AssessmentDetails extends AppCompatActivity implements AdapterView.
                 alarmManager2.set(AlarmManager.RTC_WAKEUP, triggerGoalDateAlert, pendingIntent2);
                 return true;
             case R.id.deleteAssessmentMenuButton:
-                for (Assessment assessment : repository.getmAllAssessments()) {
-                    if (assessment.getAssessmentID() == assessmentID) {
-                        Assessment currentAssessment = assessment;
-                        repository.delete(currentAssessment);
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Delete Assessment");
+                alert.setMessage("Are you sure you want to delete this assessment?");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        for (Assessment assessment : repository.getmAllAssessments()) {
+                            if (assessment.getAssessmentID() == assessmentID) {
+                                Assessment currentAssessment = assessment;
+                                repository.delete(currentAssessment);
+                            }
+                        }
+                        AssessmentsList.assessmentList.clear();
+                        AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
+                        AssessmentsList.adapter.notifyDataSetChanged();
+                        finish();
                     }
-                }
-                AssessmentsList.assessmentList.clear();
-                AssessmentsList.assessmentList.addAll(repository.getmAllAssessments());
-                AssessmentsList.adapter.notifyDataSetChanged();
-                finish();
+                });
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(AssessmentDetails.this, "Okay, assessment will not be deleted", Toast.LENGTH_LONG).show();
+                    }
+                });
+                alert.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

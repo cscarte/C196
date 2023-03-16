@@ -19,8 +19,8 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/assessmentsRecyclerView"
-                android:layout_width="411dp"
-                android:layout_height="620dp"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
                 android:background="@color/teal_200"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -33,12 +33,12 @@
                 android:id="@+id/addAssessmentDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="13dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="16dp"
                 android:clickable="true"
                 android:onClick="enterAssessmentDetails"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/assessmentsRecyclerView"
                 app:srcCompat="@android:drawable/ic_menu_add"
                 tools:ignore="SpeakableTextPresentCheck" />
         </androidx.constraintlayout.widget.ConstraintLayout>
