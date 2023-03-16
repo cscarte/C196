@@ -4,10 +4,12 @@ import static C196.mainactivity.R.id.courseTermSpinner;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -261,37 +263,38 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
     @SuppressLint("NotifyDataSetChanged")
     public void saveCourse() {
         Repository repository = new Repository(getApplication());
-        if(repository.getmAllTerms().size() == 0){
+        if (repository.getmAllTerms().size() == 0) {
             Toast.makeText(CourseDetails.this, "Please create a term first before creating a course", Toast.LENGTH_LONG).show();
         } else {
 
-        String spinnerText = courseStatus.getSelectedItem().toString();
-        term = (Term) termSpinner.getSelectedItem();
-        courseTermID = term.getTermID();
+            String spinnerText = courseStatus.getSelectedItem().toString();
+            term = (Term) termSpinner.getSelectedItem();
+            courseTermID = term.getTermID();
 
-        String formattedStartDate = "MM/dd/yy";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
+            String formattedStartDate = "MM/dd/yy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formattedStartDate, Locale.US);
 
-        try {
-            startDate = simpleDateFormat.parse(courseStartDate.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
+            try {
+                startDate = simpleDateFormat.parse(courseStartDate.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (courseID == -1) {
+                course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), booleanStartDate, booleanEndDate, courseTermID);
+                repository.insert(course);
+            } else {
+                course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), booleanStartDate, booleanEndDate, courseTermID);
+                repository.update(course);
+            }
+
+            CoursesList.courseList.clear();
+            CoursesList.courseList.addAll(repository.getmAllCourses());
+            CoursesList.coursesAdapter.notifyDataSetChanged();
+            CoursesAdapter.courseListClickEnabled = true;
+            finish();
         }
-
-        if (courseID == -1) {
-            course = new Course(0, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), booleanStartDate, booleanEndDate, courseTermID);
-            repository.insert(course);
-        } else {
-            course = new Course(courseID, courseName.getText().toString(), spinnerText, courseStartDate.getText().toString(), courseEndDate.getText().toString(), courseNotes.getText().toString(), courseInstructorName.getText().toString(), courseInstructorPhone.getText().toString(), courseInstructorEmail.getText().toString(), booleanStartDate, booleanEndDate, courseTermID);
-            repository.update(course);
-        }
-
-        CoursesList.courseList.clear();
-        CoursesList.courseList.addAll(repository.getmAllCourses());
-        CoursesList.coursesAdapter.notifyDataSetChanged();
-        CoursesAdapter.courseListClickEnabled = true;
-        finish();
-    }}
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -368,31 +371,48 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                 alarmManager2.set(AlarmManager.RTC_WAKEUP, triggerEndDateAlert, pendingIntent2);
                 return true;
             case R.id.deleteCourseMenuButton:
-                Course currentCourse;
-                int numberOfAssessments = 0;
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Delete Course?");
+                alert.setMessage("Are you sure you want to delete this course?");
 
-                for (Course course : repository.getmAllCourses()) {
-                    if (course.getCourseID() == courseID) {
-                        currentCourse = course;
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Course currentCourse;
+                        int numberOfAssessments = 0;
 
-                        for (Assessment assessment : repository.getmAllAssessments()) {
-                            if (assessment.getAssessmentCourseID() == courseID) {
-                                numberOfAssessments++;
+                        for (Course course : repository.getmAllCourses()) {
+                            if (course.getCourseID() == courseID) {
+                                currentCourse = course;
+
+                                for (Assessment assessment : repository.getmAllAssessments()) {
+                                    if (assessment.getAssessmentCourseID() == courseID) {
+                                        numberOfAssessments++;
+                                    }
+                                }
+
+                                if (numberOfAssessments < 1) {
+                                    repository.delete(currentCourse);
+                                    Toast.makeText(CourseDetails.this, currentCourse.getCourseName() + " was deleted", Toast.LENGTH_LONG).show();
+                                    CoursesList.courseList.clear();
+                                    CoursesList.courseList.addAll(repository.getmAllCourses());
+                                    CoursesList.coursesAdapter.notifyDataSetChanged();
+                                    finish();
+                                } else {
+                                    Toast.makeText(CourseDetails.this, "Cannot delete with assessments assigned to this course", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
-
-                        if (numberOfAssessments < 1) {
-                            repository.delete(currentCourse);
-                            Toast.makeText(CourseDetails.this, currentCourse.getCourseName() + " was deleted", Toast.LENGTH_LONG).show();
-                            CoursesList.courseList.clear();
-                            CoursesList.courseList.addAll(repository.getmAllCourses());
-                            CoursesList.coursesAdapter.notifyDataSetChanged();
-                            finish();
-                        } else {
-                            Toast.makeText(CourseDetails.this, "Cannot delete with assessments assigned to this course", Toast.LENGTH_LONG).show();
-                        }
                     }
-                }
+                });
+
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(CourseDetails.this, "Okay, course will not be deleted", Toast.LENGTH_LONG).show();
+                    }
+                });
+                alert.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);

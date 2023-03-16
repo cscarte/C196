@@ -1,7 +1,9 @@
 package C196.mainactivity.UI;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -167,31 +169,46 @@ public class TermDetails extends AppCompatActivity {
                 saveTerm();
                 return true;
             case R.id.termDeleteButton:
-                Term currentTerm = null;
-                int numberOfCourses = 0;
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Delete Term?");
+                alert.setMessage("Do you want to delete this term?");
+                alert.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Term currentTerm = null;
+                        int numberOfCourses = 0;
 
-                for (Term term : repository.getmAllTerms()){
-                    if (term.getTermID() == termID){
-                        currentTerm = term;
+                        for (Term term : repository.getmAllTerms()){
+                            if (term.getTermID() == termID){
+                                currentTerm = term;
 
-                        for (Course course : repository.getmAllCourses()){
-                            if (course.getCourseTermID() == termID){
-                                numberOfCourses++;
+                                for (Course course : repository.getmAllCourses()){
+                                    if (course.getCourseTermID() == termID){
+                                        numberOfCourses++;
+                                    }
+                                }
+
+                                if (numberOfCourses < 1){
+                                    repository.delete(currentTerm);
+                                    Toast.makeText(TermDetails.this, currentTerm.getTermTitle() + " was deleted", Toast.LENGTH_LONG).show();
+                                    TermsList.termList.clear();
+                                    TermsList.termList.addAll(repository.getmAllTerms());
+                                    TermsList.termsAdapter.notifyDataSetChanged();
+                                    finish();
+                                } else {
+                                    Toast.makeText(TermDetails.this, "Cannot delete term with courses assigned to it.", Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
-
-                        if (numberOfCourses < 1){
-                            repository.delete(currentTerm);
-                            Toast.makeText(TermDetails.this, currentTerm.getTermTitle() + " was deleted", Toast.LENGTH_LONG).show();
-                            TermsList.termList.clear();
-                            TermsList.termList.addAll(repository.getmAllTerms());
-                            TermsList.termsAdapter.notifyDataSetChanged();
-                            finish();
-                        } else {
-                            Toast.makeText(TermDetails.this, "Cannot delete term with courses assigned to it.", Toast.LENGTH_LONG).show();
-                        }
                     }
-                }
+                });
+                alert.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(TermDetails.this, "Okay, this term will not be deleted", Toast.LENGTH_LONG);
+                    }
+                });
+                alert.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
